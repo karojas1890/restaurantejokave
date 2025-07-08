@@ -25,7 +25,7 @@ public partial class TiposDeCao
 
     public virtual Insumo? CategoriaInsumosDesabasteceNavigation { get; set; }
 
-    public virtual ICollection<HistorialDeCao> HistorialDeCaos { get; set; } = new List<HistorialDeCao>();
+    public virtual ICollection<HistorialDeCaos> HistorialDeCaos { get; set; } = new List<HistorialDeCaos>();
 
     public virtual SeccionesRestaurante? IdSeccionNavigation { get; set; }
 }

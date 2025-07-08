@@ -21,7 +21,7 @@ public partial class HistorialDeAccione
 
     public virtual TipoDeAccion IdAccionNavigation { get; set; } = null!;
 
-    public virtual HistorialDeCao IdIncidenteNavigation { get; set; } = null!;
+    public virtual HistorialDeCaos IdIncidenteNavigation { get; set; } = null!;
 
     public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
 }

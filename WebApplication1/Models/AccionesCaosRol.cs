@@ -13,7 +13,7 @@ public partial class AccionesCaosRol
 
     public virtual TipoDeAccion IdAccionNavigation { get; set; } = null!;
 
-    public virtual TiposDeCao IdCaosNavigation { get; set; } = null!;
+    public virtual TiposDeCaos IdCaosNavigation { get; set; } = null!;
 
     public virtual Rol IdRolAutorizadoNavigation { get; set; } = null!;
 }

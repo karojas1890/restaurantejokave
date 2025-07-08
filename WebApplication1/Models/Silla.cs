@@ -13,5 +13,5 @@ public partial class Silla
 
     public virtual Mesa IdMesaNavigation { get; set; } = null!;
 
-    public virtual ICollection<Visitum> Visita { get; set; } = new List<Visitum>();
+    public virtual ICollection<Visita> Visita { get; set; } = new List<Visita>();
 }

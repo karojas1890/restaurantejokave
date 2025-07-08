@@ -25,7 +25,7 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<HistorialDeAccione> HistorialDeAcciones { get; set; }
 
-    public virtual DbSet<HistorialDeCao> HistorialDeCaos { get; set; }
+    public virtual DbSet<HistorialDeCaos> HistorialDeCaos { get; set; }
 
     public virtual DbSet<Insumo> Insumos { get; set; }
 
@@ -49,11 +49,11 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<TipoDeAccion> TipoDeAccions { get; set; }
 
-    public virtual DbSet<TiposDeCao> TiposDeCaos { get; set; }
+    public virtual DbSet<TiposDeCaos> TiposDeCaos { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    public virtual DbSet<Visitum> Visita { get; set; }
+    public virtual DbSet<Visita> Visita { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -163,7 +163,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("FK_HistorialAcciones_Usuario");
         });
 
-        modelBuilder.Entity<HistorialDeCao>(entity =>
+        modelBuilder.Entity<HistorialDeCaos>(entity =>
         {
             entity.HasKey(e => e.IdIncidente).HasName("PK__Historia__E92B13DF53A81E80");
 
@@ -361,7 +361,7 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<TiposDeCao>(entity =>
+        modelBuilder.Entity<TiposDeCaos>(entity =>
         {
             entity.HasKey(e => e.IdCaos).HasName("PK__TiposDeC__3B7B0B5D5CFC7997");
 
@@ -431,7 +431,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("FK_Usuario_Rol");
         });
 
-        modelBuilder.Entity<Visitum>(entity =>
+        modelBuilder.Entity<Visita>(entity =>
         {
             entity.HasKey(e => new { e.IdVisita, e.IdUsuario });
 

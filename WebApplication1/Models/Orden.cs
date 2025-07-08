@@ -29,5 +29,5 @@ public partial class Orden
 
     public virtual Usuario MeseroAsignadoNavigation { get; set; } = null!;
 
-    public virtual Visitum Visitum { get; set; } = null!;
+    public virtual Visita Visitum { get; set; } = null!;
 }

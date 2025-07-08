@@ -15,5 +15,5 @@ public partial class Insumo
 
     public bool Estado { get; set; }
 
-    public virtual ICollection<TiposDeCao> TiposDeCaos { get; set; } = new List<TiposDeCao>();
+    public virtual ICollection<TiposDeCaos> TiposDeCaos { get; set; } = new List<TiposDeCaos>();
 }

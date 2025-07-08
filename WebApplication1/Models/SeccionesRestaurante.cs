@@ -11,5 +11,5 @@ public partial class SeccionesRestaurante
 
     public virtual ICollection<Mesa> Mesas { get; set; } = new List<Mesa>();
 
-    public virtual ICollection<TiposDeCao> TiposDeCaos { get; set; } = new List<TiposDeCao>();
+    public virtual ICollection<TiposDeCaos> TiposDeCaos { get; set; } = new List<TiposDeCaos>();
 }

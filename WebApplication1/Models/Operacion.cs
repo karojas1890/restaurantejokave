@@ -15,5 +15,5 @@ public partial class Operacion
 
     public int TiempoMaximo { get; set; }
 
-    public virtual ICollection<HistorialDeCao> HistorialDeCaos { get; set; } = new List<HistorialDeCao>();
+    public virtual ICollection<HistorialDeCaos> HistorialDeCaos { get; set; } = new List<HistorialDeCaos>();
 }
