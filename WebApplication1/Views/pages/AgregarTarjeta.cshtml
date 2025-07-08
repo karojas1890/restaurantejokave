@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/LayoutTarjetas.cshtml";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Nueva Tarjeta - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/AgregarTarjetas.css" asp-append-version="true"/>
+</head>
+<body>
+
+
+    <div class="container">
+        <h2 class="section-title">Agregar Nueva Tarjeta</h2>
+        <p class="section-subtitle">Ingresa los datos de tu tarjeta de crédito para comenzar a usarla en el restaurante</p>
+
+        <form>
+            <div class="form-group">
+                <label class="form-label">Número de tarjeta</label>
+                <input type="text" class="form-input" placeholder="1234 5678 9012 345" maxlength="19">
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label class="form-label">Mes de vencimiento</label>
+                    <select class="form-select">
+                        <option>Mes</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="form-col">
+                    <label class="form-label">Año de vencimiento</label>
+                    <select class="form-select">
+                        <option>Año</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                    </select>
+                </div>
+                <div class="form-col">
+                    <label class="form-label">CVV</label>
+                    <input type="text" class="form-input" placeholder="123" maxlength="4">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">
+                <span class="plus-icon">+</span>
+                Agregar Nueva Tarjeta
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Formatear número de tarjeta
+        const cardInput = document.querySelector('input[placeholder="1234 5678 9012 345"]');
+        cardInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+    </script>
+</body>
+</html>

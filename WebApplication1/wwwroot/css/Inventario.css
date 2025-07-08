@@ -1,0 +1,77 @@
+﻿/* Inventory View Styles */
+.tab-content {
+    display: none;
+}
+
+    .tab-content.active {
+        display: block;
+    }
+
+.inventory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.inventory-item-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+
+    .inventory-item-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+.item-info h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.item-info p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Additional status badges for inventory */
+.status-badge.low-stock {
+    background-color: #ffeb3b;
+    color: #333;
+}
+
+.status-badge.critical {
+    background-color: #f44336;
+    color: white;
+}
+
+.status-badge.normal {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status-badge.inactive {
+    background-color: #ffeb3b;
+    color: #333;
+}
+
+.status-badge.damaged {
+    background-color: #f44336;
+    color: white;
+}
+
+.status-badge.repaired {
+    background-color: #2196f3;
+    color: white;
+}
+
+.status-badge.operational {
+    background-color: #4caf50;
+    color: white;
+}

@@ -1,0 +1,244 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background-color: white;
+    border: 2px solid #7ED321;
+    border-radius: 20px;
+    padding: 40px 30px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.logo-text {
+    font-size: 16px;
+    color: #DAA520;
+    font-weight: bold;
+    font-family: serif;
+    letter-spacing: 2px;
+}
+
+.logo-subtitle {
+    font-size: 24px;
+    color: #DAA520;
+    font-weight: bold;
+    font-family: serif;
+    margin-top: 5px;
+    position: relative;
+}
+
+    .logo-subtitle::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 2px;
+        background-color: #DAA520;
+    }
+
+.email-icon-container {
+    width: 120px;
+    height: 80px;
+    background-color: #e8e8e8;
+    border-radius: 50px;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #7ED321;
+}
+
+.email-icon {
+    font-size: 40px;
+    color: #666;
+}
+
+.title {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 40px;
+    line-height: 1.4;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #7ED321;
+    border-radius: 25px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+    .form-input:focus {
+        background-color: white;
+        border-color: #6BC91A;
+        box-shadow: 0 0 0 3px rgba(126, 211, 33, 0.1);
+    }
+
+    .form-input::placeholder {
+        color: #aaa;
+    }
+
+.verify-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #7ED321;
+    color: #333;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+    .verify-btn:hover {
+        background-color: #6BC91A;
+    }
+
+    .verify-btn:active {
+        transform: translateY(1px);
+    }
+
+.secondary-btn {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #e8e8e8;
+    color: #666;
+    border: 2px solid #7ED321;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+    .secondary-btn:hover {
+        background-color: #ddd;
+    }
+
+    .secondary-btn:active {
+        transform: translateY(1px);
+    }
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.login-link {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+}
+
+    .login-link a {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+/* Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+}
+
+/* Animaciones */
+.container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-input.error {
+    border-color: #E74C3C;
+    background-color: #ffeaea;
+}
+
+.error-message {
+    color: #E74C3C;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.success-message {
+    color: #7ED321;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}

@@ -1,0 +1,155 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/CrearCuenta.css" asp-append-version="true"/>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-text">PIZZERIA</div>
+            <div class="logo-subtitle">JOKAVE</div>
+        </div>
+
+        <h1 class="title">Crear Cuenta</h1>
+        <p class="subtitle">Regístrate para disfrutar nuestras increíbles pizzas</p>
+
+        <form id="registrationForm">
+            <div class="form-group">
+                <div class="input-icon">🆔</div>
+                <input 
+                    type="text" 
+                    id="identificacion" 
+                    class="form-input" 
+                    placeholder="Identificación"
+                    required
+                >
+                <div class="error-message" id="identificacionError"></div>
+                <div class="success-message" id="identificacionSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">👤</div>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    class="form-input" 
+                    placeholder="Nombre"
+                    required
+                >
+                <div class="error-message" id="nombreError"></div>
+                <div class="success-message" id="nombreSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">👤</div>
+                <input 
+                    type="text" 
+                    id="primerApellido" 
+                    class="form-input" 
+                    placeholder="Primer Apellido"
+                    required
+                >
+                <div class="error-message" id="primerApellidoError"></div>
+                <div class="success-message" id="primerApellidoSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">👤</div>
+                <input 
+                    type="text" 
+                    id="segundoApellido" 
+                    class="form-input" 
+                    placeholder="Segundo Apellido"
+                >
+                <div class="error-message" id="segundoApellidoError"></div>
+                <div class="success-message" id="segundoApellidoSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">📱</div>
+                <input 
+                    type="tel" 
+                    id="telefono" 
+                    class="form-input" 
+                    placeholder="Teléfono"
+                    required
+                >
+                <div class="error-message" id="telefonoError"></div>
+                <div class="success-message" id="telefonoSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">✉️</div>
+                <input 
+                    type="email" 
+                    id="correo" 
+                    class="form-input" 
+                    placeholder="correo@ejemplo.com"
+                    required
+                >
+                <div class="error-message" id="correoError"></div>
+                <div class="success-message" id="correoSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">👤</div>
+                <input 
+                    type="text" 
+                    id="usuario" 
+                    class="form-input" 
+                    placeholder="Usuario"
+                    required
+                >
+                <div class="error-message" id="usuarioError"></div>
+                <div class="success-message" id="usuarioSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">🔑</div>
+                <input 
+                    type="password" 
+                    id="contrasena" 
+                    class="form-input" 
+                    placeholder="Mínimo 8 caracteres"
+                    required
+                >
+                <div class="password-strength" id="passwordStrength">
+                    <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                </div>
+                <div class="error-message" id="contrasenaError"></div>
+                <div class="success-message" id="contrasenaSuccess"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">🔑</div>
+                <input 
+                    type="password" 
+                    id="confirmarContrasena" 
+                    class="form-input" 
+                    placeholder="Repite la contraseña"
+                    required
+                >
+                <div class="error-message" id="confirmarContrasenaError"></div>
+                <div class="success-message" id="confirmarContrasenaSuccess"></div>
+            </div>
+
+            <button type="submit" class="create-btn" id="createBtn">Crear cuenta</button>
+        </form>
+
+        <div class="login-link">
+            ¿Ya tienes una cuenta? <a href="#" id="loginLink">Inicia Sesión</a>
+        </div>
+    </div>
+
+    <script src="~/js/CrearCuenta.js"></script>
+</body>
+</html>

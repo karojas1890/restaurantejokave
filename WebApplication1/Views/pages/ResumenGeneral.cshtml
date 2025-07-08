@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Resumen General";
+}
+
+<div class="summary-view">
+    <div class="summary-grid">
+        <div class="summary-card">
+            <div class="card-header">
+                <span class="card-icon">👥</span>
+                <span>Estado del Personal</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Descansando</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number red">1</div>
+                    <div class="stat-label">Ausentes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number orange">30%</div>
+                    <div class="stat-label">Eficiencia</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="card-header">
+                <span class="card-icon">📦</span>
+                <span>Inventario crítico</span>
+            </div>
+            <div class="inventory-items">
+                <div class="inventory-item">
+                    <span>Harina para pizza</span>
+                    <div class="progress-bar small">
+                        <div class="progress-fill" style="width: 50%; background-color: #9ACD32;"></div>
+                        <span class="progress-text">50%</span>
+                    </div>
+                </div>
+                <div class="inventory-item">
+                    <span>Queso Mozzarella</span>
+                    <div class="progress-bar small">
+                        <div class="progress-fill" style="width: 25%; background-color: #FF6B6B;"></div>
+                        <span class="progress-text">25%</span>
+                    </div>
+                </div>
+                <div class="inventory-item">
+                    <span>Salsa de tomate</span>
+                    <div class="progress-bar small">
+                        <div class="progress-fill" style="width: 10%; background-color: #FF4444;"></div>
+                        <span class="progress-text">10%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="card-header">
+                <span class="card-icon">💰</span>
+                <span>Ventas del día</span>
+            </div>
+            <div class="sales-grid">
+                <div class="sale-item">
+                    <div class="sale-amount green">₡120000</div>
+                    <div class="sale-label">Ingresos</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-amount blue">89</div>
+                    <div class="sale-label">Órdenes procesadas</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-amount orange">₡15000</div>
+                    <div class="sale-label">Promedio por factura</div>
+                </div>
+                <div class="sale-item">
+                    <div class="sale-amount red">₡0</div>
+                    <div class="sale-label">Pérdidas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="card-header">
+                <span class="card-icon">⭐</span>
+                <span>Satisfacción</span>
+            </div>
+            <div class="satisfaction-grid">
+                <div class="satisfaction-item">
+                    <div class="satisfaction-score">4.7/5</div>
+                    <div class="satisfaction-label">Calificaciones</div>
+                </div>
+                <div class="satisfaction-item">
+                    <div class="satisfaction-score">23</div>
+                    <div class="satisfaction-label">Reseñas hoy</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/summary.js"></script>
+}

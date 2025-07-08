@@ -1,0 +1,172 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Mesa - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/SeleccionarMesa.css"/>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">🍕</div>
+            <div class="logo-text">PIZZERIA<br>JOKAVE</div>
+        </div>
+        <button class="close-btn">X</button>
+        <h1>Seleccionar mesa</h1>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Buscar una mesa...">
+            <button class="search-btn">🔍</button>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color disponible"></div>
+            <span>Disponible</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color esperando-orden"></div>
+            <span>Esperando orden</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color esperando-comida"></div>
+            <span>Esperando comida</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color incidente"></div>
+            <span>Incidente</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color comiendo"></div>
+            <span>Comiendo</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color esperando-cuenta"></div>
+            <span>Esperando cuenta</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color limpieza"></div>
+            <span>Limpieza</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color reservada"></div>
+            <span>Reservada</span>
+        </div>
+    </div>
+
+    <div class="tables-container">
+        <div class="tables-grid">
+            <!-- Mesa 1 - Disponible -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-number">1</div>
+                    <div class="table-capacity">0/2</div>
+                </div>
+                <div class="table-visual">
+                    <div class="table-representation">
+                        <div class="table-center disponible"></div>
+                        <div class="chair disponible chair-left"></div>
+                        <div class="chair disponible chair-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa 2 - Esperando orden -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-number">2</div>
+                    <div class="table-capacity">4/4</div>
+                </div>
+                <div class="table-visual">
+                    <div class="table-representation">
+                        <div class="table-center esperando-orden"></div>
+                        <div class="chair esperando-orden chair-top"></div>
+                        <div class="chair esperando-orden chair-bottom"></div>
+                        <div class="chair esperando-orden chair-left"></div>
+                        <div class="chair esperando-orden chair-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa 3 - Comiendo -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-number">3</div>
+                    <div class="table-capacity">4/6</div>
+                </div>
+                <div class="table-visual">
+                    <div class="table-representation">
+                        <div class="table-center comiendo"></div>
+                        <div class="chair comiendo chair-top-left"></div>
+                        <div class="chair comiendo chair-top-right"></div>
+                        <div class="chair comiendo chair-bottom-left"></div>
+                        <div class="chair comiendo chair-bottom-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa 4 - Limpieza -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-number">4</div>
+                    <div class="table-capacity">6/6</div>
+                </div>
+                <div class="table-visual">
+                    <div class="table-representation">
+                        <div class="table-center limpieza"></div>
+                        <div class="chair limpieza chair-top"></div>
+                        <div class="chair limpieza chair-bottom"></div>
+                        <div class="chair limpieza chair-top-left"></div>
+                        <div class="chair limpieza chair-top-right"></div>
+                        <div class="chair limpieza chair-bottom-left"></div>
+                        <div class="chair limpieza chair-bottom-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa 5 - Esperando cuenta -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-number">5</div>
+                    <div class="table-capacity">1/2</div>
+                </div>
+                <div class="table-visual">
+                    <div class="table-representation">
+                        <div class="table-center esperando-cuenta"></div>
+                        <div class="chair esperando-cuenta chair-left"></div>
+                        <div class="chair esperando-cuenta chair-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesa 6 - Esperando comida -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-number">6</div>
+                    <div class="table-capacity">3/4</div>
+                </div>
+                <div class="table-visual">
+                    <div class="table-representation">
+                        <div class="table-center esperando-comida"></div>
+                        <div class="chair esperando-comida chair-top"></div>
+                        <div class="chair esperando-comida chair-bottom"></div>
+                        <div class="chair esperando-comida chair-left"></div>
+                        <div class="chair esperando-comida chair-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="exit-button">Ir a sala de espera</button>
+    </div>
+
+    <script src="~/js/Seleccionarmesa.js"></script>
+</body>
+</html>

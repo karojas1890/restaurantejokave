@@ -1,0 +1,513 @@
+﻿/* Main Content Styles */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.container {
+    margin-left: 250px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .header h1 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+.date-time {
+    color: #666;
+    font-size: 14px;
+}
+
+.header-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #8b4513;
+    font-style: italic;
+}
+
+/* Views Styles */
+.assignment-view,
+.summary-view,
+.personal-view,
+.inventory-view,
+.sales-view,
+.clients-view,
+.alerts-view {
+    padding: 30px;
+    flex: 1;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    height: 100%;
+}
+
+/* Areas Section */
+.areas-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.area-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.area-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.area-icon {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.area-header h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.area-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.table-item {
+    background-color: #f0f0f0;
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+.assigned-waiter {
+    background-color: #e8f5e8;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.unassigned-waiter {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Waiters Section */
+.waiters-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+}
+
+.waiters-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.waiters-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.waiter-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.waiter-status {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+    .waiter-status.active {
+        background-color: #4caf50;
+    }
+
+.waiter-info strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.waiter-info p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.assignment-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.assign-btn {
+    padding: 5px 12px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+    .assign-btn:hover {
+        background-color: #d0d0d0;
+    }
+
+/* Tabs */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 5px;
+    width: fit-content;
+}
+
+.tab {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+    .tab.active {
+        background-color: #666;
+        color: white;
+    }
+
+/* Progress Bars */
+.progress-bar {
+    position: relative;
+    background-color: #f0f0f0;
+    height: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .progress-bar.small {
+        height: 20px;
+    }
+
+.progress-fill {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+    .status-badge.active {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    .status-badge.low-stock {
+        background-color: #ffeb3b;
+        color: #333;
+    }
+
+    .status-badge.critical {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .status-badge.normal {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    .status-badge.inactive {
+        background-color: #ffeb3b;
+        color: #333;
+    }
+
+    .status-badge.damaged {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .status-badge.repaired {
+        background-color: #2196f3;
+        color: white;
+    }
+
+    .status-badge.operational {
+        background-color: #4caf50;
+        color: white;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .container {
+        margin-left: 0;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Summary View Styles */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.summary-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.card-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+    .stat-number.red {
+        color: #ff4444;
+    }
+
+    .stat-number.orange {
+        color: #ff8c00;
+    }
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.inventory-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inventory-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .inventory-item span {
+        flex: 1;
+        margin-right: 15px;
+    }
+
+    .inventory-item .progress-bar {
+        flex: 1;
+        max-width: 150px;
+    }
+
+.sales-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.sale-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.sale-amount {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+    .sale-amount.green {
+        color: #4caf50;
+    }
+
+    .sale-amount.blue {
+        color: #2196f3;
+    }
+
+    .sale-amount.orange {
+        color: #ff8c00;
+    }
+
+    .sale-amount.red {
+        color: #ff4444;
+    }
+
+.sale-label {
+    font-size: 12px;
+    color: #666;
+}
+
+.satisfaction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.satisfaction-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.satisfaction-score {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #4caf50;
+}
+
+.satisfaction-label {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Personal View Styles */
+.staff-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.staff-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+    .staff-card h3 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+.staff-role {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.indicators-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+}
+
+    .indicators-card h3 {
+        margin-bottom: 5px;
+    }
+
+.staff-subtitle {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.indicator {
+    margin-bottom: 20px;
+}
+
+    .indicator label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }

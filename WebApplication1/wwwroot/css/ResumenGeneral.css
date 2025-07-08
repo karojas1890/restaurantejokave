@@ -1,0 +1,254 @@
+﻿/* Summary View Styles */
+.summary-view {
+    padding: 30px;
+    background-color: #f5f5f5;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+}
+
+.summary-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .summary-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.card-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Estado del Personal */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+    .stat-item:hover {
+        background-color: #f0f0f0;
+    }
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+    .stat-number.red {
+        color: #ff4444;
+    }
+
+    .stat-number.orange {
+        color: #ff8c00;
+    }
+
+    .stat-number.green {
+        color: #4caf50;
+    }
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Inventario crítico */
+.inventory-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inventory-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+    .inventory-item span {
+        flex: 1;
+        margin-right: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .inventory-item .progress-bar {
+        flex: 1;
+        max-width: 150px;
+    }
+
+/* Ventas del día */
+.sales-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.sale-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+    .sale-item:hover {
+        transform: scale(1.02);
+    }
+
+.sale-amount {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+    .sale-amount.green {
+        color: #4caf50;
+    }
+
+    .sale-amount.blue {
+        color: #2196f3;
+    }
+
+    .sale-amount.orange {
+        color: #ff8c00;
+    }
+
+    .sale-amount.red {
+        color: #ff4444;
+    }
+
+.sale-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Satisfacción */
+.satisfaction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.satisfaction-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+    .satisfaction-item:hover {
+        background-color: #e8f5e8;
+    }
+
+.satisfaction-score {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #4caf50;
+}
+
+.satisfaction-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Progress bars específicas para summary */
+.progress-bar {
+    position: relative;
+    background-color: #f0f0f0;
+    height: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+    .progress-bar.small {
+        height: 20px;
+    }
+
+.progress-fill {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive para summary */
+@media (max-width: 768px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid,
+    .sales-grid,
+    .satisfaction-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .summary-view {
+        padding: 15px;
+    }
+
+    .inventory-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+        .inventory-item .progress-bar {
+            width: 100%;
+            max-width: none;
+        }
+}

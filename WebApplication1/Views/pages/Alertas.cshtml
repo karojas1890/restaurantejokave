@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Alertas";
+}
+
+<div class="alerts-view">
+    <div class="tabs">
+        <button class="tab active" data-tab="activas">Activas (6)</button>
+        <button class="tab" data-tab="resueltas">Resueltas (4)</button>
+    </div>
+
+    <div class="alerts-grid">
+        <div class="alerts-section">
+            <div class="alert-card high">
+                <div class="alert-icon">⚡</div>
+                <div class="alert-content">
+                    <h3>Cese de suministro eléctrico</h3>
+                    <span class="alert-level">Alto</span>
+                </div>
+            </div>
+
+            <div class="alert-card critical">
+                <div class="alert-icon">🔥</div>
+                <div class="alert-content">
+                    <h3>Fuego en la cocina</h3>
+                    <span class="alert-level">Crítico</span>
+                </div>
+            </div>
+
+            <div class="alert-card medium">
+                <div class="alert-icon">🚶‍♂️</div>
+                <div class="alert-content">
+                    <h3>2 Abandonan Trabajo</h3>
+                    <span class="alert-level">Medio</span>
+                </div>
+            </div>
+
+            <div class="alert-card critical">
+                <div class="alert-icon">☠️</div>
+                <div class="alert-content">
+                    <h3>Intoxicación Alimentaria</h3>
+                    <span class="alert-level">Crítico</span>
+                </div>
+            </div>
+
+            <div class="alert-card low">
+                <div class="alert-icon">👥</div>
+                <div class="alert-content">
+                    <h3>Llegada masiva de clientes</h3>
+                    <span class="alert-level">Bajo</span>
+                </div>
+            </div>
+
+            <div class="alert-card medium">
+                <div class="alert-icon">🐛</div>
+                <div class="alert-content">
+                    <h3>Plaga en la cocina</h3>
+                    <span class="alert-level">Medio</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="crisis-detail">
+            <h2>Detalle crisis</h2>
+            <p class="crisis-subtitle">Cese de suministro eléctrico</p>
+
+            <div class="impact-section">
+                <label>Nivel de Impacto</label>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%; background-color: #ffaa00;"></div>
+                    <span class="progress-text">50%</span>
+                </div>
+            </div>
+
+            <div class="economic-loss">
+                <label>Pérdida económica estimada</label>
+                <div class="loss-amount">€250000</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%; background-color: #ff4444;"></div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <h3>Acciones Disponibles</h3>
+                <div class="action-item">
+                    <span>Encender planta eléctrica</span>
+                    <span class="effect-badge high">Efecto alto</span>
+                </div>
+                <div class="action-item">
+                    <span>Menú Emergencia</span>
+                    <span class="effect-badge medium">Efecto medio</span>
+                </div>
+                <div class="action-item">
+                    <span>Cerrar temporalmente</span>
+                    <span class="effect-badge low">Efecto bajo</span>
+                </div>
+                <button class="execute-btn">Ejecutar Acción</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/alerts.js"></script>
+}

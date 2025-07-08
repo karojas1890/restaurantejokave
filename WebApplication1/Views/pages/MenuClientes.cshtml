@@ -1,0 +1,190 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cliente - JOKAVE</title>
+   <link rel="stylesheet"  href="~/css/MenuClientes.css" asp-append-version="true"/>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">🍕</div>
+                <div class="logo-text">PIZZERIA<br>JOKAVE</div>
+            </div>
+            <div class="client-info">Cliente 1</div>
+        </div>
+
+        <!-- Estado de su visita -->
+        <div class="section">
+            <div class="section-title">Estado de su visita</div>
+            <div class="current-status">
+                <span>Estado actual:</span>
+                <div class="status-indicator"></div>
+                <span>Esperando mesa</span>
+            </div>
+
+            <div class="status-timeline">
+                <div class="status-item">
+                    <div class="status-item-title">Esperando mesa</div>
+                    <div class="status-time">
+                        <div class="clock-icon">🕐</div>
+                        <span>2:28</span>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-item-title">Esperando Mesero</div>
+                    <div class="status-time">
+                        <div class="clock-icon">🕐</div>
+                        <span>4:00</span>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-item-title">Esperando la orden</div>
+                    <div class="status-time">
+                        <div class="clock-icon">🕐</div>
+                        <span>10:00</span>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-item-title">Esperando la cuenta</div>
+                    <div class="status-time">
+                        <div class="clock-icon">🕐</div>
+                        <span>5:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acciones principales -->
+        <div class="section">
+            <div class="section-title">Acciones principales</div>
+            <div class="section-subtitle">Gestiona tu experiencia en el restaurante</div>
+
+            <div class="actions-grid">
+                <a asp-controller="Links" asp-action="SeleccionarMesa" class="action-btn btn-seleccionar">
+                    <div class="action-icon">📋</div>
+                    <div>Seleccionar mesa</div>
+                </a>
+                <a asp-controller="" asp-action="" class="action-btn btn-menu">
+                    <div class="action-icon">🏷️</div>
+                    <div>Ver el menú</div>
+                </a>
+                <a asp-controller="Links" asp-action="MenuPedidos" class="action-btn btn-ordenar">
+                    <div class="action-icon">🔔</div>
+                    <div>Ordenar</div>
+                </a>
+                <a asp-controller="Links" asp-action="AgregarTarjeta" class="action-btn btn-tarjeta">
+                    <div class="action-icon">💳</div>
+                    <div>Agregar tarjeta/Saldo</div>
+                </a>
+                <a asp-controller="Links" asp-action="Facturas" class="action-btn btn-cuenta">
+                    <div class="action-icon">🧾</div>
+                    <div>Solicitar cuenta</div>
+                </a>
+                <a asp-controller="Links" asp-action="Pagos" class="action-btn btn-pagar">
+                    <div class="action-icon">💰</div>
+                    <div>Pagar</div>
+                </a>
+                <button class="action-btn btn-salir">
+                    <div class="action-icon">↗️</div>
+                    <div>Salir</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Estado de la orden -->
+        <div class="section">
+            <div class="section-title">Estado de la orden</div>
+            <div class="order-status-header">
+                <span>Estado actual:</span>
+                <div class="status-indicator status-green"></div>
+                <span>La cocina recibió su pedido</span>
+            </div>
+
+            <div class="order-progress">
+                <div class="progress-item">
+                    <div class="progress-dot dot-yellow"></div>
+                    <span>Mesero tomando orden</span>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-dot dot-green"></div>
+                    <span>Pedido enviado a cocina</span>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-dot dot-magenta"></div>
+                    <span>Cocina preparando orden</span>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-dot dot-cyan"></div>
+                    <span>Entregando orden al cliente</span>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Emergencias -->
+        <div class="section">
+            <div class="emergency-section">
+                <div class="emergency-left">
+                    <div class="section-title">Notificación de caos</div>
+                    <button class="chaos-btn">Incendio en la cocina</button>
+                </div>
+                <div class="emergency-right">
+                    <div class="section-title">Acciones de emergencia</div>
+                    <div class="section-subtitle">Estas opciones estarán disponibles si hay una incidencia de caos en el restaurante</div>
+                    <button class="emergency-btn light">
+                        <span class="emergency-icon">👤</span>
+                        <span>Dejar de consumir y pedir cuenta de emergencia</span>
+                    </button>
+                    <button class="emergency-btn dark">
+                        <span class="emergency-icon">🚪</span>
+                        <span>Retirarse sin pagar<br><small>(Solo si ha esperado más de 10 minutos para pagar)</small></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="section">
+            <div class="feedback-section">
+                <div class="feedback-question">¿Cómo te sientes hoy?</div>
+                <div class="mood-options">
+                    <button class="mood-btn" data-mood="angry">😠</button>
+                    <button class="mood-btn" data-mood="sad">😞</button>
+                    <button class="mood-btn" data-mood="neutral">😐</button>
+                    <button class="mood-btn" data-mood="happy">😊</button>
+                    <button class="mood-btn" data-mood="excited">😄</button>
+                </div>
+
+                <div class="feedback-question">¿Cuál es tu nivel de satisfacción?</div>
+                <div class="star-rating">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
+                </div>
+
+                <div class="feedback-question">Comparte tu experiencia</div>
+                <textarea class="feedback-textarea" placeholder="Contanos sobre tu experiencia en nuestro restaurante..."></textarea>
+
+                <button class="submit-btn">Enviar Reseña</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/MenuClientes.js" asp-append-version="true"></script>
+</body>
+</html>

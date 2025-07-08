@@ -1,0 +1,284 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Pedidos - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/MenuPedidos.css" asp-append-version="true"/>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">PIZZERIA JOKAVE</div>
+        <button class="close-btn">X</button>
+    </div>
+
+    <div class="main-container">
+        <div class="menu-section">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Encuentre su producto aquí...">
+                <button class="search-btn">🔍</button>
+            </div>
+
+            
+            <div class="menu-grid">
+                <div class="menu-item margarita" data-price="8000">
+                    <img src="~/images/Margarita.jpeg" alt="Pizza Margarita">
+                    <div class="menu-item-name">Margarita</div>
+
+                </div>
+                
+                <div class="menu-item pescado" data-price="9000">
+                    <img src="~/images/pescado_al_horno.jpeg" alt="Pescado al Horno">
+                    <div class="menu-item-name">Pescado al Horno</div>
+                </div>
+                
+                <div class="menu-item casados" data-price="4000">
+                    <img src="~/images/Casado.jpeg" alt="Casados">
+                    <div class="menu-item-name">Casados</div>
+
+                </div>
+                
+                <div class="menu-item costilla" data-price="11000">
+                    <img src="~/images/Costilla_de_cerdo.jpeg" alt="Costilla de Cerdo">
+                    <div class="menu-item-name">Costilla de Cerdo</div>
+
+                </div>
+                
+                <div class="menu-item lasagna" data-price="6500">
+                    <img src="~/images/Lasagna.jpeg" alt="Lasagna">
+                    <div class="menu-item-name">Lasagna</div>
+
+                </div>
+                
+                <div class="menu-item quesos" data-price="15500">
+                    <img src="~/images/4_quesos.jpeg" alt="Pizza 4 Quesos">
+                    <div class="menu-item-name">4 Quesos</div>
+
+                </div>
+                
+                <div class="menu-item pollo" data-price="9000">
+                    <img src="~/images/Filete_de_pollo_con_papas.jpeg" alt="Filete de pollo">
+                    <div class="menu-item-name">Filete de pollo</div>
+
+                </div>
+                
+                <div class="menu-item calzone" data-price="3000">
+                    <img src="~/images/Calzone.jpeg" alt="Calzone">
+                    <div class="menu-item-name">Calzone</div>
+
+                </div>
+                
+                <div class="menu-item fettuccine" data-price="7500">
+                    <img src="~/images/Fettuccine_Alfredo.jpeg" alt="Fettuccine">
+                    <div class="menu-item-name">Fettuccine</div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="order-section">
+            <div class="order-header">
+                Mesa 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Número de pedido: 44
+            </div>
+            
+           
+
+            <div class="order-footer">
+                <div class="order-actions">
+                    <button class="btn btn-order">Ordenar</button>
+                    <button class="btn btn-total">Total</button>
+                </div>
+                
+                <div class="total-amount">₡22.500</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Precios base de los productos
+        const productPrices = {
+            'Fettuccine': 7500,
+            'Margarita': 13000,
+            'Filete de pollo': 9000,
+            'Lasagna': 6500,
+            'Casados': 4000,
+            '4 Quesos': 15500,
+            'Pescado al Horno': 9000,
+            'Costilla de Cerdo': 11000,
+            'Calzone': 3000
+            
+        };
+
+        // Inicializar cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMenuItems();
+            initializeOrderControls();
+            updateTotal(); // Calcular total inicial
+        });
+
+        // Agregar event listeners a los items del menú
+        function initializeMenuItems() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const itemName = this.querySelector('.menu-item-name').textContent;
+                    addItemToOrder(itemName);
+                });
+            });
+        }
+
+        // Función para agregar item al pedido
+        function addItemToOrder(itemName) {
+            // Buscar si el item ya existe en el pedido
+            const existingItems = document.querySelectorAll('.order-item .item-name');
+            let existingOrderItem = null;
+            
+            existingItems.forEach(item => {
+                if (item.textContent === itemName) {
+                    existingOrderItem = item.closest('.order-item');
+                }
+            });
+            
+            if (existingOrderItem) {
+                // Si ya existe, aumentar la cantidad
+                const quantityElement = existingOrderItem.querySelector('.quantity');
+                let currentQuantity = parseInt(quantityElement.textContent);
+                currentQuantity++;
+                quantityElement.textContent = currentQuantity;
+                
+                // Actualizar precio
+                updateItemPrice(existingOrderItem);
+            } else {
+                // Si no existe, crear nuevo item en el pedido
+                createNewOrderItem(itemName);
+            }
+            
+            // Actualizar total
+            updateTotal();
+        }
+
+        // Crear nuevo item en el pedido
+        function createNewOrderItem(itemName) {
+            const orderSection = document.querySelector('.order-section');
+            const orderFooter = document.querySelector('.order-footer');
+            
+            const price = productPrices[itemName] || 5000;
+            
+            const newOrderItem = document.createElement('div');
+            newOrderItem.className = 'order-item';
+            newOrderItem.innerHTML = `
+                <button class="remove-btn">X</button>
+                <span class="item-name">${itemName}</span>
+                <button class="size-btn">M</button>
+                <div class="quantity-controls">
+                    <button class="qty-btn">−</button>
+                    <span class="quantity">1</span>
+                    <button class="qty-btn">+</button>
+                </div>
+                <span class="item-price">${price.toLocaleString()}</span>
+            `;
+            
+            // Insertar antes del footer
+            orderSection.insertBefore(newOrderItem, orderFooter);
+            
+            // Agregar event listeners al nuevo item
+            addOrderItemListeners(newOrderItem);
+        }
+
+        // Inicializar controles de items existentes y nuevos
+        function initializeOrderControls() {
+            document.querySelectorAll('.order-item').forEach(orderItem => {
+                addOrderItemListeners(orderItem);
+            });
+        }
+
+        // Agregar event listeners a un item del pedido
+        function addOrderItemListeners(orderItem) {
+            const removeBtn = orderItem.querySelector('.remove-btn');
+            const qtyBtns = orderItem.querySelectorAll('.qty-btn');
+            
+            // Botón remover
+            removeBtn.addEventListener('click', function() {
+                orderItem.remove();
+                updateTotal();
+            });
+            
+            // Botones de cantidad
+            qtyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quantityElement = orderItem.querySelector('.quantity');
+                    let quantity = parseInt(quantityElement.textContent);
+                    
+                    if (this.textContent === '+') {
+                        quantity++;
+                    } else if (this.textContent === '−' && quantity > 1) {
+                        quantity--;
+                    }
+                    
+                    quantityElement.textContent = quantity;
+                    updateItemPrice(orderItem);
+                    updateTotal();
+                });
+            });
+        }
+
+        // Actualizar precio de un item específico
+        function updateItemPrice(orderItem) {
+            const quantity = parseInt(orderItem.querySelector('.quantity').textContent);
+            const itemName = orderItem.querySelector('.item-name').textContent;
+            const priceElement = orderItem.querySelector('.item-price');
+            
+            const basePrice = productPrices[itemName] || 5000;
+            const totalPrice = basePrice * quantity;
+            
+            priceElement.textContent = totalPrice.toLocaleString();
+        }
+
+        // Actualizar total del pedido
+        function updateTotal() {
+            let total = 0;
+            
+            document.querySelectorAll('.order-item .item-price').forEach(priceElement => {
+                const price = parseInt(priceElement.textContent.replace(/[.,]/g, ''));
+                total += price;
+            });
+            
+            const totalElement = document.querySelector('.total-amount');
+            totalElement.textContent = '₡' + total.toLocaleString();
+        }
+
+        // Funcionalidad de búsqueda
+        document.querySelector('.search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                const itemName = item.querySelector('.menu-item-name').textContent.toLowerCase();
+                if (itemName.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Event listeners para botones de acción
+        document.querySelector('.btn-order').addEventListener('click', function() {
+            const orderItems = document.querySelectorAll('.order-item');
+            if (orderItems.length === 0) {
+                alert('No hay items en el pedido');
+                return;
+            }
+            alert('¡Pedido enviado a la cocina!');
+        });
+
+        document.querySelector('.btn-total').addEventListener('click', function() {
+            const total = document.querySelector('.total-amount').textContent;
+            alert(`Total del pedido: ${total}`);
+        });
+    </script>
+</body>
+</html>

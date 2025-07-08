@@ -1,0 +1,353 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #DAA520;
+    font-family: serif;
+}
+
+.close-btn {
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.main-container {
+    display: flex;
+    height: calc(100vh - 80px);
+}
+
+.menu-section {
+    flex: 2;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.order-section {
+    flex: 1;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin: 20px 20px 20px 0;
+    padding: 20px;
+    height: fit-content;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 50px 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.category-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.category-item {
+    border: 2px solid #7ED321;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    width: 120px;
+    height: 100px;
+    position: relative;
+    background-color: #f0f0f0;
+}
+
+    .category-item img {
+        width: 100%;
+        height: 70px;
+        object-fit: cover;
+    }
+
+.category-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.menu-item {
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 150px;
+    position: relative;
+    background-color: #f0f0f0;
+    transition: transform 0.2s ease;
+}
+
+    .menu-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .menu-item:active {
+        transform: scale(0.95);
+    }
+
+    .menu-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.menu-item-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+
+/* Imágenes de fondo para cada pizza */
+.margarita {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Margarita');
+}
+
+.fettuccine {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Hawaiana');
+}
+
+.pollo {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Boloñesa');
+}
+
+.lasagna {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Barbacoa');
+}
+
+.casados {
+    background-image: url('/placeholder.svg?height=150&width=200&text=4+Quesos');
+}
+
+.Quesos {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Vegetariana');
+}
+
+.pescado {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Suprema');
+}
+
+.carbonara {
+    background-image: url('/placeholder.svg?height=150&width=200&text=Carbonara');
+}
+
+.costilla {
+    background-image: url('/placeholder.svg?height=150&width=200&text=4+Estaciones');
+}
+
+.order-header {
+    background-color: #e8e8e8;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.order-item {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.remove-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.item-name {
+    flex: 1;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+.size-btn {
+    background-color: #999;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #999;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.qty-btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    .qty-btn:hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+
+.quantity {
+    color: white;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #333;
+    min-width: 60px;
+    text-align: right;
+    font-size: 16px;
+}
+
+.order-footer {
+    margin-top: 30px;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-order {
+    background-color: #7ED321;
+    color: #333;
+}
+
+.btn-total {
+    background-color: #999;
+    color: white;
+}
+
+.total-amount {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}

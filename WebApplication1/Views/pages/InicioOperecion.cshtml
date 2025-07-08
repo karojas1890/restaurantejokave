@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Asignación e Inicio de Operaciones";
+}
+
+<div class="assignment-view">
+    <div class="content-grid">
+        <div class="areas-section">
+            <!-- Area 1 -->
+            <div class="area-card">
+                <div class="area-header">
+                    <span class="area-icon">🏢</span>
+                    <div>
+                        <h3>ÁREA 1</h3>
+                        <p>Mesas: 3</p>
+                    </div>
+                </div>
+                <div class="tables-grid">
+                    <div class="table-item">Mesa 1<br>2 px</div>
+                    <div class="table-item">Mesa 2<br>4 px</div>
+                    <div class="table-item">Mesa 3<br>6 px</div>
+                </div>
+                <div class="assigned-waiter">
+                    Mesero Asignado: Vera Navarro
+                </div>
+            </div>
+
+            <!-- Area 2 -->
+            <div class="area-card">
+                <div class="area-header">
+                    <span class="area-icon">🏢</span>
+                    <div>
+                        <h3>ÁREA 2</h3>
+                        <p>Mesas: 3</p>
+                    </div>
+                </div>
+                <div class="tables-grid">
+                    <div class="table-item">Mesa 4<br>6 px</div>
+                    <div class="table-item">Mesa 5<br>2 px</div>
+                    <div class="table-item">Mesa 6<br>4 px</div>
+                </div>
+                <div class="unassigned-waiter">
+                    Mesero Asignado: Sin Asignar
+                </div>
+            </div>
+        </div>
+
+        <div class="waiters-section">
+            <div class="waiters-card">
+                <div class="waiters-header">
+                    <span class="waiters-icon">👨‍💼</span>
+                    <span>Meseros Disponibles</span>
+                </div>
+
+                <div class="waiter-item">
+                    <div class="waiter-status active"></div>
+                    <div class="waiter-info">
+                        <strong>Carlos Rodríguez</strong>
+                        <p>Asignar a:</p>
+                        <div class="assignment-buttons">
+                            <button class="assign-btn">Área 1</button>
+                            <button class="assign-btn">Área 2</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="waiter-item">
+                    <div class="waiter-status active"></div>
+                    <div class="waiter-info">
+                        <strong>Pamela Jiménez</strong>
+                        <p>Asignar a:</p>
+                        <div class="assignment-buttons">
+                            <button class="assign-btn">Área 1</button>
+                            <button class="assign-btn">Área 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/assignment.js"></script>
+}

@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Ventas";
+}
+
+<div class="sales-view">
+    <div class="tabs">
+        <button class="tab" data-tab="diario">Diario</button>
+        <button class="tab active" data-tab="semanal">Semanal</button>
+        <button class="tab" data-tab="mensual">Mensual</button>
+    </div>
+
+    <div class="sales-metrics">
+        <div class="sales-metric-card">
+            <h3>Ventas Totales</h3>
+            <div class="metric-value large">₡1 200 000</div>
+        </div>
+        <div class="sales-metric-card">
+            <h3>Órdenes procesadas</h3>
+            <div class="metric-value large">573</div>
+        </div>
+        <div class="sales-metric-card">
+            <h3>Promedio por factura</h3>
+            <div class="metric-value large">₡15000</div>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <h2>Distribución de ventas por producto</h2>
+        <p class="chart-subtitle">Distribución de ventas por tipo de producto</p>
+        <div class="chart-container">
+            <canvas id="salesChart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-legend">
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #2196F3;"></span>
+                <span>Pizza Margarita</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #4CAF50;"></span>
+                <span>Pizza Pepperoni</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #FF9800;"></span>
+                <span>Pizza Vegetariana</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #FF5722;"></span>
+                <span>Pizza Hawaiana</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #9C27B0;"></span>
+                <span>Otras</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Ventas.js"></script>
+}

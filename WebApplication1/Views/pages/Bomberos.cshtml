@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Bomberos.css" asp-append-version="true" />
+    <title>Llamando a los bomberos - JOKAVE</title>
+   
+</head>
+<body>
+    <div class="container">
+        <div class="notification-card">
+            <div class="hourglass-icon">⏳</div>
+            <div class="notification-text">
+                <h2>Llamando a los bomberos</h2>
+                <p>Se solicitó asistencia profesional al cuerpo de bomberos más cercano</p>
+            </div>
+        </div>
+
+        <button class="action-button">Ejecutando acción...</button>
+
+        <div class="time-containers">
+            <div class="time-box time-elapsed">
+                <div class="time-label">Tiempo transcurrido</div>
+                <div class="time-value">02:05min</div>
+            </div>
+            <div class="time-box time-remaining">
+                <div class="time-label">Tiempo restante</div>
+                <div class="time-value">07:55min</div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="bottom-indicator"></div>
+    </div>
+</body>
+</html>

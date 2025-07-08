@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/Facturas.css" asp-append-version="true"/>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <div class="restaurant-name">Pizzeria JOKAVE</div>
+            <div class="restaurant-info">Cartago, Costa Rica</div>
+            <div class="restaurant-info">Teléfono: 8888-8888</div>
+        </div>
+
+        <div class="invoice-info">
+            <div><strong>Información de la Factura</strong></div>
+            <div>IDFactura: PJ14062025-007</div>
+            <div>Fecha: Sat Jun 14 2025</div>
+            <div>**Sin cancelar</div>
+        </div>
+
+        <div class="table-info">
+            <strong>Detalle de la Factura</strong> Mesa 1 Númpedido: 44
+        </div>
+
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-name">Carbonara</td>
+                    <td>2</td>
+                    <td>₡8.000</td>
+                    <td>₡16.000</td>
+                </tr>
+                <tr>
+                    <td class="item-name">Margarita</td>
+                    <td>1</td>
+                    <td>₡5.000</td>
+                    <td>₡5.000</td>
+                </tr>
+                <tr>
+                    <td class="item-name">Limonada</td>
+                    <td>1</td>
+                    <td>₡1.500</td>
+                    <td>₡1.500</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="totals-section">
+            <div class="total-row">
+                <span>Subtotal</span>
+                <span>₡22.000</span>
+            </div>
+            <div class="total-row">
+                <span>IVA</span>
+                <span>₡2.860</span>
+            </div>
+            <div class="final-total">
+                <span>Total: ₡24.860</span>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-pay">Pagar</button>
+            <button class="btn btn-back">Regresar</button>
+        </div>
+    </div>
+</body>
+</html>

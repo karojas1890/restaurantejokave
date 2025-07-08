@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Personal";
+}
+
+<div class="personal-view">
+    <div class="tabs">
+        <button class="tab active" data-tab="chefs">Chefs</button>
+        <button class="tab" data-tab="meseros">Meseros</button>
+    </div>
+
+    <div class="content-grid">
+        <div class="staff-section">
+            <div class="staff-card">
+                <h3>María González</h3>
+                <p class="staff-role">Chef Principal</p>
+                <span class="status-badge active">Activo</span>
+            </div>
+
+            <div class="staff-card">
+                <h3>Carlos Rodríguez</h3>
+                <p class="staff-role">Chef Asistente</p>
+                <span class="status-badge active">Activo</span>
+            </div>
+
+            <div class="staff-card">
+                <h3>Esther Angulo</h3>
+                <p class="staff-role">Chef Asistente</p>
+                <span class="status-badge active">Activo</span>
+            </div>
+        </div>
+
+        <div class="indicators-section">
+            <div class="indicators-card">
+                <h3>Indicadores de María González</h3>
+                <p class="staff-subtitle">Chef Principal • Activo</p>
+
+                <div class="indicator">
+                    <label>Eficiencia</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%; background-color: #9ACD32;"></div>
+                        <span class="progress-text">50%</span>
+                    </div>
+                </div>
+
+                <div class="indicator">
+                    <label>Energía</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%; background-color: #FF6B6B;"></div>
+                        <span class="progress-text">25%</span>
+                    </div>
+                </div>
+
+                <div class="indicator">
+                    <label>Estrés</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%; background-color: #FF4444;"></div>
+                        <span class="progress-text">80%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/personal.js"></script>
+}

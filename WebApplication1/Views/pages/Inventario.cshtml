@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Inventario";
+}
+
+<div class="inventory-view">
+    <div class="tabs">
+        <button class="tab active" data-tab="materia-prima">Materia Prima</button>
+        <button class="tab" data-tab="activos">Activos</button>
+    </div>
+
+    <div id="materia-prima-content" class="tab-content active">
+        <h2>Materia Prima</h2>
+        <div class="inventory-list">
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Harina para Pizza</h3>
+                    <p>25 kg disponibles</p>
+                </div>
+                <span class="status-badge low-stock">Bajo Stock</span>
+            </div>
+
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Queso Mozarella</h3>
+                    <p>8 kg disponibles</p>
+                </div>
+                <span class="status-badge critical">Crítico</span>
+            </div>
+
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Pepperoni</h3>
+                    <p>12 kg disponibles</p>
+                </div>
+                <span class="status-badge normal">Normal</span>
+            </div>
+
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Cerveza Imperial</h3>
+                    <p>10 cajas disponibles</p>
+                </div>
+                <span class="status-badge normal">Normal</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="activos-content" class="tab-content">
+        <h2>Activos</h2>
+        <div class="inventory-list">
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Caja registradora 1</h3>
+                    <p>Inactiva</p>
+                </div>
+                <span class="status-badge inactive">Inactiva</span>
+            </div>
+
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Extractor de grasa</h3>
+                    <p>Dañado</p>
+                </div>
+                <span class="status-badge damaged">Dañado</span>
+            </div>
+
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Refrigerador 2</h3>
+                    <p>Reparado</p>
+                </div>
+                <span class="status-badge repaired">Reparado</span>
+            </div>
+
+            <div class="inventory-item-card">
+                <div class="item-info">
+                    <h3>Horno Principal</h3>
+                    <p>Operativo</p>
+                </div>
+                <span class="status-badge operational">Operativo</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/inventory.js"></script>
+}

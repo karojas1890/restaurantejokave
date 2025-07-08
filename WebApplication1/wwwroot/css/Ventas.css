@@ -1,0 +1,89 @@
+﻿/* Sales View Styles */
+.sales-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.sales-metric-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+    .sales-metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .sales-metric-card h3 {
+        margin-bottom: 15px;
+        color: #666;
+        font-size: 16px;
+    }
+
+.metric-value.large {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.chart-section {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+    .chart-section h2 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+.chart-subtitle {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+/* Responsive for sales */
+@media (max-width: 768px) {
+    .sales-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+}

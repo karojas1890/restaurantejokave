@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = "~/Views/Shared/LayoutTarjetas.cshtml";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Saldo - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/CargarSaldo.css" asp-append-version="true"/>
+</head>
+<body>
+   
+
+    <div class="container">
+        <h2 class="section-title">Cargar Saldo</h2>
+        <p class="section-subtitle">Agrega fondos a tu tarjeta para usar en el restaurante</p>
+
+        <div class="form-group">
+            <label class="form-label">Selecciona la tarjeta</label>
+            <select class="form-select">
+                <option>Elije una tarjeta</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Monto a cargar</label>
+            <input type="text" class="amount-input" value="0.00" readonly>
+            <div class="amount-buttons">
+                <button class="amount-btn">₡10000</button>
+                <button class="amount-btn">₡15000</button>
+                <button class="amount-btn">₡20000</button>
+            </div>
+        </div>
+
+        <button class="submit-button">
+            <span class="plus-icon">+</span>
+            Cargar Saldo
+        </button>
+    </div>
+
+    <script src="~/js/CargarSaldo.js"></script>
+</body>
+</html>

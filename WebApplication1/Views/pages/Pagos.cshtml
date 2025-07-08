@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Tarjeta - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/Pagos.css" asp-append-version="true"/>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Selecciona la tarjeta</h1>
+
+        <div class="card-select">
+            <select class="card-dropdown">
+                <option>•••• •••• •••• 123</option>
+            </select>
+        </div>
+
+        <div class="balance-info">
+            <div class="balance-row">
+                <span>Saldo disponible</span>
+                <span class="amount">₡30000</span>
+            </div>
+            <div class="balance-row">
+                <span>Total a pagar</span>
+                <span class="amount">₡24860</span>
+            </div>
+        </div>
+
+        <div class="success-message">
+            <span class="success-icon">✓</span>
+            <span>Saldo suficiente para procesar el pago</span>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-pay">Pagar</button>
+            <button class="btn btn-back">Regresar</button>
+        </div>
+    </div>
+</body>
+</html>

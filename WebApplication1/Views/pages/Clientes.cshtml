@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="clients-view">
+    <div class="section-title">
+        <h2>Reseñas de Clientes</h2>
+    </div>
+
+    <div class="reviews-section">
+        <div class="review-card">
+            <h3>Carlos Rodríguez</h3>
+            <div class="stars">
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+            </div>
+            <p class="review-text">La pizza estuvo deliciosa y el servicio excelente.</p>
+        </div>
+
+        <div class="review-card">
+            <h3>Arlene Gómez</h3>
+            <div class="stars">
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star">★</span>
+            </div>
+            <p class="review-text">"Muy buena comida, solo el servicio fue un poco lento."</p>
+        </div>
+    </div>
+
+    <div class="satisfaction-metrics">
+        <h2>Nivel de satisfacción de clientes</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value green">95%</div>
+                <div class="metric-label">Satisfacción general</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">4.7/5</div>
+                <div class="metric-label">Promedio de calificaciones</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value green">16min</div>
+                <div class="metric-label">Promedio tiempo de espera</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mood-section">
+        <h2>Estado de ánimo de los clientes</h2>
+        <div class="mood-chart">
+            <div class="mood-bar" style="height: 20%; background-color: #ff4444;">
+                <span class="mood-label">Furioso</span>
+            </div>
+            <div class="mood-bar" style="height: 30%; background-color: #ffaa00;">
+                <span class="mood-label">Molesto</span>
+            </div>
+            <div class="mood-bar" style="height: 40%; background-color: #ffdd00;">
+                <span class="mood-label">Neutro</span>
+            </div>
+            <div class="mood-bar" style="height: 50%; background-color: #88ccff;">
+                <span class="mood-label">Descontento</span>
+            </div>
+            <div class="mood-bar" style="height: 80%; background-color: #44ff44;">
+                <span class="mood-label">Contento</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/clients.js"></script>
+}

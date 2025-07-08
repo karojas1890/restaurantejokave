@@ -1,0 +1,161 @@
+﻿/* Clients View Styles */
+.section-title h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.reviews-section {
+    margin-bottom: 30px;
+}
+
+.review-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+    .review-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .review-card h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #333;
+    }
+
+.stars {
+    margin-bottom: 10px;
+}
+
+.star {
+    font-size: 20px;
+    color: #ddd;
+    margin-right: 2px;
+}
+
+    .star.filled {
+        color: #ffd700;
+    }
+
+.review-text {
+    color: #666;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.satisfaction-metrics {
+    margin-bottom: 30px;
+}
+
+    .satisfaction-metrics h2 {
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.metric-card {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+    .metric-card:hover {
+        transform: translateY(-2px);
+    }
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+    .metric-value.green {
+        color: #4caf50;
+    }
+
+.metric-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.mood-section {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+    .mood-section h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+.mood-chart {
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    height: 200px;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.mood-bar {
+    width: 60px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+    .mood-bar:hover {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+
+.mood-label {
+    position: absolute;
+    bottom: -25px;
+    font-size: 12px;
+    text-align: center;
+    width: 80px;
+    left: -10px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Responsive for clients */
+@media (max-width: 768px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mood-chart {
+        height: 150px;
+    }
+
+    .mood-bar {
+        width: 40px;
+    }
+
+    .mood-label {
+        font-size: 10px;
+        width: 60px;
+        left: -10px;
+    }
+}

@@ -1,0 +1,41 @@
+﻿
+@{
+    Layout = "~/Views/Shared/LayoutTarjetas.cshtml";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Tarjetas - JOKAVE</title>
+    <link rel="stylesheet" href="~/css/MisTarjetas.css" asp-append-version="true"/>
+   
+</head>
+<body>
+    
+
+    <div class="container">
+        <h2 class="section-title">Mis Tarjetas</h2>
+        <p class="section-subtitle">Consulta el saldo de tus tarjetas registradas</p>
+
+        <div class="card-display">
+            <div class="card-number">
+                Número de tarjeta<br>
+                •••• •••• •••• 345
+            </div>
+
+            <div class="card-details">
+                <div class="card-expiry">
+                    <div class="card-expiry-label">Vence</div>
+                    <div class="card-expiry-value">10/26</div>
+                </div>
+
+                <div class="card-balance">
+                    <div class="balance-label">Saldo Disponible</div>
+                    <div class="balance-amount">₡25000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

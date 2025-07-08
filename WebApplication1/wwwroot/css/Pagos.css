@@ -1,0 +1,109 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.card-select {
+    margin-bottom: 30px;
+}
+
+.card-dropdown {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    color: #666;
+}
+
+.balance-info {
+    margin-bottom: 30px;
+}
+
+.balance-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    color: #666;
+    font-size: 16px;
+}
+
+    .balance-row:first-child {
+        border-bottom: 1px solid #eee;
+    }
+
+.amount {
+    font-weight: bold;
+    color: #333;
+}
+
+.success-message {
+    background-color: #7ED321;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.success-icon {
+    font-size: 20px;
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-pay {
+    background-color: #666;
+}
+
+.btn-back {
+    background-color: #999;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}

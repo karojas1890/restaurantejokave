@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dashboard Gerencial JOKAVE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/SideBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mainContent.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Alertas.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Inventario.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Personal.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ResumenGeneral.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Ventas.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Clientes.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="logo-section">
+                    <div class="logo-icon">🍕</div>
+                    <span class="logo-text">Gerente del restaurante</span>
+                    <div class="brand-logo">JOKAVE</div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a asp-controller="Links" asp-action="InicioOperaciones" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "InicioOperaciones" ? "active" : "")">
+                        <span class="nav-icon">👥</span>
+                        <span>Asignación e inicio Operación</span>
+                    </a>
+                    <a asp-controller="Links" asp-action="ResumenGeneral" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "ResumenGeneral" ? "active" : "")">
+                        <span class="nav-icon">📊</span>
+                        <span>Resumen General</span>
+                    </a>
+                    <a asp-controller="Links" asp-action="Personal" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Personal" ? "active" : "")">
+                        <span class="nav-icon">👨‍🍳</span>
+                        <span>Personal</span>
+                    </a>
+                    <a asp-controller="Links" asp-action="Inventario" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Inventario" ? "active" : "")">
+                        <span class="nav-icon">📦</span>
+                        <span>Inventario</span>
+                    </a>
+                    <a asp-controller="Links" asp-action="Ventas" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Ventas" ? "active" : "")">
+                        <span class="nav-icon">💰</span>
+                        <span>Ventas</span>
+                    </a>
+                    <a asp-controller="Links" asp-action="Clientes" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Clientes" ? "active" : "")">
+                        <span class="nav-icon">👥</span>
+                        <span>Clientes</span>
+                    </a>
+                    <a asp-controller="Links" asp-action="Alertas" class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Alertas" ? "active" : "")">
+                        <span class="nav-icon">⚠️</span>
+                        <span>Alertas</span>
+                    </a>
+                </nav>
+            </aside>
+        </header>
+
+        <div class="container">
+            <header class="header">
+                <div class="header-content">
+                    <h1>Dashboard Gerencial</h1>
+                    <p class="date-time">Jueves 12 de junio 11:00am</p>
+                </div>
+                <div class="header-logo">JOKAVE</div>
+            </header>
+
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+   
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Sidebar.js" asp-append-version="true"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
