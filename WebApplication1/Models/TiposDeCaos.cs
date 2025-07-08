@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Models;
 
-public partial class TiposDeCao
+public partial class TiposDeCaos
 {
     public int IdCaos { get; set; }
 

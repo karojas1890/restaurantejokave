@@ -19,7 +19,7 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Activo> Activos { get; set; }
 
-    public virtual DbSet<Cuentum> Cuenta { get; set; }
+    public virtual DbSet<Cuenta> Cuenta { get; set; }
 
     public virtual DbSet<DetalleOrden> DetalleOrdens { get; set; }
 
@@ -45,7 +45,7 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Silla> Sillas { get; set; }
 
-    public virtual DbSet<Tarjetum> Tarjeta { get; set; }
+    public virtual DbSet<Tarjeta> Tarjeta { get; set; }
 
     public virtual DbSet<TipoDeAccion> TipoDeAccions { get; set; }
 
@@ -95,7 +95,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Estado).HasDefaultValue(1);
         });
 
-        modelBuilder.Entity<Cuentum>(entity =>
+        modelBuilder.Entity<Cuenta>(entity =>
         {
             entity.HasKey(e => e.IdCuenta).HasName("PK__Cuenta__D41FD706D2D05A4F");
 
@@ -111,8 +111,8 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Subtotal).HasColumnType("decimal(12, 2)");
             entity.Property(e => e.Total).HasColumnType("decimal(12, 2)");
 
-            entity.HasOne(d => d.IdOrdenNavigation).WithOne(p => p.Cuentum)
-                .HasForeignKey<Cuentum>(d => d.IdOrden)
+            entity.HasOne(d => d.IdOrdenNavigation).WithOne(p => p.Cuenta)
+                .HasForeignKey<Cuenta>(d => d.IdOrden)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cuenta_Orden");
         });
@@ -329,7 +329,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("FK_Sillas_Mesas");
         });
 
-        modelBuilder.Entity<Tarjetum>(entity =>
+        modelBuilder.Entity<Tarjeta>(entity =>
         {
             entity.HasKey(e => e.NumeroTarjeta).HasName("PK__Tarjeta__BC163C0BFCFF73DD");
 

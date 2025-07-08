@@ -37,7 +37,7 @@ public partial class Usuario
 
     public virtual ICollection<Orden> Ordens { get; set; } = new List<Orden>();
 
-    public virtual ICollection<Tarjetum> Tarjeta { get; set; } = new List<Tarjetum>();
+    public virtual ICollection<Tarjeta> Tarjeta { get; set; } = new List<Tarjeta>();
 
     public virtual ICollection<Visita> Visita { get; set; } = new List<Visita>();
 }

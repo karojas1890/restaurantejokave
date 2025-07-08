@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Models;
 
-public partial class Visitum
+public partial class Visita
 {
     public int IdVisita { get; set; }
 

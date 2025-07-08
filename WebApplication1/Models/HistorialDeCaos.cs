@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Models;
 
-public partial class HistorialDeCao
+public partial class HistorialDeCaos
 {
     public int IdIncidente { get; set; }
 
@@ -17,7 +17,7 @@ public partial class HistorialDeCao
 
     public virtual ICollection<HistorialDeAccione> HistorialDeAcciones { get; set; } = new List<HistorialDeAccione>();
 
-    public virtual TiposDeCao IdCaosNavigation { get; set; } = null!;
+    public virtual TiposDeCaos IdCaosNavigation { get; set; } = null!;
 
     public virtual Operacion IdOperacionNavigation { get; set; } = null!;
 }

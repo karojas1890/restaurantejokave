@@ -21,7 +21,7 @@ public partial class Orden
 
     public DateTime? HoraRecibida { get; set; }
 
-    public virtual Cuentum? Cuentum { get; set; }
+    public virtual Cuenta Cuenta { get; set; }
 
     public virtual ICollection<DetalleOrden> DetalleOrdens { get; set; } = new List<DetalleOrden>();
 

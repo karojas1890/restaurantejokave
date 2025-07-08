@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Models;
 
-public partial class Tarjetum
+public partial class Tarjeta
 {
     public string NumeroTarjeta { get; set; } = null!;
 
