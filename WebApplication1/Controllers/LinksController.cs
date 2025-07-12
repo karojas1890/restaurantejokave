@@ -89,5 +89,9 @@ namespace WebApplication1.Controllers
         {
             return View("~/Views/pages/CrearCuenta.cshtml");
         }
+        public IActionResult PanelMesero()
+        {
+            return View("~/Views/pages/PanelMesero.cshtml");
+        }
     }
 }
