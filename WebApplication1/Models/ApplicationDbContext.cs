@@ -405,7 +405,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(6)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.Contraseña)
+            entity.Property(e => e.Password)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.DocumentoIdentificacion)
