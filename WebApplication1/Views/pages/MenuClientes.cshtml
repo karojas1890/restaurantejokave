@@ -1,8 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@model WebApplication1.Models.Usuario
 @{
     Layout = null;
+
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +20,7 @@
                 <div class="logo-icon">🍕</div>
                 <div class="logo-text">PIZZERIA<br>JOKAVE</div>
             </div>
-            <div class="client-info">Cliente 1</div>
+            <div class="client-info">@Model.Nombre</div>
         </div>
 
         <!-- Estado de su visita -->

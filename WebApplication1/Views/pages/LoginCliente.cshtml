@@ -1,0 +1,44 @@
+﻿@* LoginCliente.cshtml *@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="~/css/LoginCliente.css" asp-append-version="true" />
+    <!-- ... (código existente) ... -->
+</head>
+<body>
+    
+    <div class="login-container">
+        <h1>Iniciar Sesión</h1>
+        <p class="description">Ingresa tus credenciales para acceder</p>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <form asp-controller="Auth" asp-action="LoginCliente" method="post">
+            <div class="input-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" required placeholder="Ingresa tu usuario">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
+            </div>
+
+            <!-- ... (resto del código existente) ... -->
+
+            <button type="submit" class="login-button">Iniciar Sesión</button>
+
+            <p style="margin-top: 20px;">¿No tienes una cuenta? <a href="#" class="register-link">Regístrate</a></p>
+        </form>
+    </div>
+    <script src="~/js/LoginCliente.js"></script>
+</body>
+</html>

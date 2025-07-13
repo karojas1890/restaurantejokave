@@ -1,9 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.Models;
+using System.Linq;
+
 
 namespace WebApplication1.Controllers
 {
     public class LinksController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public LinksController (ApplicationDbContext context)
+        {
+
+        _context = context; 
+        
+        }    
         public IActionResult Index()
         {
             return View();
@@ -12,6 +24,17 @@ namespace WebApplication1.Controllers
         {
             return View("~/Views/pages/Alertas.cshtml");
         }
+
+        public IActionResult LoginCliente()
+        {
+            return View("~/Views/pages/LoginCliente.cshtml");
+        }
+
+        public IActionResult CrearCuentaCliente()
+        {
+            return View("~/Views/pages/CrearCuentaCliente.cshtml");
+        }
+
         public IActionResult Clientes()
         {
             return View("~/Views/pages/Clientes.cshtml");
@@ -77,8 +100,9 @@ namespace WebApplication1.Controllers
         {
             return View("~/Views/pages/ErrorDeExtintor.cshtml");
         }
-        public IActionResult MenuClientes() 
+        public IActionResult MenuClientes()
         {
+            // Pasar el modelo de usuario a la vista
             return View("~/Views/pages/MenuClientes.cshtml");
         }
         public IActionResult ValidarPorCorreo()
