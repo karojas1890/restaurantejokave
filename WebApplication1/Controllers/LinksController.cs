@@ -117,5 +117,9 @@ namespace WebApplication1.Controllers
         {
             return View("~/Views/pages/PanelMesero.cshtml");
         }
+        public IActionResult GeneradorCaos()
+        {
+            return View("~/Views/pages/PanelGeneradordeCaos.cshtml");
+        }
     }
 }

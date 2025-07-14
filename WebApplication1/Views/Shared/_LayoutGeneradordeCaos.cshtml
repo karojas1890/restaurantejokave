@@ -13,6 +13,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
 
+
     <!-- Vendor Styles -->
     <link rel="stylesheet" href="~/stylesVera/vendor/fonts/boxicons.css" />
     <link rel="stylesheet" href="~/stylesVera/vendor/css/core.css" class="template-customizer-core-css" />
@@ -160,6 +161,16 @@
                 border-color: #a31b2f;
             }
 
+        .metric-card {
+            width: 180px;
+            height: 180px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+
     </style>
 </head>
 <body>
@@ -178,68 +189,25 @@
             <img src="~/stylesVera/img/logo-jokave.png" alt="Pizzería JOKAVE" style="height: 100px; margin-bottom: 0;">
         </div>
         <h2 style="color: #1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
-            Mesero:
-            <span><input type="text" class="form-control d-inline-block mx-2" style="width: 50px;" value="..." readonly>
-            </span>
+            Generador de Caos
         </h2>
         <div class="d-flex align-items-center gap-2">
-            <h2 style="color: #D66363; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
-            Carga:
-        </h2>
+            <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 24px; margin: 0;">
+                Estado de operación:
+            </h2>
             <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
                 <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
-                     style="width: 75%; background-color: #FD462A; border-radius: 20px; font-size: 12px; font-weight: 600; color: white;">
+                     style="width: 75%; background-color: #95CD38; border-radius: 20px; font-size: 12px; font-weight: 600; color: white;"
+                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
                     75%
                 </div>
             </div>
         </div>
-        
-        <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700;font-size: 28px;">
-            Sección asignada:
-            <span>
-                <input type="text" class="form-control d-inline-block mx-2" style="width: 50px;" value="0" readonly>
-            </span>
-        </h2>
     </header>
-    <div class="d-flex">
-        <!-- Menú lateral -->
-        <div class="col-md-3 p-3">
-            <div class="card border-success shadow-sm acciones-mesero" style="border-radius: 15px; background-color: white;">
-                <h3 class="titulo-mesero">Acciones</h3>
-                <div class="card-body d-grid gap-3 w-100">
-                    <button class="btn btn-accion-mesero">Ver Menú</button>
-                    <button class="btn btn-accion-mesero">Nuevo Pedido</button>
-                    <button class="btn btn-accion-mesero">Entregar Cuenta</button>
-                    <button class="btn btn-accion-mesero">Reservar Mesa</button>
-                    <button class="btn btn-accion-mesero">Cancelar Reservación</button>
-                    <button class="btn btn-accion-mesero">Gestionar Pago</button>
-                </div>
-            </div>
-            <div class="card shadow-sm mt-4" style="border-radius: 15px; background-color: white;">
-                <div class="card-body text-center">
-                    <button class="btn btn-supervivencia">¡Activar modo supervivencia!</button>
-                </div>
-            </div>
-        </div>
-        
-        
-
-        <!-- Contenido principal -->
-        <div class="flex-grow-1 bg-light">
-            @RenderBody()
-            @RenderSection("Scripts", required: false)
-        </div>
-
-        <!-- Menú lateral derecho -->
-        <div class="col-md-3 p-3">
-            <div class="card border-success shadow-sm acciones-mesero" style="border-radius: 15px; background-color: white;">
-                <h3 class="titulo-mesero">Notificaciones</h3>
-                <div class="card-body d-grid gap-3 w-100">
-                    <button class="btn btn-accion-mesero">Notificaciones</button>
-                </div>
-            </div>
-        </div>
+    <!-- Contenido principal -->
+    <div class="flex-grow-1 bg-light">
+        @RenderBody()
+        @RenderSection("Scripts", required: false)
     </div>
 </body>
 </html>
-    

@@ -2,18 +2,65 @@
     ViewData["Title"] = "PanelMesero";
     Layout = "_LayoutPanelMesero";
 }
-<div class="container mt-4">
-    <h2>Mis mesas</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card border-success mb-3">
-                <div class="card-header bg-success text-white">Mesa 1</div>
-                <div class="card-body">
-                    <p class="card-text">Estado: Disponible</p>
+<div class="row justify-content-center">
+    <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 w-100">
+        <!-- Eficiencia -->
+        <div class="d-flex align-items-center gap-2">
+            <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; margin: 0;">
+                Eficiencia:
+            </h2>
+            <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
+                <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
+                     style="width: 75%; background-color: yellow; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
+                    75%
                 </div>
             </div>
         </div>
-        <!-- Agrega más tarjetas de mesas -->
+
+        <!-- Energía -->
+        <div class="d-flex align-items-center gap-2">
+            <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; margin: 0;">
+                Energía:
+            </h2>
+            <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
+                <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
+                     style="width: 75%; background-color: #95CD38; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
+                    75%
+                </div>
+            </div>
+        </div>
+
+        <!-- Estrés -->
+        <div class="d-flex align-items-center gap-2">
+            <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; margin: 0;">
+                Estrés:
+            </h2>
+            <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
+                <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
+                     style="width: 75%; background-color: #FD462A; border-radius: 20px; font-size: 12px; font-weight: 600; color: white;">
+                    75%
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<h2 class="text-center" style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; color: #1A3F37;">
+    Mis mesas
+</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card border-success mb-3 shadow-sm">
+            <div class="text-center card-header bg-success text-white" style="font-family: 'Poppins', sans-serif;">
+                Mesa: 
+            </div>
+            <div class="card-body">
+                <p class="card-text" style="font-family: 'Poppins', sans-serif;">Capacidad: </p>
+                <p class="card-text" style="font-family: 'Poppins', sans-serif;">Estado: </p>
+                <p class="text-center card-text" style="font-family: 'Poppins', sans-serif;">Imagen: </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
