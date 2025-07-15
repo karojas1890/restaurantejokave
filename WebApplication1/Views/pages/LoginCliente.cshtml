@@ -1,24 +1,38 @@
-﻿@* LoginCliente.cshtml *@
-@{
+﻿@{
     Layout = null;
 }
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/LoginCliente.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
     <!-- ... (código existente) ... -->
 </head>
 <body>
-    
+
     <div class="login-container">
         <h1>Iniciar Sesión</h1>
         <p class="description">Ingresa tus credenciales para acceder</p>
 
+        <div id="modalPersonalizado" class="modal-overlay">
+            <div class="modal-contenido">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 id="modalTitulo">Mensaje</h2>
+                <p id="modalTexto"></p>
+            </div>
+        </div>
+
         @if (TempData["ErrorMessage"] != null)
         {
-            <div class="alert alert-danger">
-                @TempData["ErrorMessage"]
-            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var titulo = "Error";
+                    var mensaje = "@TempData["ErrorMessage"]";
+                    mostrarModal(titulo, mensaje);
+                });
+            </script>
         }
 
         <form asp-controller="Auth" asp-action="LoginCliente" method="post">
@@ -36,9 +50,10 @@
 
             <button type="submit" class="login-button">Iniciar Sesión</button>
 
-            <p style="margin-top: 20px;">¿No tienes una cuenta? <a href="#" class="register-link">Regístrate</a></p>
+            <p style="margin-top: 20px;">¿No tienes una cuenta? <a asp-controller="Links" asp-action="CrearCuentaCliente" class="register-link">Regístrate</a></p>
         </form>
     </div>
-    <script src="~/js/LoginCliente.js"></script>
+    <script src="~/js/LoginCliente.js" asp-append-version="true"></script>
+    <script src="~/js//Modal.js" asp-append-version="true"></script>
 </body>
 </html>

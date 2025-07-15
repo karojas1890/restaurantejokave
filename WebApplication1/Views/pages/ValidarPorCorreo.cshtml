@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model WebApplication1.Models.Usuario
 @{
     Layout = null;
 }
@@ -10,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/ValidarPorCorreo.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
     <title>Verificar Email - JOKAVE</title>
   
 </head>
@@ -19,8 +18,25 @@
             <div class="logo-text">PIZZERIA</div>
             <div class="logo-subtitle">JOKAVE</div>
         </div>
-      
 
+        <div id="modalPersonalizado" class="modal-overlay">
+            <div class="modal-contenido">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 id="modalTitulo">Mensaje</h2>
+                <p id="modalTexto"></p>
+            </div>
+        </div>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var titulo = "Error";
+                    var mensaje = "@TempData["ErrorMessage"]";
+                    mostrarModal(titulo, mensaje);
+                });
+            </script>
+        }
         <div class="email-icon-container">
             <div class="email-icon">✉️</div>
         </div>
@@ -28,17 +44,19 @@
         <h1 class="title">Verificar email</h1>
         <p class="subtitle">Hemos enviado un email al correo registrado</p>
 
-        <form id="verificationForm">
+        <form id="verificationForm" asp-controller="Auth" asp-action="ValidarCodigo" method="post">
             <div class="form-group">
                 <label class="form-label" for="verificationCode">Código de verificación</label>
                 <input 
                     type="text" 
-                    id="verificationCode" 
+                    id="Codigo" 
+                    name="Codigo"
                     class="form-input" 
                     placeholder="Ingrese el código de 6 dígitos"
                     maxlength="6"
                     pattern="[0-9]{6}"
                 >
+                <input type="hidden" name="id" dirname="id" value="@Model.IdUsuario" />
                 <div class="error-message" id="errorMessage">Código inválido. Debe contener 6 dígitos.</div>
                 <div class="success-message" id="successMessage">Código válido</div>
             </div>
@@ -62,5 +80,6 @@
     </div>
 
     <script src="~/js/ValidarPorCorreo.js"></script>
+    <script src="~/js/Modal.js"></script>
 </body>
 </html>

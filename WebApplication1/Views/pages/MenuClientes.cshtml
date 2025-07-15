@@ -20,9 +20,26 @@
                 <div class="logo-icon">🍕</div>
                 <div class="logo-text">PIZZERIA<br>JOKAVE</div>
             </div>
-            <div class="client-info">@Model.Nombre</div>
+            @if(Model!=null)
+            {
+                <div class="client-info">@Model.Nombre</div>
+            }
+            else
+            {
+                <div class="client-info">Hola</div>
+            }
+            <button class="hamburger-btn" id="hamburgerBtn">☰</button>
         </div>
-
+        <!-- Menu hamburguesa tipo ventana lateral -->
+        <div id="menuHamburguesa">
+            <a asp-controller="Mesa" asp-action="SeleccionarMesa">📋 Seleccionar mesa</a>
+            <a asp-controller="" asp-action="">🏷 Ver el menú</a>
+            <a asp-controller="Menu" asp-action="Pedidos">🔔 Ordenar</a>
+            <a asp-controller="Links" asp-action="AgregarTarjeta">💳 Agregar tarjeta/Saldo</a>
+            <a asp-controller="Links" asp-action="Facturas">🧾 Solicitar cuenta</a>
+            <a asp-controller="Links" asp-action="Pagos">💰 Pagar</a>
+            <a asp-controller="Links" asp-action="MenuCliente">↗ Salir</a>
+        </div>
         <!-- Estado de su visita -->
         <div class="section">
             <div class="section-title">Estado de su visita</div>
@@ -65,12 +82,12 @@
         </div>
 
         <!-- Acciones principales -->
-        <div class="section">
+        <div class="section" id="section1">
             <div class="section-title">Acciones principales</div>
             <div class="section-subtitle">Gestiona tu experiencia en el restaurante</div>
 
             <div class="actions-grid">
-                <a asp-controller="Links" asp-action="SeleccionarMesa" class="action-btn btn-seleccionar">
+                <a asp-controller="Mesa" asp-action="SeleccionarMesa" class="action-btn btn-seleccionar">
                     <div class="action-icon">📋</div>
                     <div>Seleccionar mesa</div>
                 </a>
@@ -184,7 +201,7 @@
             </div>
         </div>
     </div>
-
+    <script src="~/js/EstadoOrden.js" asp-append-version="true"></script>
     <script src="~/js/MenuClientes.js" asp-append-version="true"></script>
 </body>
 </html>

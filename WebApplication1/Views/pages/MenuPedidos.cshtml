@@ -26,30 +26,38 @@
             </div>
 
             <div class="menu-grid">
-               
+                <div class="menu-section"></div>
+
                 @if (Model != null)
                 {
 
-                foreach (var item in Model)
-                {   
-                    <div class="menu-item" data-id="@item.IdProducto" data-price="@item.Precio">
-                        <img src="@Url.Content(item.DireccionImagen ?? "~/images/default.png")" alt="@item.Nombre" onerror="this.src='@Url.Content("~/images/default.png")'">
-                        <div class="menu-item-info">
-                            <div class="menu-item-name">@item.Nombre</div>
-                            <div class="menu-item-price">₡@item.Precio.ToString("N0")</div>
-                            @if (!string.IsNullOrEmpty(item.Descripcion))
+                    foreach (var item in Model)
+                    {
+                        <div class="menu-item" data-id="@item.IdProducto" data-price="@item.Precio">
+                            @if (!string.IsNullOrEmpty(item.DireccionImagen))
                             {
-                                <div class="menu-item-desc">@item.Descripcion</div>
+                                <img src="@Url.Content(item.DireccionImagen)"
+                                     alt="@item.Nombre"
+                                     onerror="this.style.display='none';">
                             }
+
+                            <div class="menu-item-info">
+                                <div class="menu-item-name">@item.Nombre</div>
+                                <div class="menu-item-price">₡@item.Precio.ToString("N0")</div>
+                                @if (!string.IsNullOrEmpty(item.Descripcion))
+                                {
+                                    <div class="menu-item-desc">@item.Descripcion</div>
+                                }
+                            </div>
+
                         </div>
-                        </div>
-                    } 
+                    }
                 }
                 else
                 {
                     <h1>El modelo esta vacio</h1>
                 }
-               
+
             </div>
         </div>
 
@@ -66,7 +74,6 @@
             </div>
 
             <div class="order-items-container" id="orderItemsContainer">
-                <!-- Los items del pedido se agregarán aquí dinámicamente -->
             </div>
 
             <div class="order-footer">

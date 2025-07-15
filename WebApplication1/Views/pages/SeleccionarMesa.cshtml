@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Mesa>
 @{
     Layout = null;
 }
@@ -62,111 +62,92 @@
     </div>
 
     <div class="tables-container">
-        <div class="tables-grid">
-            <!-- Mesa 1 - Disponible -->
-            <div class="table-card">
-                <div class="table-header">
-                    <div class="table-number">1</div>
-                    <div class="table-capacity">0/2</div>
-                </div>
-                <div class="table-visual">
-                    <div class="table-representation">
-                        <div class="table-center disponible"></div>
-                        <div class="chair disponible chair-left"></div>
-                        <div class="chair disponible chair-right"></div>
+        <div class="tables-grid-wrapper">
+
+            <button id="btnAnterior" class="nav-btn left" disabled>&larr; Anterior</button>
+
+            <div class="tables-grid">
+                @{
+                    int mesasPorGrupo = 6;
+                    int totalMesas = Model.Count;
+                    int totalGrupos = (int)Math.Ceiling((double)totalMesas / mesasPorGrupo);
+                }
+
+                @for (int grupoId = 0; grupoId < totalGrupos; grupoId++)
+                {
+                    <div class="mesa-grupo @(grupoId == 0 ? "activo" : "")" data-grupo="@grupoId">
+                        @foreach (var mesa in Model.Skip(grupoId * mesasPorGrupo).Take(mesasPorGrupo))
+                        {
+                            <div class="table-card" data-mesa-id="@mesa.IdMesa">
+                                <div class="table-header">
+                                    <div class="table-number">Mesa @mesa.IdMesa</div>
+                                    <div class="table-capacity">@mesa.Sillas.Count() silla(s)</div>
+                                </div>
+                                <div class="table-visual">
+                                    <div class="table-representation">
+                                        <div class="table-center @(mesa.Estado == 1 ? "disponible" : "ocupada")"></div>
+
+                                        @{
+                                            int index = 0;
+                                            var totalSillas = mesa.Sillas.Count;
+                                            var radio = 55;
+                                            var centro = 70;
+                                        }
+
+                                        @foreach (var silla in mesa.Sillas)
+                                        {
+                                            var angulo = (360.0 / totalSillas) * index;
+                                            var radianes = angulo * Math.PI / 180.0;
+                                            var x = (int)(centro + radio * Math.Cos(radianes) - 9);
+                                            var y = (int)(centro + radio * Math.Sin(radianes) - 9);
+
+                                            <div class="chair @(silla.Estado == 1 ? "disponible" : "ocupada")"
+                                                 data-silla-id="@silla.IdSilla"
+                                                 style="left:@($"{x}px"); top:@($"{y}px");"
+                                                 oncontextmenu="seleccionarSilla(event, @silla.IdSilla)">
+                                            </div>
+
+                                            index++;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
-                </div>
+                }
             </div>
 
-            <!-- Mesa 2 - Esperando orden -->
-            <div class="table-card">
-                <div class="table-header">
-                    <div class="table-number">2</div>
-                    <div class="table-capacity">4/4</div>
-                </div>
-                <div class="table-visual">
-                    <div class="table-representation">
-                        <div class="table-center esperando-orden"></div>
-                        <div class="chair esperando-orden chair-top"></div>
-                        <div class="chair esperando-orden chair-bottom"></div>
-                        <div class="chair esperando-orden chair-left"></div>
-                        <div class="chair esperando-orden chair-right"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mesa 3 - Comiendo -->
-            <div class="table-card">
-                <div class="table-header">
-                    <div class="table-number">3</div>
-                    <div class="table-capacity">4/6</div>
-                </div>
-                <div class="table-visual">
-                    <div class="table-representation">
-                        <div class="table-center comiendo"></div>
-                        <div class="chair comiendo chair-top-left"></div>
-                        <div class="chair comiendo chair-top-right"></div>
-                        <div class="chair comiendo chair-bottom-left"></div>
-                        <div class="chair comiendo chair-bottom-right"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mesa 4 - Limpieza -->
-            <div class="table-card">
-                <div class="table-header">
-                    <div class="table-number">4</div>
-                    <div class="table-capacity">6/6</div>
-                </div>
-                <div class="table-visual">
-                    <div class="table-representation">
-                        <div class="table-center limpieza"></div>
-                        <div class="chair limpieza chair-top"></div>
-                        <div class="chair limpieza chair-bottom"></div>
-                        <div class="chair limpieza chair-top-left"></div>
-                        <div class="chair limpieza chair-top-right"></div>
-                        <div class="chair limpieza chair-bottom-left"></div>
-                        <div class="chair limpieza chair-bottom-right"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mesa 5 - Esperando cuenta -->
-            <div class="table-card">
-                <div class="table-header">
-                    <div class="table-number">5</div>
-                    <div class="table-capacity">1/2</div>
-                </div>
-                <div class="table-visual">
-                    <div class="table-representation">
-                        <div class="table-center esperando-cuenta"></div>
-                        <div class="chair esperando-cuenta chair-left"></div>
-                        <div class="chair esperando-cuenta chair-right"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mesa 6 - Esperando comida -->
-            <div class="table-card">
-                <div class="table-header">
-                    <div class="table-number">6</div>
-                    <div class="table-capacity">3/4</div>
-                </div>
-                <div class="table-visual">
-                    <div class="table-representation">
-                        <div class="table-center esperando-comida"></div>
-                        <div class="chair esperando-comida chair-top"></div>
-                        <div class="chair esperando-comida chair-bottom"></div>
-                        <div class="chair esperando-comida chair-left"></div>
-                        <div class="chair esperando-comida chair-right"></div>
-                    </div>
-                </div>
-            </div>
+            <button id="btnSiguiente" class="nav-btn right">Siguiente &rarr;</button>
         </div>
 
         <button class="exit-button">Ir a sala de espera</button>
     </div>
+    <script>
+        let grupoActual = 0;
+        const grupos = document.querySelectorAll('.mesa-grupo');
+        const btnAnterior = document.getElementById('btnAnterior');
+        const btnSiguiente = document.getElementById('btnSiguiente');
 
+        function cambiarGrupo(direccion) {
+            grupos[grupoActual].classList.remove('activo');
+            grupoActual += direccion;
+
+            if (grupoActual < 0) grupoActual = 0;
+            if (grupoActual >= grupos.length) grupoActual = grupos.length - 1;
+
+            grupos[grupoActual].classList.add('activo');
+
+            btnAnterior.disabled = grupoActual === 0;
+            btnSiguiente.disabled = grupoActual === grupos.length - 1;
+        }
+
+        btnAnterior.addEventListener('click', () => cambiarGrupo(-1));
+        btnSiguiente.addEventListener('click', () => cambiarGrupo(1));
+
+        // Inicializa estados de botones al cargar la página
+        btnAnterior.disabled = true;
+        if (grupos.length <= 1) btnSiguiente.disabled = true;
+    </script>
     <script src="~/js/Seleccionarmesa.js"></script>
 </body>
 </html>
