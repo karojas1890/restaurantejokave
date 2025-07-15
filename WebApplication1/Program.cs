@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,27 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Registra el ApplicationDbContext con EF Core
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+builder.Services.AddScoped<EmailService>();
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/AccesoDenegado";
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Cliente", policy => policy.RequireClaim("Role", "1"));
+    options.AddPolicy("Chef", policy => policy.RequireClaim("Role", "2"));
+    options.AddPolicy("Mesero", policy => policy.RequireClaim("Role", "3"));
+    options.AddPolicy("Gerente", policy => policy.RequireClaim("Role", "4"));
+    options.AddPolicy("Dios del caos", policy => policy.RequireClaim("Role", "5"));
+});
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

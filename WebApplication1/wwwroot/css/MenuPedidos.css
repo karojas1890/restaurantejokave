@@ -63,6 +63,27 @@ body {
     height: fit-content;
 }
 
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+    border-bottom: 1px solid #ddd;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+}
+
+.qty-btn {
+    padding: 0 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    color: black !important;
+}
+
 .search-container {
     margin-bottom: 20px;
     position: relative;
@@ -168,44 +189,11 @@ body {
     font-size: 16px;
 }
 
-
-
-/* Imágenes de fondo para cada pizza */
-.margarita {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Margarita');
+.quantity {
+    color: black !important;
 }
 
-.fettuccine {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Hawaiana');
-}
 
-.pollo {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Boloñesa');
-}
-
-.lasagna {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Barbacoa');
-}
-
-.casados {
-    background-image: url('/placeholder.svg?height=150&width=200&text=4+Quesos');
-}
-
-.Quesos {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Vegetariana');
-}
-
-.pescado {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Suprema');
-}
-
-.carbonara {
-    background-image: url('/placeholder.svg?height=150&width=200&text=Carbonara');
-}
-
-.costilla {
-    background-image: url('/placeholder.svg?height=150&width=200&text=4+Estaciones');
-}
 
 .order-header {
     background-color: #e8e8e8;
@@ -350,4 +338,49 @@ body {
     font-size: 20px;
     font-weight: bold;
     color: #333;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .qty-btn,
+    .quantity {
+        color: black !important;
+    }
+
+    .menu-item img {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .order-section {
+        width: 100%;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+
+    .menu-item-info {
+        text-align: center;
+    }
 }

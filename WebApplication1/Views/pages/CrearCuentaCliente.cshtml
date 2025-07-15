@@ -10,7 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta - JOKAVE</title>
-    <link rel="stylesheet" href="~/css/CrearCuenta.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/CrearCuenta.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container">
@@ -18,126 +19,137 @@
             <div class="logo-text">PIZZERIA</div>
             <div class="logo-subtitle">JOKAVE</div>
         </div>
+        <!--Modal para gestion de mensajes-->
+        <div id="modalPersonalizado" class="modal-overlay">
+            <div class="modal-contenido">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 id="modalTitulo">Mensaje</h2>
+                <p id="modalTexto"></p>
+            </div>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+        {
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var titulo = "@(TempData["SuccessMessage"] != null ? "Éxito" : "Error")";
+                    var mensaje = "@(TempData["SuccessMessage"] ?? TempData["ErrorMessage"])";
+                    mostrarModal(titulo, mensaje);
+                });
+            </script>
+        }
+
 
         <h1 class="title">Crear Cuenta</h1>
         <p class="subtitle">Regístrate para disfrutar nuestras increíbles pizzas</p>
 
-        <form id="registrationForm">
+        <form asp-controller="Usuarios" asp-action="CrearCuenta" method="post" id="registrationForm">
             <div class="form-group">
                 <div class="input-icon">🆔</div>
-                <input 
-                    type="text" 
-                    id="identificacion" 
-                    class="form-input" 
-                    placeholder="Identificación"
-                    required
-                >
-                <div class="error-message" id="identificacionError"></div>
-                <div class="success-message" id="identificacionSuccess"></div>
+                <input type="text"
+                       id="DocumentoIdentificacion"
+                       name="DocumentoIdentificacion"
+                       class="form-input"
+                       placeholder="Identificación"
+                       required>
+                <div class="error-message" id="DocumentoIdentificacionError"></div>
+                <div class="success-message" id="DocumentoIdentificacionSuccess"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">👤</div>
-                <input 
-                    type="text" 
-                    id="nombre" 
-                    class="form-input" 
-                    placeholder="Nombre"
-                    required
-                >
-                <div class="error-message" id="nombreError"></div>
-                <div class="success-message" id="nombreSuccess"></div>
+                <input type="text"
+                       id="Nombre"
+                       name="Nombre"
+                       class="form-input"
+                       placeholder="Nombre"
+                       required>
+                <div class="error-message" id="NombreError"></div>
+                <div class="success-message" id="NombreSuccess"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">👤</div>
-                <input 
-                    type="text" 
-                    id="primerApellido" 
-                    class="form-input" 
-                    placeholder="Primer Apellido"
-                    required
-                >
-                <div class="error-message" id="primerApellidoError"></div>
-                <div class="success-message" id="primerApellidoSuccess"></div>
+                <input type="text"
+                       id="Apellido1"
+                       name="Apellido1"
+                       class="form-input"
+                       placeholder="Primer Apellido"
+                       required>
+                <div class="error-message" id="Apellido1Error"></div>
+                <div class="success-message" id="Apellido1Success"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">👤</div>
-                <input 
-                    type="text" 
-                    id="segundoApellido" 
-                    class="form-input" 
-                    placeholder="Segundo Apellido"
-                >
-                <div class="error-message" id="segundoApellidoError"></div>
-                <div class="success-message" id="segundoApellidoSuccess"></div>
+                <input type="text"
+                       id="Apellido2"
+                       name="Apellido2"
+                       class="form-input"
+                       placeholder="Segundo Apellido">
+                <div class="error-message" id="Apellido2Error"></div>
+                <div class="success-message" id="Apellido2Success"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">📱</div>
-                <input 
-                    type="tel" 
-                    id="telefono" 
-                    class="form-input" 
-                    placeholder="Teléfono"
-                    required
-                >
-                <div class="error-message" id="telefonoError"></div>
-                <div class="success-message" id="telefonoSuccess"></div>
+                <input type="tel"
+                       id="Telefono"
+                       name="Telefono"
+                       class="form-input"
+                       placeholder="Teléfono"
+                       required>
+                <div class="error-message" id="TelefonoError"></div>
+                <div class="success-message" id="TelefonoSuccess"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">✉️</div>
-                <input 
-                    type="email" 
-                    id="correo" 
-                    class="form-input" 
-                    placeholder="correo@ejemplo.com"
-                    required
-                >
-                <div class="error-message" id="correoError"></div>
-                <div class="success-message" id="correoSuccess"></div>
+                <input type="email"
+                       id="Email"
+                       name="Email"
+                       class="form-input"
+                       placeholder="correo@ejemplo.com"
+                       required>
+                <div class="error-message" id="EmailError"></div>
+                <div class="success-message" id="EmailSuccess"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">👤</div>
-                <input 
-                    type="text" 
-                    id="usuario" 
-                    class="form-input" 
-                    placeholder="Usuario"
-                    required
-                >
-                <div class="error-message" id="usuarioError"></div>
-                <div class="success-message" id="usuarioSuccess"></div>
+                <input type="text"
+                       id="Usuario1"
+                       name="Usuario1"
+                       class="form-input"
+                       placeholder="Usuario"
+                       required>
+                <div class="error-message" id="Usuario1Error"></div>
+                <div class="success-message" id="Usuario1Success"></div>
             </div>
+            <input type="hidden" name="IdRol" value="1" />
 
             <div class="form-group">
                 <div class="input-icon">🔑</div>
-                <input 
-                    type="password" 
-                    id="contrasena" 
-                    class="form-input" 
-                    placeholder="Mínimo 8 caracteres"
-                    required
-                >
-                <div class="password-strength" id="passwordStrength">
-                    <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                <input type="password"
+                       id="Password"
+                       name="Password"
+                       class="form-input"
+                       placeholder="Mínimo 8 caracteres"
+                       required>
+                <div class="password-strength" id="passStrength">
+                    <div class="password-strength-bar" id="passStrengthBar"></div>
                 </div>
-                <div class="error-message" id="contrasenaError"></div>
-                <div class="success-message" id="contrasenaSuccess"></div>
+                <div class="error-message" id="PasswordError"></div>
+                <div class="success-message" id="PasswordSuccess"></div>
             </div>
 
             <div class="form-group">
                 <div class="input-icon">🔑</div>
-                <input 
-                    type="password" 
-                    id="confirmarContrasena" 
-                    class="form-input" 
-                    placeholder="Repite la contraseña"
-                    required
-                >
+                <input type="password"
+                       id="confirmarContrasena"
+                       class="form-input"
+                       placeholder="Repite la contraseña"
+                       required>
                 <div class="error-message" id="confirmarContrasenaError"></div>
                 <div class="success-message" id="confirmarContrasenaSuccess"></div>
             </div>
@@ -146,10 +158,11 @@
         </form>
 
         <div class="login-link">
-            ¿Ya tienes una cuenta? <a href="#" id="loginLink">Inicia Sesión</a>
+            ¿Ya tienes una cuenta? <a asp-controller="Links" asp-action="LoginCliente" id="loginLink">Inicia Sesión</a>
         </div>
     </div>
 
-    <script src="~/js/CrearCuenta.js"></script>
+    <script src="~/js/CrearCuenta.js" defer></script>
+    <script src="~/js/Modal.js" defer></script>
 </body>
 </html>

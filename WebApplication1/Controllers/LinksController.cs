@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace WebApplication1.Controllers
@@ -100,6 +101,8 @@ namespace WebApplication1.Controllers
         {
             return View("~/Views/pages/ErrorDeExtintor.cshtml");
         }
+
+        [Authorize(Roles = "1")]
         public IActionResult MenuClientes()
         {
             // Pasar el modelo de usuario a la vista

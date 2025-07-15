@@ -1,248 +1,87 @@
-﻿class PedidoManager {
-    constructor() {
-        this.products = {};
-        this.initialize();
-    }
+﻿// Agregar item al pedido al hacer clic en el menú
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const name = this.querySelector('.menu-item-name')?.textContent || 'Producto';
+        const price = parseInt(this.dataset.price);
 
-    initialize() {
-        this.loadProducts();
-        this.setupEventListeners();
-        this.updateOrderNumber();
-    }
-
-    loadProducts() {
-        document.querySelectorAll('.menu-item').forEach(item => {
-            const productId = item.dataset.id;
-            this.products[productId] = {
-                id: productId,
-                name: item.querySelector('.menu-item-name').textContent,
-                price: parseFloat(item.dataset.price),
-                image: item.querySelector('img').src,
-                description: item.querySelector('.menu-item-desc')?.textContent || ''
-            };
-        });
-    }
-
-    setupEventListeners() {
-        // Menú items
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', () => this.addItemToOrder(item.dataset.id));
-        });
-
-        // Búsqueda
-        document.querySelector('.search-input').addEventListener('input', (e) => this.handleSearch(e));
-        document.querySelector('.search-btn').addEventListener('click', () => this.performSearch());
-
-        // Botones de orden
-        document.getElementById('btnOrder').addEventListener('click', () => this.submitOrder());
-        document.getElementById('btnTotal').addEventListener('click', () => this.showTotal());
-
-        // Delegación de eventos para los items del pedido
-        document.getElementById('orderItemsContainer').addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-btn')) {
-                this.removeOrderItem(e.target.closest('.order-item'));
-            } else if (e.target.classList.contains('qty-btn')) {
-                this.adjustQuantity(e.target);
-            }
-        });
-    }
-
-    addItemToOrder(productId) {
-        const product = this.products[productId];
-        const orderContainer = document.getElementById('orderItemsContainer');
-        const existingItem = orderContainer.querySelector(`.order-item[data-id="${productId}"]`);
+        const container = document.getElementById('orderItemsContainer');
+        let existingItem = container.querySelector(`.order-item[data-id='${id}']`);
 
         if (existingItem) {
-            this.increaseQuantity(existingItem);
+            // Aumentar cantidad si ya existe
+            const qtySpan = existingItem.querySelector('.quantity');
+            qtySpan.textContent = parseInt(qtySpan.textContent) + 1;
+            updateItemPrice(existingItem);
         } else {
-            this.createNewOrderItem(product);
+            // Crear nuevo item
+            const orderItem = document.createElement('div');
+            orderItem.className = 'order-item';
+            orderItem.dataset.id = id;
+            orderItem.dataset.price = price;
+
+            orderItem.innerHTML = `
+                <span class="item-name">${name}</span>
+                <div class="qty-controls">
+                    <button class="qty-btn">−</button>
+                    <span class="quantity">1</span>
+                    <button class="qty-btn">+</button>
+                </div>
+                <span class="item-price">${price.toLocaleString()}</span>
+                <button class="remove-btn"><i class="fas fa-trash"></i></button>
+            `;
+
+            container.appendChild(orderItem);
         }
 
-        this.updateTotal();
-    }
+        updateTotal();
+    });
+});
 
-    createNewOrderItem(product) {
-        const orderContainer = document.getElementById('orderItemsContainer');
+// Delegación de eventos para manejar clicks dinámicos (cantidad y eliminar)
+document.getElementById('orderItemsContainer').addEventListener('click', function (e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
 
-        const newOrderItem = document.createElement('div');
-        newOrderItem.className = 'order-item';
-        newOrderItem.dataset.id = product.id;
-        newOrderItem.innerHTML = `
-            <button class="remove-btn"><i class="fas fa-times"></i></button>
-            <img src="${product.image}" alt="${product.name}" onerror="this.src='@Url.Content("~/images/default.png")'">
-            <div class="item-info">
-                <span class="item-name">${product.name}</span>
-                <div class="quantity-controls">
-                    <button class="qty-btn"><i class="fas fa-minus"></i></button>
-                    <span class="quantity">1</span>
-                    <button class="qty-btn"><i class="fas fa-plus"></i></button>
-                </div>
-            </div>
-            <span class="item-price">₡${product.price.toLocaleString()}</span>
-        `;
+    const orderItem = btn.closest('.order-item');
+    if (!orderItem) return;
 
-        orderContainer.appendChild(newOrderItem);
-    }
+    // Botones de cantidad
+    if (btn.classList.contains('qty-btn')) {
+        const qtySpan = orderItem.querySelector('.quantity');
+        let quantity = parseInt(qtySpan.textContent);
 
-    increaseQuantity(orderItem) {
-        const quantityElement = orderItem.querySelector('.quantity');
-        let currentQuantity = parseInt(quantityElement.textContent);
-        quantityElement.textContent = currentQuantity + 1;
-        this.updateItemPrice(orderItem);
-    }
-
-    adjustQuantity(button) {
-        const orderItem = button.closest('.order-item');
-        const quantityElement = orderItem.querySelector('.quantity');
-        let quantity = parseInt(quantityElement.textContent);
-
-        if (button.querySelector('.fa-plus')) {
+        if (btn.textContent === '+') {
             quantity++;
-        } else if (button.querySelector('.fa-minus') && quantity > 1) {
+        } else if (btn.textContent === '−' && quantity > 1) {
             quantity--;
         }
 
-        quantityElement.textContent = quantity;
-        this.updateItemPrice(orderItem);
-        this.updateTotal();
+        qtySpan.textContent = quantity;
+        updateItemPrice(orderItem);
     }
 
-    removeOrderItem(orderItem) {
+    // Botón de eliminar
+    if (btn.classList.contains('remove-btn')) {
         orderItem.remove();
-        this.updateTotal();
+        updateTotal();
     }
+});
 
-    updateItemPrice(orderItem) {
-        const quantity = parseInt(orderItem.querySelector('.quantity').textContent);
-        const productId = orderItem.dataset.id;
-        const priceElement = orderItem.querySelector('.item-price');
-        const product = this.products[productId];
-        const totalPrice = product.price * quantity;
-
-        priceElement.textContent = `₡${totalPrice.toLocaleString()}`;
-    }
-
-    updateTotal() {
-        let total = 0;
-        document.querySelectorAll('.order-item .item-price').forEach(priceElement => {
-            const priceText = priceElement.textContent.replace(/[^0-9]/g, '');
-            total += parseInt(priceText);
-        });
-
-        document.querySelector('.total-amount').textContent = `₡${total.toLocaleString()}`;
-    }
-
-    handleSearch(e) {
-        const term = e.target.value.trim();
-        if (term.length > 2) {
-            this.performSearch(term);
-        } else {
-            document.getElementById('searchResults').innerHTML = '';
-            document.getElementById('searchResults').style.display = 'none';
-        }
-    }
-
-    performSearch(term = null) {
-        const searchTerm = term || document.querySelector('.search-input').value.trim();
-
-        if (searchTerm.length < 1) {
-            // Mostrar todos los productos si la búsqueda está vacía
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.style.display = 'block';
-            });
-            return;
-        }
-
-        fetch(`/Menu/Buscar?term=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                const resultsContainer = document.getElementById('searchResults');
-                resultsContainer.innerHTML = '';
-
-                if (data.length > 0) {
-                    data.forEach(item => {
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'search-result-item';
-                        resultItem.textContent = item.nombre;
-                        resultItem.addEventListener('click', () => {
-                            this.addItemToOrder(item.idProducto.toString());
-                            resultsContainer.style.display = 'none';
-                        });
-                        resultsContainer.appendChild(resultItem);
-                    });
-                    resultsContainer.style.display = 'block';
-                } else {
-                    const noResults = document.createElement('div');
-                    noResults.className = 'search-no-results';
-                    noResults.textContent = 'No se encontraron resultados';
-                    resultsContainer.appendChild(noResults);
-                    resultsContainer.style.display = 'block';
-                }
-            });
-    }
-
-    submitOrder() {
-        const orderItems = document.querySelectorAll('.order-item');
-        if (orderItems.length === 0) {
-            alert('No hay items en el pedido');
-            return;
-        }
-
-        const mesaSelect = document.getElementById('mesaSelect');
-        const pedido = {
-            IdMesa: parseInt(mesaSelect.value),
-            Items: Array.from(orderItems).map(item => {
-                const productId = item.dataset.id;
-                const product = this.products[productId];
-                const quantity = parseInt(item.querySelector('.quantity').textContent);
-                const priceText = item.querySelector('.item-price').textContent.replace(/[^0-9]/g, '');
-
-                return {
-                    IdProducto: parseInt(productId),
-                    Nombre: product.name,
-                    Cantidad: quantity,
-                    PrecioUnitario: product.price,
-                    PrecioTotal: parseInt(priceText)
-                };
-            })
-        };
-
-        fetch('/Menu/RealizarPedido', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(pedido)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(`¡Pedido #${data.ordenId} enviado a la cocina!`);
-                    document.getElementById('orderItemsContainer').innerHTML = '';
-                    this.updateTotal();
-                    this.updateOrderNumber();
-                } else {
-                    alert('Error al procesar el pedido');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al enviar el pedido');
-            });
-    }
-
-    showTotal() {
-        const total = document.querySelector('.total-amount').textContent;
-        alert(`Total del pedido: ${total}`);
-    }
-
-    updateOrderNumber() {
-        const orderNumberElement = document.getElementById('orderNumber');
-        orderNumberElement.textContent = Math.floor(Math.random() * 900) + 100;
-    }
+// Actualiza el precio individual según cantidad
+function updateItemPrice(orderItem) {
+    const price = parseInt(orderItem.dataset.price);
+    const quantity = parseInt(orderItem.querySelector('.quantity').textContent);
+    const priceElement = orderItem.querySelector('.item-price');
+    priceElement.textContent = (price * quantity).toLocaleString();
 }
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    new PedidoManager();
-});
+// Suma el total general del pedido
+function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('.order-item .item-price').forEach(price => {
+        total += parseInt(price.textContent.replace(/[.,]/g, ''));
+    });
+
+    document.querySelector('.total-amount').textContent = '₡' + total.toLocaleString();
+}
