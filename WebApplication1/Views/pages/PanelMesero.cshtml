@@ -2,8 +2,31 @@
     ViewData["Title"] = "PanelMesero";
     Layout = "_LayoutPanelMesero";
 }
+@inject IHttpContextAccessor httpContext
+
+@{
+    var eficiencia = httpContext.HttpContext.Session.GetInt32("Eficiencia") ?? 0;
+    var energia = httpContext.HttpContext.Session.GetInt32("Energia") ?? 0;
+    var estres = httpContext.HttpContext.Session.GetInt32("Estres") ?? 0;
+
+    // Colores de eficiencia y energía (de mayor a menor = verde → amarillo → rojo)
+    string colorEficiencia = eficiencia > 50 ? "#95CD38"      // Verde
+                        : eficiencia > 15 ? "yellow"      // Amarillo
+                        : "#FD462A";                      // Rojo
+
+    string colorEnergia = energia > 50 ? "#95CD38"
+                          : energia > 15 ? "yellow"
+                          : "#FD462A";
+
+    // Estrés (inverso)
+    string colorEstres = estres > 85 ? "#FD462A"              // Rojo
+                        : estres > 45 ? "yellow"              // Amarillo
+                        : "#95CD38";
+}
+
 <div class="row justify-content-center">
     <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 w-100">
+
         <!-- Eficiencia -->
         <div class="d-flex align-items-center gap-2">
             <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; margin: 0;">
@@ -11,10 +34,11 @@
             </h2>
             <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
                 <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
-                     style="width: 75%; background-color: yellow; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
-                    75%
+                     style="width: @eficiencia%; background-color: @colorEficiencia; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
+                    @eficiencia%
                 </div>
             </div>
+
         </div>
 
         <!-- Energía -->
@@ -24,8 +48,8 @@
             </h2>
             <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
                 <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
-                     style="width: 75%; background-color: #95CD38; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
-                    75%
+                     style="width: @energia%; background-color: @colorEnergia; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
+                    @energia%
                 </div>
             </div>
         </div>
@@ -37,11 +61,12 @@
             </h2>
             <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
                 <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
-                     style="width: 75%; background-color: #FD462A; border-radius: 20px; font-size: 12px; font-weight: 600; color: white;">
-                    75%
+                     style="width: @estres%; background-color: @colorEstres; border-radius: 20px; font-size: 12px; font-weight: 600; color: black;">
+                    @estres%
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

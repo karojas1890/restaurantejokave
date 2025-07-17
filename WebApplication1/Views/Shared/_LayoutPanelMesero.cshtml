@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor httpContext
+@{
+    var Carga = httpContext.HttpContext.Session.GetInt32("Carga") ?? 0;
+  
+    string colorCarga = Carga > 85 ? "#FD462A"              // Rojo
+                        : Carga > 40 ? "yellow"              // Amarillo
+                        : "#95CD38";
+}
+<!DOCTYPE html>
 <html>
 <head runat="server">
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="5">
+
     <title>Dashboard Mesero</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scal=1.0" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -179,20 +189,23 @@
         </div>
         <h2 style="color: #1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
             Mesero:
-            <span><input type="text" class="form-control d-inline-block mx-2" style="width: 50px;" value="..." readonly>
+            <span class="mx-2" style="color: #1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
+                @httpContext.HttpContext.Session.GetString("Nombre")
             </span>
+
         </h2>
-        <div class="d-flex align-items-center gap-2">
-            <h2 style="color: #D66363; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
-            Carga:
-        </h2>
-            <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
+        <div class="d-flex align-items-center gap-2 my-2">
+            <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700;font-size: 28px; margin: 0;">
+                Carga:
+            </h2>
+            <div class="progress" style="height: 40px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
                 <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
-                     style="width: 75%; background-color: #FD462A; border-radius: 20px; font-size: 12px; font-weight: 600; color: white;">
-                    75%
+                     style="width: @Carga%; background-color: @colorCarga; border-radius: 20px; font-size: 14px; font-weight: 600; color: black;">
+                    @Carga%
                 </div>
             </div>
         </div>
+
         
         <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700;font-size: 28px;">
             Sección asignada:

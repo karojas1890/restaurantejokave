@@ -44,10 +44,28 @@ namespace WebApplication1.Controllers
                         HttpContext.Session.SetString("Usuario", reader["Usuario"].ToString());
                         HttpContext.Session.SetInt32("IdRol", idRol);
 
+                        if (idRol == 3)
+                        {
+                            if (reader["NombreCompleto"] != DBNull.Value)
+                                HttpContext.Session.SetString("Nombre", reader["NombreCompleto"].ToString());
+
+                            if (reader["Eficiencia"] != DBNull.Value)
+                                HttpContext.Session.SetInt32("Eficiencia", Convert.ToInt32(reader["Eficiencia"]));
+
+                            if (reader["Energia"] != DBNull.Value)
+                                HttpContext.Session.SetInt32("Energia", Convert.ToInt32(reader["Energia"]));
+
+                            if (reader["Estres"] != DBNull.Value)
+                                HttpContext.Session.SetInt32("Estres", Convert.ToInt32(reader["Estres"]));
+
+                            if (reader["Carga"] != DBNull.Value)
+                                HttpContext.Session.SetInt32("Carga", Convert.ToInt32(reader["Carga"]));
+                        }
+
                         redirectUrl = idRol switch
                         {
                             3 => "/Links/PanelMesero",
-                            5 => "/Links/GeneradorCaos",
+                            5 => "/Links/PanelGeneradordeCaos",
                             _ => "/Links/Index"
                         };
                     }
