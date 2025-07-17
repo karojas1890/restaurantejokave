@@ -124,7 +124,7 @@
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Mesero</h5>
                     <p class="card-text">Atiende múltiples mesas bajo presión. Gestiona pedidos, quejas y comunicación. Puede entrar en Modo Supervivencia.</p>
-                    <a asp-controller="Links" asp-action="PanelMesero" class="btn btn-outline-success">
+                    <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Acceso al rol Mesero
                     </a>
                 </div>
@@ -178,7 +178,7 @@
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Generador de Caos</h5>
                     <p class="card-text">Crea eventos disruptivos. Incendios, plagas, cortes de energía... El caos está en tus manos.</p>
-                <a asp-controller="Links" asp-action="GeneradorCaos" class="btn btn-outline-success">
+                    <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Acceso al rol Generador de Caos
                     </a>
                 </div>
@@ -250,31 +250,60 @@
             </div>
         </div>
     </footer>
-    <!-- Modal de Login Cliente -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header d-flex flex-column justify-content-center align-items-center w-100">
+<!-- Modal de Login Cliente -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-column justify-content-center align-items-center w-100">
                 <img src="~/stylesVera/img/logo-jokave.png" alt="Pizzería JOKAVE" style="height: 80px;" class="mb-2">
-                    <h5 class="modal-title text-center w-100" id="loginModalLabel" style="color:#1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 36px;">Acceso al Sistema</h5>
-                    <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="usuario" class="form-label" style="color: #888888; font-family: 'Poppins', sans-serif; font-size: 16px;">Usuario</label>
-                            <input type="text" class="form-control" id="usuario" placeholder="Usuario">
-                        </div>
-                        <div class="mb-3">
-                            <label for="clave" class="form-label" style="color: #888888; font-family: 'Poppins', sans-serif; font-size: 16px;">Contraseña</label>
-                            <input type="password" class="form-control" id="clave" placeholder="••••••••">
-                        </div>
-                        <button type="submit" class="btn btn-success w-100" style="font-family: 'Poppins', sans-serif; font-size: 16px;">Ingresar</button>
-                    </form>
-                </div>
+                <h5 class="modal-title text-center w-100" id="loginModalLabel" style="color:#1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 36px;">
+                    Acceso al Sistema
+                </h5>
+                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="usuario" class="form-label" style="color: #888888;">Usuario</label>
+                        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="clave" class="form-label" style="color: #888888;">Contraseña</label>
+                        <input type="password" class="form-control" id="clave" name="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Ingresar</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Script de validación AJAX -->
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // evita recarga
+
+        var usuario = document.getElementById("usuario").value;
+        var clave = document.getElementById("clave").value;
+
+        $.ajax({
+            type: "POST",
+            url: "/Login/Validar", //controlador
+            data: { usuario: usuario, password: clave },
+            success: function (data) {
+                if (data.mensaje === "Login exitoso") {
+                    window.location.href = data.redirectUrl; //redirige según el rol
+                } else {
+                    alert(data.mensaje); //muestra errores como "Credenciales inválidas"
+                }
+            },
+            error: function () {
+                alert("Error al conectarse con el servidor");
+            }
+        });
+    });
+</script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             mostrarInicio();

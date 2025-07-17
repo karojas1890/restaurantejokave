@@ -39,6 +39,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Dios del caos", policy => policy.RequireClaim("Role", "5"));
 });
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 
