@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor httpContext
+@{
+    var Carga = httpContext.HttpContext.Session.GetInt32("Carga") ?? 0;
+  
+    string colorCarga = Carga > 85 ? "#FD462A"              // Rojo
+                        : Carga > 40 ? "yellow"              // Amarillo
+                        : "#95CD38";
+}
+
+<!DOCTYPE html>
 <html>
 <head runat="server">
     <meta charset="utf-8" />
+
     <title>Dashboard Mesero</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -160,7 +170,60 @@
                 border-color: #a31b2f;
             }
 
-    </style>
+        .card-verde-pastel {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #7BC043;
+            border-radius: 10px;
+            padding: 10px 15px;
+            transition: 0.3s ease-in-out;
+        }
+
+            .card-verde-pastel:hover {
+                background-color: #1A3F37;
+                color: white;
+            }
+
+        .mesa-circular {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mesa-centro {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #7BC043;
+            border-radius: 50%;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .silla {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: inherit;
+            top: 50%;
+            left: 50%;
+            transform: rotate(calc(var(--i) * 360deg / var(--total))) translateY(-45px);
+            transform-origin: center;
+        }
+
+
+
+            
+     </style>
 </head>
 <body>
     <div style="background-color: #95CD38; padding: 8px 20px; color: white; font-size: 14px;" class="d-flex justify-content-between align-items-center flex-wrap">
@@ -179,20 +242,23 @@
         </div>
         <h2 style="color: #1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
             Mesero:
-            <span><input type="text" class="form-control d-inline-block mx-2" style="width: 50px;" value="..." readonly>
+            <span class="mx-2" style="color: #1A3F37; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
+                @httpContext.HttpContext.Session.GetString("Nombre")
             </span>
+
         </h2>
-        <div class="d-flex align-items-center gap-2">
-            <h2 style="color: #D66363; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;font-size: 48px;">
-            Carga:
-        </h2>
-            <div class="progress" style="height: 20px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
+        <div class="d-flex align-items-center gap-2 my-2">
+            <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700;font-size: 28px; margin: 0;">
+                Carga:
+            </h2>
+            <div class="progress" style="height: 40px; width: 150px; background-color: #e9ecef; border-radius: 20px; overflow: hidden;">
                 <div class="progress-bar d-flex justify-content-center align-items-center" role="progressbar"
-                     style="width: 75%; background-color: #FD462A; border-radius: 20px; font-size: 12px; font-weight: 600; color: white;">
-                    75%
+                     style="width: @Carga%; background-color: @colorCarga; border-radius: 20px; font-size: 14px; font-weight: 600; color: black;">
+                    @Carga%
                 </div>
             </div>
         </div>
+
         
         <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700;font-size: 28px;">
             Sección asignada:
@@ -240,6 +306,8 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </body>
 </html>
     
