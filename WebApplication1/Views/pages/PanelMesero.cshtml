@@ -2,6 +2,7 @@
     ViewData["Title"] = "PanelMesero";
     Layout = "_LayoutPanelMesero";
 }
+
 @inject IHttpContextAccessor httpContext
 
 @{
@@ -26,7 +27,6 @@
 
 <div class="row justify-content-center">
     <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 w-100">
-
         <!-- Eficiencia -->
         <div class="d-flex align-items-center gap-2">
             <h2 style="color: #888888; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; margin: 0;">
@@ -73,19 +73,110 @@
 <h2 class="text-center" style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; color: #1A3F37;">
     Mis mesas
 </h2>
-<div class="row">
-    <div class="col-md-4">
-        <div class="card border-success mb-3 shadow-sm">
-            <div class="text-center card-header bg-success text-white" style="font-family: 'Poppins', sans-serif;">
-                Mesa: 
-            </div>
-            <div class="card-body">
-                <p class="card-text" style="font-family: 'Poppins', sans-serif;">Capacidad: </p>
-                <p class="card-text" style="font-family: 'Poppins', sans-serif;">Estado: </p>
-                <p class="text-center card-text" style="font-family: 'Poppins', sans-serif;">Imagen: </p>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="row" id="mesasContainer"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("Script cargado");
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Links/ObtenerMesasAsignadas",
+            success: function (response) {
+                console.log("Tipo de response:", typeof response);
+                console.log("Contenido de response:", response);
+
+                if (!Array.isArray(response)) {
+                    console.error("La respuesta no es un arreglo");
+                    return;
+                }
+
+
+                const mesasAgrupadas = {};
+
+                response.forEach(item => {
+                    const idMesa = item.idMesa;
+
+                    if (!mesasAgrupadas[idMesa]) {
+                        mesasAgrupadas[idMesa] = {
+                            IdMesa: idMesa,
+                            Sillas: []
+                        };
+                    }
+
+                    mesasAgrupadas[idMesa].Sillas.push({
+                        IdSilla: item.idSilla,
+                        Estado: item.estadoSilla
+                    });
+                });
+
+                const container = $("#mesasContainer");
+                container.empty();
+
+                const mesas = Object.values(mesasAgrupadas);
+
+                if (mesas.length === 0) {
+                    container.html('<p class="text-center text-muted">Sin mesas asignadas por el momento.</p>');
+                    return;
+                }
+
+                mesas.forEach(mesa => {
+                    console.log("Mesa agrupada:", mesa);
+
+                        let sillasHtml = `
+      <div class="mesa-circular" style="--total: ${mesa.Sillas.length};">
+        <div class="mesa-centro"></div>
+    `;
+
+    mesa.Sillas.forEach((silla, index) => {
+        const color = silla.Estado === 1
+            ? "#28a745"  // Verde
+            : "#FFD700"; // Dorado
+
+        sillasHtml += `
+          <div class="silla"
+               style="
+                  --i: ${index};
+                  --total: ${mesa.Sillas.length};
+                  background-color: ${color};
+               ">
+          </div>
+        `;
+    });
+
+    sillasHtml += `</div>`;
+
+                    const card = `
+                        <div class="col-md-4">
+                            <div class="card card-verde-pastel mb-3 shadow-sm">
+                                <div class="text-center card-header text-#0E3B2D" style="background-color: #C7EFCF; font-family: 'Poppins', sans-serif;">
+                                    Mesa: ${mesa.IdMesa}
+                                </div>
+                                <div class="card-body text-center">
+                                    ${sillasHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.append(card);
+                });
+            },
+            error: function (xhr, status, error) {
+                $("#mesasContainer").html('<p class="text-danger text-center">Error al cargar tus mesas.</p>');
+                console.error("Error AJAX:", error);
+                console.log("Estado:", status);
+                console.log("Respuesta completa:", xhr.responseText);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
 
 
