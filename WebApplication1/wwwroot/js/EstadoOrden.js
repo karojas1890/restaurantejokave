@@ -1,23 +1,33 @@
 ﻿
-function actualizarEstadoOrden() {
-    fetch(`/Ordenes/EstadoOrden`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                // Orden no encontrada
-                limpiarEstado();
-                console.warn(data.error);
-                return;
-            }
-
-
-            actualizarBarra(data.progreso);
-        })
-        .catch(err => {
-            console.error('Error fetching estado:', err);
+fetch(`/Ordenes/EstadoOrden`, {
+    method: 'GET',
+    credentials: 'include' 
+})
+    .then(res => {
+        
+        const contentType = res.headers.get('content-type') || '';
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        if (!contentType.includes('application/json')) {
+            throw new Error('Respuesta no es JSON');
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data.error) {
             limpiarEstado();
-        });
-}
+            console.warn(data.error);
+            return;
+        }
+
+        actualizarBarra(data.progreso);
+    })
+    .catch(err => {
+        console.error('Error fetching estado:', err);
+        limpiarEstado();
+    });
+
 
 function limpiarEstado() {
     // O resetear la barra

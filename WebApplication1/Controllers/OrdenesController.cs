@@ -36,7 +36,10 @@ namespace WebApplication1.Controllers
             if (orden == null)
                 return Json(new { error = "Orden no encontrada para el usuario" });
 
-            return Json(new { progreso = orden.EstadoOrden });
+            return Json(new
+            { 
+                progreso = orden.EstadoOrden 
+            });
         }
         [HttpGet]
         public async Task<JsonResult> EstadoVisita()

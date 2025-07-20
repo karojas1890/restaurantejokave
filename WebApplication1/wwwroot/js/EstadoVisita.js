@@ -21,21 +21,32 @@ const estados = [
 
 // Función principal para obtener y actualizar estado de visita
 function actualizarEstadoVisita() {
-    fetch(`/Ordenes/EstadoVisita`)
-        .then(res => res.json())
+    fetch(`/Ordenes/EstadoVisita`, {
+        method: 'GET',
+        credentials: 'include'  
+    })
+        .then(res => {
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+            const contentType = res.headers.get('content-type') || '';
+            if (!contentType.includes('application/json')) {
+                throw new Error('Respuesta no es JSON');
+            }
+
+            return res.json();
+        })
         .then(data => {
             if (data.error) {
                 limpiarEstado();
                 console.warn(data.error);
                 return;
             }
-            
+
             if (data.estadoActual && data.estadoActual !== EstadoActual) {
                 EstadoActual = data.estadoActual;
-                cambiarEstado(EstadoActual); 
+                cambiarEstado(EstadoActual);
             }
 
-            // Actualizar tiempo si se proporciona desde el servidor
             if (data.tiempoEspera) {
                 actualizarTiempoEspera(data.tiempoEspera);
             }
@@ -44,6 +55,8 @@ function actualizarEstadoVisita() {
             console.error('Error al obtener el estado de visita:', err);
             limpiarEstado();
         });
+}
+
 }
 
 // Crear solo el elemento del estado actual en el timeline

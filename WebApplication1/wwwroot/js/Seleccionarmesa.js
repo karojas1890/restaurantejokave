@@ -42,13 +42,13 @@ function seleccionarSilla(elemento) {
     const idSilla = elemento.dataset.sillaId;
     const idMesa = elemento.dataset.mesaId;
 
-    console.log(`Silla seleccionada: ${idSilla}, Mesa: ${idMesa}`);
 
     fetch("/Mesa/ConfirmarSilla", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
+        credentials: 'include', 
         body: JSON.stringify({ idSilla, idMesa })
     })
         .then(response => {
@@ -57,10 +57,9 @@ function seleccionarSilla(elemento) {
         .then(data => {
             mostrarModal("Exito", data.message);
 
-           
             setTimeout(() => {
                 location.reload();
-            }, 2000); 
+            }, 2000);
         })
         .catch(error => {
             mostrarModal("Error", error.message);
