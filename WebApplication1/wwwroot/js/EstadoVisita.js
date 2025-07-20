@@ -57,7 +57,7 @@ function actualizarEstadoVisita() {
         });
 }
 
-}
+
 
 // Crear solo el elemento del estado actual en el timeline
 function actualizarTimelineEstados(estadoActual) {
