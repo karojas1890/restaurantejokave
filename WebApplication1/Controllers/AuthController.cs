@@ -4,9 +4,10 @@ using WebApplication1.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Service;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 public class AuthController : Controller
 {
@@ -17,7 +18,6 @@ public class AuthController : Controller
         _context = context;
         _emailService = emailService;
     }
-
     [HttpGet("/Login")]
     public IActionResult Login()
     {
@@ -27,9 +27,18 @@ public class AuthController : Controller
         }
         return View("~/Views/pages/LoginCliente.cshtml");
     }
-
+    [HttpGet("/AccesoDenegado")]
+    public IActionResult Denegado()
+    {
+       
+        return View("~/Views/pages/AccesoDenegado.cshtml");
+    }
+    public IActionResult LoginCliente()
+    {
+        return View();
+    }
    
-    
+  
     [HttpPost]
     public IActionResult LoginCliente(string username, string password)
     {
@@ -68,24 +77,21 @@ public class AuthController : Controller
 
     }
     [HttpPost]
-    public async Task<IActionResult> ValidarCodigo(int id,string Codigo)
+    public async Task<IActionResult> ValidarCodigo(int id, string Codigo)
     {
-           
-            var usuario = _context.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
 
-       
-            if (usuario == null)
-            {
-                TempData["ErrorMessage"] = "Usuario no encontrado.";
-                return RedirectToAction("LoginCliente");
-            }
+        if (usuario == null)
+        {
+            TempData["ErrorMessage"] = "Usuario no encontrado.";
+            return RedirectToAction("LoginCliente");
+        }
 
-        
-            if (usuario.Codigo != Codigo)
-            {
-                TempData["ErrorMessage"] = "El codigo ingresado no es valido.";
-                return View("~/Views/pages/ValidarPorCorreo.cshtml", usuario);
-            }
+        if (usuario.Codigo != Codigo)
+        {
+            TempData["ErrorMessage"] = "El código ingresado no es válido.";
+            return View("~/Views/pages/ValidarPorCorreo.cshtml", usuario);
+        }
 
         var claims = new List<Claim>
     {
@@ -96,20 +102,63 @@ public class AuthController : Controller
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
 
+        var nuevaVisita = new Visita
+        {
+            IdUsuario = usuario.IdUsuario,
+            Estado = 1, // Esperando mesa
+           FechaHoraIngreso = DateTime.Now // FechaHoraIngreso se llena automáticamente
+        };
+
+        _context.Visita.Add(nuevaVisita);
+        _context.SaveChanges();
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
 
 
-
-        return View("~/Views/pages/MenuClientes.cshtml", usuario);
-        
-
+        return RedirectToAction("LoginC", new { id = usuario.IdUsuario });
     }
-
-    public IActionResult Logout()
+    [Authorize(Roles = "1")]
+    public IActionResult LoginC(int id)
     {
-        HttpContext.Session.Clear();
-        return RedirectToAction("LoginCliente");
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
+        return View("~/Views/pages/MenuClientes.cshtml", usuario);
     }
+
+    public async Task<IActionResult> Logout()
+    {
+
+        var idUsuarioClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+        if (idUsuarioClaim != null && int.TryParse(idUsuarioClaim.Value, out int idUsuario))
+        {
+            var visitasActivas = _context.Visita
+                .Where(v => v.IdUsuario == idUsuario && v.FechaHoraSalida == null)
+                .ToList();
+
+            foreach (var visita in visitasActivas)
+            {
+                visita.FechaHoraSalida = DateTime.Now;
+                visita.Estado = 8;
+
+                if (visita.IdSilla != null)
+                {
+                    var silla = _context.Sillas.FirstOrDefault(s => s.IdSilla == visita.IdSilla);
+                    if (silla != null)
+                    {
+                        silla.Estado = 1; 
+                    }
+                }
+            }
+
+            _context.SaveChanges();
+        }
+
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        HttpContext.Session.Clear();
+
+        // Redirige al login
+        return View("~/Views/Home/Index.cshtml");
+    }
+
+
 }
