@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+
 
 // Configuración de sesiones
 builder.Services.AddSession(options =>
@@ -22,7 +24,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddScoped<EmailService>();
-
+builder.Services.AddHttpClient();
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {

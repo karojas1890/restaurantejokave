@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Modo Supervivencia";
+    Layout = "_LayoutModoSupervivenciaMesero";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card text-white text-center" style="background-color: red; border-radius: 15px; padding: 30px; max-width: 450px; width: 100%;">
+        <div class="card-header d-flex justify-content-between align-items-center" style="font-size: 24px;">
+            <span>🔔 ¡Activa modo supervivencia!</span>
+            <a href="@Url.Action("PanelMesero", "Mesero")" class="text-white" style="font-size: 24px; text-decoration: none;">&times;</a>
+        </div>
+        <div class="card-body d-grid gap-3 mt-4">
+            <button class="btn btn-dark p-3 rounded" style="font-size: 18px;"><i class="fas fa-couch me-2"></i>Tomar un descanso</button>
+            <button class="btn btn-dark p-3 rounded" style="font-size: 18px;"><i class="fas fa-glass-whiskey me-2"></i>Hidratarse</button>
+            <button class="btn btn-dark p-3 rounded" style="font-size: 18px;"><i class="fas fa-phone-volume me-2"></i>Solicitar ayuda al gerente</button>
+            <button class="btn btn-dark p-3 rounded" style="font-size: 18px;"><i class="fas fa-times-circle me-2"></i>Renunciar</button>
+        </div>
+    </div>
+</div>
