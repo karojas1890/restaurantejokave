@@ -9,37 +9,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cargar Saldo - JOKAVE</title>
     <link rel="stylesheet" href="~/css/CargarSaldo.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
 </head>
 <body>
    
+    <div id="modalPersonalizado" class="modal-overlay">
+        <div class="modal-contenido">
+            <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+            <h2 id="modalTitulo">Mensaje</h2>
+            <p id="modalTexto"></p>
+        </div>
+    </div>
 
+    @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var titulo = "@(TempData["SuccessMessage"] != null ? "Exito" : "Error")";
+                var mensaje = "@(TempData["SuccessMessage"] ?? TempData["ErrorMessage"])";
+                mostrarModal(titulo, mensaje);
+            });
+        </script>
+    }
     <div class="container">
         <h2 class="section-title">Cargar Saldo</h2>
         <p class="section-subtitle">Agrega fondos a tu tarjeta para usar en el restaurante</p>
-
+        <form asp-controller="Tarjetas" asp-action="CargarSaldo" method="post">
         <div class="form-group">
-            <label class="form-label">Selecciona la tarjeta</label>
-            <select class="form-select">
-                <option>Elije una tarjeta</option>
+            <label for="tarjetaSeleccionada">Selecciona una tarjeta:</label>
+            <select id="tarjetaSeleccionada" name="NumeroTarjeta" class="form-select" required>
+                <option value="">-- Selecciona una tarjeta --</option>
+                    @foreach (var tarjeta in Model)
+                    {
+                        string ultimos4 = tarjeta.NumeroTarjeta.Substring(tarjeta.NumeroTarjeta.Length - 4);
+
+                        <option value="@tarjeta.NumeroTarjeta">•••• •••• •••• @ultimos4</option>
+                    }
             </select>
         </div>
+      
 
         <div class="form-group">
             <label class="form-label">Monto a cargar</label>
-            <input type="text" class="amount-input" value="0.00" readonly>
-            <div class="amount-buttons">
-                <button class="amount-btn">₡10000</button>
-                <button class="amount-btn">₡15000</button>
-                <button class="amount-btn">₡20000</button>
-            </div>
+                <input type="text" name="monto" id="monto" class="amount-input" >
+            
+        
         </div>
 
-        <button class="submit-button">
+         <button type="submit" class="submit-button">
             <span class="plus-icon">+</span>
             Cargar Saldo
         </button>
+        </form>
     </div>
-
+    
+    <script src="~/js/Modal.js"></script>
     <script src="~/js/CargarSaldo.js"></script>
 </body>
 </html>

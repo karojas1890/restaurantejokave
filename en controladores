@@ -1,0 +1,158 @@
+[33mcommit c38a4e9f96b534eec54621d5f96e7661a22ed7e2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/Katherine[m[33m, [m[1;32mKatherine[m[33m)[m
+Merge: 7255ddf 632821d
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Sun Jul 20 12:14:26 2025 -0600
+
+    Merge branch 'main' into Katherine
+
+[33mcommit 632821d9a7996418086ca4e00caf7e2c5018d82c[m
+Merge: 9ef5230 bffa552
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Sun Jul 20 12:13:35 2025 -0600
+
+    Merge branch 'main' of https://github.com/karojas1890/restaurantejokave
+
+[33mcommit 9ef5230b5e7f230f6bd740ded88a1435337e200a[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Sun Jul 20 12:13:33 2025 -0600
+
+    Guardando mis cambios locales antes de actualizar
+
+[33mcommit bffa55294840f9b5e1627af3928b98fb88c77ce3[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Sat Jul 19 21:23:45 2025 -0600
+
+    Actualización: integración con Groq sin exponer la API key
+
+[33mcommit 7255ddf124a8d8cafcccf9830bbd28e9178fa35e[m
+Merge: 636126e 89cd699
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Fri Jul 18 22:37:59 2025 -0600
+
+    Merge branch 'main' into Katherine
+
+[33mcommit 89cd69984e93a7d4efa685da50ebf4dc642cec50[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Fri Jul 18 21:41:08 2025 -0600
+
+    Jalar mesas a la vista de mesero
+
+[33mcommit 95d39643819a8216e3fd27e6e495c9e8693e8bb4[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Wed Jul 16 22:14:53 2025 -0600
+
+    Carga de indicadores y nombre desde BD vista de mesero
+
+[33mcommit 7cd911d215578070385624dd1fa8fb4214e79583[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Wed Jul 16 20:12:26 2025 -0600
+
+    Login en modal de index. Controlador de login
+
+[33mcommit 636126eeb48c7a6eaf1248ea83196b764b9438e6[m
+Merge: 879920f b677549
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Mon Jul 14 22:28:15 2025 -0600
+
+    Merge pull request #5 from karojas1890/main
+    
+    Mergin main in katherine
+
+[33mcommit b6775495387a9ee219552adb78d7629e720e6aaf[m
+Merge: 0380744 879920f
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Mon Jul 14 22:23:10 2025 -0600
+
+    Merge pull request #4 from karojas1890/Katherine
+    
+    prueba
+
+[33mcommit 879920fa4a9a6726919f96bf6b7001db81ed97c8[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Mon Jul 14 22:22:32 2025 -0600
+
+    prueba
+
+[33mcommit 0380744e391bf796f9ae5b16d6a36509e661d0c1[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Mon Jul 14 22:20:33 2025 -0600
+
+    Login con codigo
+    Pssword haseado
+    Autenticacion 2 pasos
+    Vista responsiva
+    Vista de mesas interactua con bd
+    Permisos por rol
+    Estado de la orden interactura parcialmente con bd
+
+[33mcommit 5b5d10013580cc52fb29e8caa46bdbfacf61903b[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Sun Jul 13 21:47:45 2025 -0600
+
+    Vistas sin programación
+
+[33mcommit 869e99828cd3e4887cc84ef3cafdd8401421d074[m
+Merge: 06ec1a7 9b9baa3
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Sat Jul 12 20:10:48 2025 -0600
+
+    Merge pull request #3 from karojas1890/Katherine
+    
+    se crear el login
+
+[33mcommit 9b9baa328055f32390a08dc20eccd61ddf84b53e[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Sat Jul 12 20:09:03 2025 -0600
+
+    se crear el login
+
+[33mcommit 06ec1a7fc604e1004e6d517bffc8c68a620a95ce[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Sat Jul 12 14:12:15 2025 -0600
+
+    Agregar trabajo de Vera en vista mesero
+
+[33mcommit ef6f8b9848cd15aed3240cba7703e47ed97485aa[m
+Author: vera0804 <vera2vn@gmail.com>
+Date:   Wed Jul 9 14:46:22 2025 -0600
+
+    Agregar trabajo de Vera
+
+[33mcommit bb435fb4a7d93fc5f025e495da6698a93b4e4877[m
+Merge: 08996c0 7f1f2e4
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Tue Jul 8 23:56:13 2025 -0600
+
+    Merge pull request #2 from karojas1890/Katherine
+    
+    La vista de ordenar interactua con la bd, trae los productos
+
+[33mcommit 7f1f2e452666608a773c86c34313ef235c7a90a0[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Tue Jul 8 23:51:25 2025 -0600
+
+    La vista de ordenar interactua con la bd, trae los productos
+
+[33mcommit 08996c05450e138664483e9d92a5f9e89f4d836d[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Tue Jul 8 18:50:39 2025 -0600
+
+    Se agregan imagenes de productos del menu
+
+[33mcommit a8cd92d0215abf4c533cb0d552cd5c631547ffdc[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Tue Jul 8 17:25:09 2025 -0600
+
+    corregir nombre de modelos
+
+[33mcommit acfcfc3704a13321ae49fb6fb4d261f1087fe9c8[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Tue Jul 8 17:12:34 2025 -0600
+
+    corregir nombre de modelos
+
+[33mcommit 2051a6223ab1e32ea47da12e88867482cd835359[m
+Author: karojas1890 <katherine.rojas.salazar@cuc.cr>
+Date:   Tue Jul 8 16:19:38 2025 -0600
+
+    Primer commit: Subiendo proyecto inicial katherine

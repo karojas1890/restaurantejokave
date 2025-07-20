@@ -59,6 +59,7 @@ document.getElementById('orderItemsContainer').addEventListener('click', functio
 
         qtySpan.textContent = quantity;
         updateItemPrice(orderItem);
+        updateTotal();
     }
 
     // Botón de eliminar
@@ -85,3 +86,54 @@ function updateTotal() {
 
     document.querySelector('.total-amount').textContent = '₡' + total.toLocaleString();
 }
+
+//desde aqui se gestiona el controlador para la orden 
+document.getElementById('btnOrder').addEventListener('click', async () => {
+    const orderItemsContainer = document.getElementById('orderItemsContainer');
+    const orderItemsDivs = orderItemsContainer.querySelectorAll('.order-item');
+
+    
+    const items = Array.from(orderItemsDivs).map(div => {
+        const idProducto = parseInt(div.dataset.id);
+        const nombre = div.querySelector('.item-name').textContent;
+        const cantidad = parseInt(div.querySelector('.quantity').textContent);
+        const precioUnitario = parseInt(div.dataset.price);
+        const precioTotal = cantidad * precioUnitario;
+
+        return {
+            IdProducto: idProducto,
+            Nombre: nombre,
+            Cantidad: cantidad,
+            PrecioUnitario: precioUnitario,
+            PrecioTotal: precioTotal
+        };
+    });
+
+    
+    const pedido = {
+        idMesa: parseInt(document.getElementById('orderNumber').textContent), 
+        items: items
+    };
+    
+    try {
+        const response = await fetch('/Menu/RealizarPedido', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pedido)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            mostrarModal("Error", errorData.message || 'Error en el pedido');
+            return;
+        }
+
+        const data = await response.json();
+        mostrarModal("Éxito", `Pedido realizado con éxito. ID orden: ${data.ordenId}`);
+        
+    } catch (error) {
+        mostrarModal("Error", 'Error al enviar el pedido: ' + error.message);
+    }
+});

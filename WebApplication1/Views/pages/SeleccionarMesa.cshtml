@@ -9,7 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccionar Mesa - JOKAVE</title>
-    <link rel="stylesheet" href="~/css/SeleccionarMesa.css"/>
+    <link rel="stylesheet" href="~/css/SeleccionarMesa.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
 </head>
 <body>
     <div class="header">
@@ -17,8 +18,20 @@
             <div class="logo-icon">🍕</div>
             <div class="logo-text">PIZZERIA<br>JOKAVE</div>
         </div>
-        <button class="close-btn">X</button>
+        <a style="text-decoration:none;" asp-controller="Menu" asp-action="MenuC" class="close-btn">X</a>
         <h1>Seleccionar mesa</h1>
+        <!--Modal para gestion de mensajes-->
+        <div id="modalPersonalizado" class="modal-overlay">
+            <div class="modal-contenido">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 id="modalTitulo">Mensaje</h2>
+                <p id="modalTexto"></p>
+            </div>
+        </div>
+       
+
+      
+
 
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Buscar una mesa...">
@@ -65,7 +78,7 @@
         <div class="tables-grid-wrapper">
 
             <button id="btnAnterior" class="nav-btn left" disabled>&larr; Anterior</button>
-
+           
             <div class="tables-grid">
                 @{
                     int mesasPorGrupo = 6;
@@ -103,8 +116,9 @@
 
                                             <div class="chair @(silla.Estado == 1 ? "disponible" : "ocupada")"
                                                  data-silla-id="@silla.IdSilla"
+                                                 data-mesa-id="@mesa.IdMesa"
                                                  style="left:@($"{x}px"); top:@($"{y}px");"
-                                                 oncontextmenu="seleccionarSilla(event, @silla.IdSilla)">
+                                                 onclick="seleccionarSilla(this)">
                                             </div>
 
                                             index++;
@@ -117,37 +131,13 @@
                 }
             </div>
 
+
             <button id="btnSiguiente" class="nav-btn right">Siguiente &rarr;</button>
         </div>
 
         <button class="exit-button">Ir a sala de espera</button>
     </div>
-    <script>
-        let grupoActual = 0;
-        const grupos = document.querySelectorAll('.mesa-grupo');
-        const btnAnterior = document.getElementById('btnAnterior');
-        const btnSiguiente = document.getElementById('btnSiguiente');
-
-        function cambiarGrupo(direccion) {
-            grupos[grupoActual].classList.remove('activo');
-            grupoActual += direccion;
-
-            if (grupoActual < 0) grupoActual = 0;
-            if (grupoActual >= grupos.length) grupoActual = grupos.length - 1;
-
-            grupos[grupoActual].classList.add('activo');
-
-            btnAnterior.disabled = grupoActual === 0;
-            btnSiguiente.disabled = grupoActual === grupos.length - 1;
-        }
-
-        btnAnterior.addEventListener('click', () => cambiarGrupo(-1));
-        btnSiguiente.addEventListener('click', () => cambiarGrupo(1));
-
-        // Inicializa estados de botones al cargar la página
-        btnAnterior.disabled = true;
-        if (grupos.length <= 1) btnSiguiente.disabled = true;
-    </script>
+    <script src="~/js/Modal.js" asp-append-version="true"></script>
     <script src="~/js/Seleccionarmesa.js"></script>
 </body>
 </html>

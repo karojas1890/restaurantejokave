@@ -1,4 +1,5 @@
-﻿
+﻿﻿@using WebApplication1.Models.ViewModels
+@model FacturaViewModel
 @{
     Layout = null;
 }
@@ -8,9 +9,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura - JOKAVE</title>
-    <link rel="stylesheet" href="~/css/Facturas.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Facturas.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
 </head>
 <body>
+    <!--Modal para gestion de mensajes-->
+    <div id="modalPersonalizado" class="modal-overlay">
+        <div class="modal-contenido">
+            <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+            <h2 id="modalTitulo">Mensaje</h2>
+            <p id="modalTexto"></p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var titulo = "@(TempData["SuccessMessage"] != null ? "Exito" : "Error")";
+                var mensaje = "@(TempData["SuccessMessage"] ?? TempData["ErrorMessage"])";
+                mostrarModal(titulo, mensaje);
+            });
+        </script>
+    }
     <div class="invoice-container">
         <div class="header">
             <div class="restaurant-name">Pizzeria JOKAVE</div>
@@ -18,66 +39,87 @@
             <div class="restaurant-info">Teléfono: 8888-8888</div>
         </div>
 
-        <div class="invoice-info">
-            <div><strong>Información de la Factura</strong></div>
-            <div>IDFactura: PJ14062025-007</div>
-            <div>Fecha: Sat Jun 14 2025</div>
-            <div>**Sin cancelar</div>
-        </div>
-
-        <div class="table-info">
-            <strong>Detalle de la Factura</strong> Mesa 1 Númpedido: 44
-        </div>
-
-        <table class="items-table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="item-name">Carbonara</td>
-                    <td>2</td>
-                    <td>₡8.000</td>
-                    <td>₡16.000</td>
-                </tr>
-                <tr>
-                    <td class="item-name">Margarita</td>
-                    <td>1</td>
-                    <td>₡5.000</td>
-                    <td>₡5.000</td>
-                </tr>
-                <tr>
-                    <td class="item-name">Limonada</td>
-                    <td>1</td>
-                    <td>₡1.500</td>
-                    <td>₡1.500</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="totals-section">
-            <div class="total-row">
-                <span>Subtotal</span>
-                <span>₡22.000</span>
+        @if (Model == null || Model.Items == null || !Model.Items.Any())
+        {
+            <div class="error-message">
+                <strong>Por favor, seleccione la forma en que desea pagar:</strong><br />
+                
             </div>
-            <div class="total-row">
-                <span>IVA</span>
-                <span>₡2.860</span>
+
+            <form asp-action="MostrarFactura" asp-controller="Factura" method="post">
+                <div class="payment-form">
+                    <label>
+                        <input type="radio" name="pagoSeparado" value="true" required />
+                        Pagar solo mi orden
+                    </label>
+                    <label>
+                        <input type="radio" name="pagoSeparado" value="false" />
+                        Pagar toda la cuenta de la mesa
+                    </label>
+                    <button type="submit" class="btn btn-primary">Ver factura</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="invoice-info">
+                <div><strong>Información de la Factura</strong></div>
+                <div>IDFactura:@DateTime.Now.ToString("ddMMyyyy")-@Model.NumeroPedido</div>
+                <div>Fecha: @Model.Fecha.ToString("ddd MMM dd yyyy")</div>
+                <div>@Model.EstadoPago</div>
             </div>
-            <div class="final-total">
-                <span>Total: ₡24.860</span>
+
+            <div class="table-info">
+                <strong>Detalle de la Factura</strong> Mesa @Model.IdMesa Númpedido: @Model.NumeroPedido
             </div>
-        </div>
+
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="item-name">@item.NombreProducto</td>
+                            <td>@item.Cantidad</td>
+                            <td>₡@item.ValorIndividual.ToString("N0")</td>
+                            <td>₡@item.Subtotal.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="totals-section">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>₡@Model.Subtotal.ToString("N0")</span>
+                </div>
+                <div class="total-row">
+                    <span>IVA</span>
+                    <span>₡@Model.IVA.ToString("N0")</span>
+                </div>
+                <div  class="final-total">
+                    <span id="total">Total: ₡@Model.Total.ToString("N0")</span>
+                </div>
+            </div>
+
+        }
 
         <div class="button-container">
-            <button class="btn btn-pay">Pagar</button>
-            <button class="btn btn-back">Regresar</button>
+            <a asp-controller="Menu" asp-action="MenuC" class="btn btn-back">Regresar</a>
+
+            <a asp-controller="Pagos" asp-action="TraerTarjetas" type="button" class="btn btn-back">Pagar</a>
+           
         </div>
     </div>
+   
+    <script src="~/js/Modal.js"></script>
 </body>
 </html>
+

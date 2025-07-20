@@ -1,47 +1,111 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model WebApplication1.Models.ViewModels.PagoViewModel
 @{
     Layout = null;
 }
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Selección de Tarjeta - JOKAVE</title>
-    <link rel="stylesheet" href="~/css/Pagos.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Pagos.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Selecciona la tarjeta</h1>
-
-        <div class="card-select">
-            <select class="card-dropdown">
-                <option>•••• •••• •••• 123</option>
-            </select>
-        </div>
-
-        <div class="balance-info">
-            <div class="balance-row">
-                <span>Saldo disponible</span>
-                <span class="amount">₡30000</span>
-            </div>
-            <div class="balance-row">
-                <span>Total a pagar</span>
-                <span class="amount">₡24860</span>
+        <!--Modal para gestion de mensajes-->
+        <div id="modalPersonalizado" class="modal-overlay">
+            <div class="modal-contenido">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 id="modalTitulo">Mensaje</h2>
+                <p id="modalTexto"></p>
             </div>
         </div>
 
-        <div class="success-message">
-            <span class="success-icon">✓</span>
-            <span>Saldo suficiente para procesar el pago</span>
-        </div>
+        @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+        {
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var titulo = "@(TempData["SuccessMessage"] != null ? "Exito" : "Error")";
+                    var mensaje = "@(TempData["SuccessMessage"] ?? TempData["ErrorMessage"])";
+                    mostrarModal(titulo, mensaje);
+                });
+            </script>
+        }
+        @if (Model.Tarjetas == null || Model.Tarjetas.Count==0)
+        {
+            <div style="text-align:center; padding: 20px; background-color: #ffe3e3; border-radius: 8px; margin: 20px 0;">
+                <h1 style="color: #d9534f;">No hay tarjetas registradas para este cliente</h1>
+                <a style="text-decoration:none; color:black" asp-controller="Links" asp-action="AgregarTarjeta" class="btn btn-primary" style="margin-top: 10px;">Agregar Tarjeta</a>
+            </div>
+        }
+        else
+        {
+            
+            <h1 class="title">Selecciona la tarjeta</h1>
+            <form asp-controller="Pagos" asp-action="GestionPagos" method="post">
+                <div class="card-select">
+                    <select id="NumeroTarjeta" name="NumeroTarjeta" class="card-dropdown" required>
+                        <option value="">-- Seleccione tarjeta --</option>
+                        @foreach (var tarjeta in Model.Tarjetas ?? new List<Tarjeta>())
+                        {
+                            var ultimos4 = tarjeta.NumeroTarjeta.Substring(tarjeta.NumeroTarjeta.Length - 4);
+                            <option value="@tarjeta.NumeroTarjeta"
+                                    data-saldo="@tarjeta.Saldo"
+                                    data-mes="@tarjeta.MesVencimiento"
+                                    data-anio="@tarjeta.AnioVencimiento"
+                                    data-cvv="@tarjeta.CodigoSeguridad">
+                                •••• •••• •••• @ultimos4
+                            </option>
+                        }
+                    </select>
+                </div>
 
-        <div class="button-container">
-            <button class="btn btn-pay">Pagar</button>
-            <button class="btn btn-back">Regresar</button>
-        </div>
+                <input type="hidden" name="MesVencimiento" id="inputMes" />
+                <input type="hidden" name="AnioVencimiento" id="inputAnio" />
+                <input type="hidden" name="CodigoSeguridad" id="inputCVV" />
+                <input type="hidden" name="Monto" id="inputMonto" value="@Model.TotalAPagar" />
+                @if (Model.TotalAPagar == null || Model.TotalAPagar == 0)
+                {
+                    <div class="success-message" style="background: #ffe3e3; padding: 10px; border-radius: 8px;">
+                        <span class="success-icon" style="color:#d9534f;">✓</span>
+                        <span style="color:#d9534f;">
+                            No has seleccionado una Factura a pagar
+                            <a style="color: #000; text-decoration:none;" asp-controller="Links" asp-action="Facturas">Seleccionar Factura</a>
+                        </span>
+                    </div>
+                }
+                else
+              {
+
+                <div id="infoTarjeta" style="display:none;">
+                    <div class="balance-info">
+                        <div class="balance-row">
+                            <span>Saldo disponible</span>
+                                <span class="amount" id="saldoDisponible">₡0</span>
+                        </div>
+                        
+                       
+                          <div class="balance-row">
+                                <span>Total a pagar</span>
+                                <span class="amount" id="montoPagar">₡@Model.TotalAPagar</span>
+                            </div>
+                        
+                    </div>
+                        <div class="success-message"></div>
+                </div>
+                }
+                <div class="button-container">
+                    <button type="submit" class="btn btn-pay" disabled>Pagar</button>
+                    <a asp-controller="Menu" asp-action="MenuC" class="btn btn-back">Regresar</a>
+                </div>
+            </form>
+
+        }
     </div>
+
+    <script src="~/js/Pagos.js" asp-append-version="true"></script>
+    <script src="~/js/Modal.js" asp-append-version="true"></script>
 </body>
 </html>

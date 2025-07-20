@@ -10,7 +10,7 @@
     
         <header>
             <div class="header">
-                <button class="close-btn">X</button>
+            <a style="text-decoration:none;" asp-controller="Menu" asp-action="MenuC" class="close-btn">X</a>
                 <h1>Gestiona tus tarjetas de crédito y saldos</h1>
                 <div class="date">Jueves 12 de junio 11:00am</div>
                 <div class="logo">PIZZERIA JOKAVE</div>
@@ -18,8 +18,8 @@
 
             <div class="nav-tabs">
                 <a asp-controller="Links" asp-action="AgregarTarjeta" class="nav-tab">Agregar tarjeta</a>
-                <a asp-controller="Links" asp-action="MisTarjetas" class="nav-tab">Mis tarjetas</a>
-                <a asp-controller="Links" asp-action="CargarSaldo" class="nav-tab">Cargar Saldo</a>
+                <a asp-controller="Tarjetas" asp-action="MisTarjetas" class="nav-tab">Mis tarjetas</a>
+                <a asp-controller="Tarjetas" asp-action="TraerTarjetas" class="nav-tab">Cargar Saldo</a>
             </div>
         </header>
 

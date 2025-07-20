@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.querySelectorAll('.action-btn').forEach(btn => {
     btn.addEventListener('click', function () {
         const action = this.textContent.trim();
-        console.log(`Acción seleccionada: ${action}`);
+       
     });
 });
 
@@ -63,27 +63,33 @@ document.querySelectorAll('.emergency-btn, .chaos-btn').forEach(btn => {
     btn.addEventListener('click', function () {
         const emergency = this.textContent.trim();
         if (confirm(`¿Estás seguro de que quieres activar: ${emergency}?`)) {
-            console.log(`Emergencia activada: ${emergency}`);
+            
         }
     });
 });
 
-// Funcionalidad para enviar reseña
-document.querySelector('.submit-btn').addEventListener('click', function () {
-    const mood = document.querySelector('.mood-btn.selected')?.dataset.mood;
-    const rating = currentRating;
-    const comment = document.querySelector('.feedback-textarea').value;
 
-    if (mood && rating > 0) {
-        console.log('Reseña enviada:', { mood, rating, comment });
-        alert('¡Gracias por tu reseña!');
 
-        // Limpiar formulario
-        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-        document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
-        document.querySelector('.feedback-textarea').value = '';
-        currentRating = 0;
-    } else {
-        alert('Por favor completa tu estado de ánimo y calificación.');
+//menu hamburguesa
+const btn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('menuHamburguesa');
+
+btn.addEventListener('click', () => {
+    menu.classList.toggle('show');
+});
+
+
+window.addEventListener('click', function (e) {
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('show');
     }
 });
+
+
+window.addEventListener('click', function (e) {
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('show');
+    }
+});
+
+

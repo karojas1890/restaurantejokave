@@ -1,6 +1,5 @@
-﻿
-document.addEventListener("DOMContentLoaded", () => {
-   
+﻿document.addEventListener("DOMContentLoaded", () => {
+
     function createSalesChart() {
         const canvas = document.getElementById("salesChart")
         if (!canvas) return
@@ -10,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const centerY = canvas.height / 2
         const radius = 120
 
-       
+
         ctx.clearRect(0, 0, canvas.width, canvas.height)
 
         const data = [
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let currentAngle = -Math.PI / 2
 
-        
+
         data.forEach((item) => {
             const sliceAngle = (item.value / 100) * 2 * Math.PI
 
@@ -34,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.fillStyle = item.color
             ctx.fill()
 
-    
+
             ctx.strokeStyle = "#fff"
             ctx.lineWidth = 2
             ctx.stroke()
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             currentAngle += sliceAngle
         })
 
-  
+
         currentAngle = -Math.PI / 2
         data.forEach((item) => {
             const sliceAngle = (item.value / 100) * 2 * Math.PI
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.fillStyle = item.color
             ctx.fillRect(outerX - textWidth / 2 - 4, outerY - textHeight / 2 - 2, textWidth + 8, textHeight + 4)
 
-        
+
             ctx.fillStyle = "#fff"
             ctx.textAlign = "center"
             ctx.textBaseline = "middle"
@@ -88,17 +87,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const period = this.getAttribute("data-tab")
             console.log("Switched to:", period)
 
-           
+
             updateSalesMetrics(period)
 
-          
+
             setTimeout(() => {
                 createSalesChart()
             }, 100)
         })
     })
 
-   
+
     function updateSalesMetrics(period) {
         const metrics = {
             diario: {
@@ -133,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createSalesChart()
     }, 500)
 
-   
+
     const canvas = document.getElementById("salesChart")
     if (canvas) {
         canvas.addEventListener("mousemove", (event) => {
@@ -148,13 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (distance <= 120) {
                 canvas.style.cursor = "pointer"
 
-                
+
                 const angle = Math.atan2(y - centerY, x - centerX)
                 const normalizedAngle = (angle + Math.PI / 2 + 2 * Math.PI) % (2 * Math.PI)
 
-               
+
                 let currentAngle = 0
-                const data = [35, 25, 15, 10, 15] 
+                const data = [35, 25, 15, 10, 15]
                 const labels = ["Pizza Margarita", "Pizza Pepperoni", "Pizza Vegetariana", "Pizza Hawaiana", "Otras"]
 
                 for (let i = 0; i < data.length; i++) {
@@ -200,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-   
+
     function showProductDetails(product, percentage) {
         const details = {
             "Pizza Margarita": { sales: "₡420,000", units: 200 },
@@ -215,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`${product}\n\nParticipación: ${percentage}%\nVentas: ${info.sales}\nUnidades vendidas: ${info.units}`)
     }
 
- 
+
     function animateChart() {
         const canvas = document.getElementById("salesChart")
         if (!canvas) return
@@ -231,12 +230,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateSalesData() {
- 
+
         const metricValues = document.querySelectorAll(".sales-metric-card .metric-value")
 
         metricValues.forEach((value, index) => {
             if (Math.random() > 0.8) {
-              
+
                 const currentText = value.textContent
 
                 if (currentText.includes("₡")) {
@@ -244,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const newAmount = currentAmount + Math.floor(Math.random() * 50000)
                     value.textContent = "₡" + newAmount.toLocaleString()
                 } else if (!currentText.includes("₡") && index === 1) {
-                    
+
                     const currentOrders = Number.parseInt(currentText)
                     const newOrders = currentOrders + Math.floor(Math.random() * 5)
                     value.textContent = newOrders.toString()
@@ -252,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
 
-      
+
         if (Math.random() > 0.95) {
             setTimeout(createSalesChart, 100)
         }
@@ -288,5 +287,5 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-   
+
 })

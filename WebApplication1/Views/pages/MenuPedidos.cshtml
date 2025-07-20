@@ -9,13 +9,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Pedidos - JOKAVE</title>
     <link rel="stylesheet" href="~/css/MenuPedidos.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="header">
         <div class="logo">PIZZERIA JOKAVE</div>
-        <button class="close-btn" onclick="window.history.back()"><i class="fas fa-times"></i></button>
+        <a style="text-decoration:none;" asp-controller="Menu" asp-action="MenuC" class="close-btn">X</a>
     </div>
+    <!--Modal para gestion de mensajes-->
+    <div id="modalPersonalizado" class="modal-overlay">
+        <div class="modal-contenido">
+            <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+            <h2 id="modalTitulo">Mensaje</h2>
+            <p id="modalTexto"></p>
+        </div>
+    </div>
+
 
     <div class="main-container">
         <div class="menu-section">
@@ -63,17 +73,12 @@
 
         <div class="order-section">
             <div class="order-header">
-                <select id="mesaSelect" class="form-control">
-                    <option value="1">Mesa 1</option>
-                    <option value="2">Mesa 2</option>
-                    <option value="3">Mesa 3</option>
-                    <option value="4">Mesa 4</option>
-                    <option value="5">Mesa 5</option>
-                </select>
-                <div class="order-number">Pedido: <span id="orderNumber">@(new Random().Next(100))</span></div>
+                
+                <div class="order-number">Mesa: <span id="orderNumber">@ViewBag.NumeroMesa</span></div>
             </div>
 
             <div class="order-items-container" id="orderItemsContainer">
+
             </div>
 
             <div class="order-footer">
@@ -88,5 +93,6 @@
     </div>
 
     <script src="~/js/MenuPedidos.js" asp-append-version="true"></script>
+    <script src="~/js/Modal.js" asp-append-version="true"></script>
 </body>
 </html>

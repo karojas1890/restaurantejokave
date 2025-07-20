@@ -1,4 +1,4 @@
-﻿
+﻿@model List<WebApplication1.Models.Tarjeta>
 @{
     Layout = "~/Views/Shared/LayoutTarjetas.cshtml";
 }
@@ -18,24 +18,28 @@
         <h2 class="section-title">Mis Tarjetas</h2>
         <p class="section-subtitle">Consulta el saldo de tus tarjetas registradas</p>
 
-        <div class="card-display">
-            <div class="card-number">
-                Número de tarjeta<br>
-                •••• •••• •••• 345
-            </div>
-
-            <div class="card-details">
-                <div class="card-expiry">
-                    <div class="card-expiry-label">Vence</div>
-                    <div class="card-expiry-value">10/26</div>
+        @foreach (var tarjeta in Model)
+        {
+            var ultimos4 = tarjeta.NumeroTarjeta.Length >= 4 ? tarjeta.NumeroTarjeta.Substring(tarjeta.NumeroTarjeta.Length - 4) : tarjeta.NumeroTarjeta;
+            <div class="card-display">
+                <div class="card-number">
+                    Número de tarjeta<br>
+                    •••• •••• •••• @ultimos4
                 </div>
 
-                <div class="card-balance">
-                    <div class="balance-label">Saldo Disponible</div>
-                    <div class="balance-amount">₡25000</div>
+                <div class="card-details">
+                    <div class="card-expiry">
+                        <div class="card-expiry-label">Vence</div>
+                        <div class="card-expiry-value">@($"{tarjeta.MesVencimiento:D2}/{tarjeta.AnioVencimiento}")</div>
+                    </div>
+
+                    <div class="card-balance">
+                        <div class="balance-label">Saldo Disponible</div>
+                        <div class="balance-amount">₡@tarjeta.Saldo</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </body>
 </html>

@@ -1,5 +1,4 @@
-﻿
-@model WebApplication1.Models.Usuario
+﻿@model WebApplication1.Models.Usuario
 @{
     Layout = null;
 
@@ -10,17 +9,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Cliente - JOKAVE</title>
-   <link rel="stylesheet"  href="~/css/MenuClientes.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/MenuClientes.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Modal.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container">
+        <div id="modalPersonalizado" class="modal-overlay">
+            <div class="modal-contenido">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 id="modalTitulo">Mensaje</h2>
+                <p id="modalTexto"></p>
+            </div>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+        {
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var titulo = "@(TempData["SuccessMessage"] != null ? "Exito" : "Error")";
+                    var mensaje = "@(TempData["SuccessMessage"] ?? TempData["ErrorMessage"])";
+                    mostrarModal(titulo, mensaje);
+                });
+            </script>
+        }
         <!-- Header -->
         <div class="header">
             <div class="logo">
                 <div class="logo-icon">🍕</div>
                 <div class="logo-text">PIZZERIA<br>JOKAVE</div>
             </div>
-            @if(Model!=null)
+            @if (Model != null)
             {
                 <div class="client-info">@Model.Nombre</div>
             }
@@ -37,50 +55,21 @@
             <a asp-controller="Menu" asp-action="Pedidos">🔔 Ordenar</a>
             <a asp-controller="Links" asp-action="AgregarTarjeta">💳 Agregar tarjeta/Saldo</a>
             <a asp-controller="Links" asp-action="Facturas">🧾 Solicitar cuenta</a>
-            <a asp-controller="Links" asp-action="Pagos">💰 Pagar</a>
-            <a asp-controller="Links" asp-action="MenuCliente">↗ Salir</a>
+            <a asp-controller="Pagos" asp-action="TraerTarjetas">💰 Pagar</a>
+            <a asp-controller="Auth" asp-action="Logout">↗ Salir</a>
         </div>
-        <!-- Estado de su visita -->
-        <div class="section">
+        <div class="section" id="estado-container">
             <div class="section-title">Estado de su visita</div>
             <div class="current-status">
                 <span>Estado actual:</span>
                 <div class="status-indicator"></div>
-                <span>Esperando mesa</span>
+                <span id="textoEstado"></span>
             </div>
 
-            <div class="status-timeline">
-                <div class="status-item">
-                    <div class="status-item-title">Esperando mesa</div>
-                    <div class="status-time">
-                        <div class="clock-icon">🕐</div>
-                        <span>2:28</span>
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="status-item-title">Esperando Mesero</div>
-                    <div class="status-time">
-                        <div class="clock-icon">🕐</div>
-                        <span>4:00</span>
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="status-item-title">Esperando la orden</div>
-                    <div class="status-time">
-                        <div class="clock-icon">🕐</div>
-                        <span>10:00</span>
-                    </div>
-                </div>
-                <div class="status-item">
-                    <div class="status-item-title">Esperando la cuenta</div>
-                    <div class="status-time">
-                        <div class="clock-icon">🕐</div>
-                        <span>5:00</span>
-                    </div>
-                </div>
+            <div class="status-timeline" id="statusTimeline">
+                <!-- Los estados serán insertados aquí dinámicamente -->
             </div>
         </div>
-
         <!-- Acciones principales -->
         <div class="section" id="section1">
             <div class="section-title">Acciones principales</div>
@@ -107,47 +96,52 @@
                     <div class="action-icon">🧾</div>
                     <div>Solicitar cuenta</div>
                 </a>
-                <a asp-controller="Links" asp-action="Pagos" class="action-btn btn-pagar">
+                <a asp-controller="Pagos" asp-action="TraerTarjetas" class="action-btn btn-pagar">
                     <div class="action-icon">💰</div>
                     <div>Pagar</div>
                 </a>
-                <button class="action-btn btn-salir">
+                <a asp-controller="Auth" asp-action="Logout" class="action-btn btn-salir">
                     <div class="action-icon">↗️</div>
                     <div>Salir</div>
-                </button>
+                </a>
             </div>
         </div>
 
         <!-- Estado de la orden -->
+        <!-- Estado de la orden -->
         <div class="section">
             <div class="section-title">Estado de la orden</div>
-            <div class="order-status-header">
-                <span>Estado actual:</span>
-                <div class="status-indicator status-green"></div>
-                <span>La cocina recibió su pedido</span>
-            </div>
+
 
             <div class="order-progress">
                 <div class="progress-item">
-                    <div class="progress-dot dot-yellow"></div>
+                    <div class="progress-dot" id="dot-1"></div>
                     <span>Mesero tomando orden</span>
                 </div>
                 <div class="progress-item">
-                    <div class="progress-dot dot-green"></div>
+                    <div class="progress-dot" id="dot-2"></div>
                     <span>Pedido enviado a cocina</span>
                 </div>
                 <div class="progress-item">
-                    <div class="progress-dot dot-magenta"></div>
+                    <div class="progress-dot" id="dot-3"></div>
                     <span>Cocina preparando orden</span>
                 </div>
                 <div class="progress-item">
-                    <div class="progress-dot dot-cyan"></div>
-                    <span>Entregando orden al cliente</span>
+                    <div class="progress-dot" id="dot-4"></div>
+                    <span>En camino a la mesa</span>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-dot" id="dot-5"></div>
+                    <span>Orden entregada</span>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-dot" id="dot-6"></div>
+                    <span>Orden finalizada</span>
                 </div>
             </div>
 
             <div class="progress-bar-container">
-                <div class="progress-bar"></div>
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
         </div>
 
@@ -175,14 +169,17 @@
 
         <!-- Feedback -->
         <div class="section">
-            <div class="feedback-section">
+            <form asp-controller="Menu" asp-action="EnviarFeedback" method="post">
+                <input type="hidden" name="EstadoAnimo" id="EstadoAnimo" />
+                <input type="hidden" name="Satisfaccion" id="Satisfaccion" />
+
                 <div class="feedback-question">¿Cómo te sientes hoy?</div>
                 <div class="mood-options">
-                    <button class="mood-btn" data-mood="angry">😠</button>
-                    <button class="mood-btn" data-mood="sad">😞</button>
-                    <button class="mood-btn" data-mood="neutral">😐</button>
-                    <button class="mood-btn" data-mood="happy">😊</button>
-                    <button class="mood-btn" data-mood="excited">😄</button>
+                    <button type="button" class="mood-btn" data-mood="1">😠</button>
+                    <button type="button" class="mood-btn" data-mood="2">😞</button>
+                    <button type="button" class="mood-btn" data-mood="3">😐</button>
+                    <button type="button" class="mood-btn" data-mood="4">😊</button>
+                    <button type="button" class="mood-btn" data-mood="5">😄</button>
                 </div>
 
                 <div class="feedback-question">¿Cuál es tu nivel de satisfacción?</div>
@@ -195,13 +192,31 @@
                 </div>
 
                 <div class="feedback-question">Comparte tu experiencia</div>
-                <textarea class="feedback-textarea" placeholder="Contanos sobre tu experiencia en nuestro restaurante..."></textarea>
+                <textarea class="feedback-textarea" id="Comentarios" name="Comentarios" placeholder="Contanos sobre tu experiencia..."></textarea>
 
-                <button class="submit-btn">Enviar Reseña</button>
-            </div>
+                <button type="submit" class="submit-btn">Enviar Reseña</button>
+            </form>
         </div>
     </div>
     <script src="~/js/EstadoOrden.js" asp-append-version="true"></script>
     <script src="~/js/MenuClientes.js" asp-append-version="true"></script>
+    <script src="~/js/EstadoVisita.js" asp-append-version="true"></script>
+    <script src="~/js/Modal.js" asp-append-version="true"></script>
+    <script>
+       
+        // feedback
+        document.querySelectorAll('.mood-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('EstadoAnimo').value = btn.dataset.mood;
+            });
+        });
+
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', () => {
+                document.getElementById('Satisfaccion').value = star.dataset.rating;
+            });
+        });
+
+    </script>
 </body>
 </html>
