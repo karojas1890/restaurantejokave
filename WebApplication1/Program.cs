@@ -22,7 +22,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddScoped<EmailService>();
-
+builder.Services.AddHttpClient();
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
