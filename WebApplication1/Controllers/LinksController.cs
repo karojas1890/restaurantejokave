@@ -7,6 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using WebApplication1.Models;
 
 
@@ -16,11 +21,13 @@ namespace WebApplication1.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public LinksController(ApplicationDbContext context, IConfiguration config)
+        public LinksController(ApplicationDbContext context, IConfiguration config, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _config = config;
+            _httpClientFactory = httpClientFactory;
         }
 
         public IActionResult Index()
@@ -220,6 +227,87 @@ namespace WebApplication1.Controllers
 
                     }
                 }
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ObtenerSugerenciaIA(int eficiencia, int energia, int estres)
+        {
+            string apiKey = Environment.GetEnvironmentVariable("GROQ_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                Console.WriteLine("❌ No se encontró la variable de entorno GROQ_API_KEY.");
+                return BadRequest("No se encontró la clave API.");
+            }
+
+            Console.WriteLine("✅ API Key recibida: " + apiKey);
+            string prompt = $"Dado que la eficiencia del mesero es {eficiencia}%, la energía es {energia}% y el estrés es {estres}%, ¿qué acción debe tomar entre: Hidratarse, Tomar un descanso, Solicitar ayuda al gerente o Renunciar? Explica brevemente tu elección. Respuesta corta y profesional";
+
+            var requestBody = new
+            {
+                model = "llama3-70b-8192",
+                messages = new[]
+                {
+                new { role = "user", content = prompt }
+            },
+                temperature = 0.7
+            };
+
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var json = System.Text.Json.JsonSerializer.Serialize(requestBody);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://api.groq.com/openai/v1/chat/completions", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("Error al consultar Groq.");
+            }
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            using var jsonDoc = await JsonDocument.ParseAsync(responseStream);
+
+            string respuestaIA = jsonDoc.RootElement
+                .GetProperty("choices")[0]
+                .GetProperty("message")
+                .GetProperty("content")
+                .GetString();
+
+            return Json(new { sugerencia = respuestaIA });
+        }
+
+        [HttpPost]
+        public IActionResult EjecutarModoSupervivencia(int opcion)
+        {
+            string usuario = HttpContext.Session.GetString("Usuario");
+
+            if (string.IsNullOrEmpty(usuario))
+            {
+                return Json(new { success = false, message = "Sesión expirada" });
+            }
+
+            try
+            {
+                string connectionString = _config.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("usuariojokave.SP_ModoSupervivenciaMesero", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Usuario", usuario);
+                    cmd.Parameters.AddWithValue("@Opcion", opcion);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
             }
         }
 
