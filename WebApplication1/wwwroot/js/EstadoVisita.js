@@ -8,15 +8,15 @@ let EstadoActual = null;
 
 // Textos y colores por estado
 const estados = [
-    { id: 1, nombre: "En espera", clase: "en-espera" },
-    { id: 2, nombre: "Asignado a mesa", clase: "asignado" },
+    { id: 1, nombre: "En espera", clase: "en-espera", style: "red" },
+    { id: 2, nombre: "Asignado a mesa", clase: "asignado", style: "Black" },
     { id: 3, nombre: "Ordenando", clase: "ordenando" },
     { id: 4, nombre: "Esperando Orden", clase: "esperando-cuenta" },
     { id: 5, nombre: "Consumiendo", clase: "consumiendo" },
     { id: 6, nombre: "Solicitando cuenta", clase: "solicitando-cuenta" },
     { id: 7, nombre: "Pagando", clase: "pagando" },
     { id: 8, nombre: "Se retira después de pagar", clase: "retira-pagado" },
-    { id: 9, nombre: "Se retira sin pagar", clase: "retira-sin-pago" }
+    { id: 9, nombre: "Se retira sin pagar", clase: "retira-sin-pago", style:"red"}
 ];
 
 // Función principal para obtener y actualizar estado de visita

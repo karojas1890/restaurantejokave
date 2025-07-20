@@ -1,8 +1,6 @@
 ﻿
-const idOrden = 2;//hay que ver como se recoje el id
-
 function actualizarEstadoOrden() {
-    fetch(`/Ordenes/EstadoOrden?id=${idOrden}`)
+    fetch(`/Ordenes/EstadoOrden`)
         .then(res => res.json())
         .then(data => {
             if (data.error) {
@@ -41,7 +39,7 @@ function actualizarBarra(progreso) {
 
     const progressBar = document.querySelector('.progress-bar');
     const dots = document.querySelectorAll('.progress-dot');
-    const statusText = document.querySelector('.order-status-header span:last-child');
+    const statusText = document.querySelector('.section-title span:last-child');
 
     // Limpia clases
     dots.forEach(dot => {
@@ -74,9 +72,30 @@ function actualizarBarra(progreso) {
             dots[1].classList.add('dot-green');
             dots[2].classList.add('dot-magenta');
             dots[3].classList.add('dot-cyan');
-            if (statusText) statusText.textContent = 'Entregando orden al cliente';
+            if (statusText) statusText.textContent = 'En camino a la mesa';
+            break;
+        case 5:
+            progressBar.style.width = '83.3%';
+            dots[0].classList.add('dot-yellow');
+            dots[1].classList.add('dot-green');
+            dots[2].classList.add('dot-magenta');
+            dots[3].classList.add('dot-cyan');
+            dots[4].classList.add('dot-blue');
+            if (statusText) statusText.textContent = 'Orden entregada';
+            break;
+        case 6:
+            progressBar.style.width = '100%';
+            dots[0].classList.add('dot-yellow');
+            dots[1].classList.add('dot-green');
+            dots[2].classList.add('dot-magenta');
+            dots[3].classList.add('dot-cyan');
+            dots[4].classList.add('dot-blue');
+            dots[5].classList.add('dot-lime');
+            if (statusText) statusText.textContent = 'Orden finalizada';
             break;
         default:
+
+               
 
             limpiarEstado();
     }
