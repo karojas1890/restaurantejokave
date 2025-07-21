@@ -1,12 +1,9 @@
-﻿// Variables globales
-
-//nuevo
-let timerInterval = null;
+﻿let timerInterval = null;
 let tiempoSegundos = 0;
 
 let EstadoActual = null;
 
-// Textos y colores por estado
+
 const estados = [
     { id: 1, nombre: "En espera", clase: "en-espera", style: "red" },
     { id: 2, nombre: "Asignado a mesa", clase: "asignado", style: "Black" },
@@ -16,14 +13,39 @@ const estados = [
     { id: 6, nombre: "Solicitando cuenta", clase: "solicitando-cuenta" },
     { id: 7, nombre: "Pagando", clase: "pagando" },
     { id: 8, nombre: "Se retira después de pagar", clase: "retira-pagado" },
-    { id: 9, nombre: "Se retira sin pagar", clase: "retira-sin-pago", style:"red"}
+    { id: 9, nombre: "Se retira sin pagar", clase: "retira-sin-pago", style: "red" }
 ];
 
-// Función principal para obtener y actualizar estado de visita
+const STORAGE_KEY = "estadosVisita";
+
+
+function guardarEstadoTiempo(idEstado, tiempo) {
+    let estadosGuardados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    const index = estadosGuardados.findIndex(e => e.idEstado === idEstado);
+    if (index >= 0) {
+        estadosGuardados[index].tiempo = tiempo;
+    } else {
+        estadosGuardados.push({ idEstado, tiempo });
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(estadosGuardados));
+}
+
+
+function obtenerEstadosGuardados() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+}
+
+
+function limpiarEstadosGuardados() {
+    localStorage.removeItem(STORAGE_KEY);
+}
+
+
 function actualizarEstadoVisita() {
     fetch(`/Ordenes/EstadoVisita`, {
         method: 'GET',
-        credentials: 'include'  
+        credentials: 'include'
     })
         .then(res => {
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -43,8 +65,7 @@ function actualizarEstadoVisita() {
             }
 
             if (data.estadoActual && data.estadoActual !== EstadoActual) {
-                EstadoActual = data.estadoActual;
-                cambiarEstado(EstadoActual);
+                cambiarEstado(data.estadoActual);
             }
 
             if (data.tiempoEspera) {
@@ -59,7 +80,6 @@ function actualizarEstadoVisita() {
 
 
 
-// Crear solo el elemento del estado actual en el timeline
 function actualizarTimelineEstados(estadoActual) {
     const timeline = document.getElementById("statusTimeline");
     if (!timeline) {
@@ -73,9 +93,8 @@ function actualizarTimelineEstados(estadoActual) {
         return;
     }
 
-    // Verifica si ya se añadió ese estado
     if (document.getElementById(`estado-${estadoInfo.id}`)) {
-        return; // Ya existe, no lo agregues de nuevo
+        return; 
     }
 
     const estadoDiv = document.createElement('div');
@@ -94,31 +113,46 @@ function actualizarTimelineEstados(estadoActual) {
 }
 
 
-// Actualizar solo el estado actual (sin recargar todo)
 function cambiarEstado(nuevoEstado) {
-    // Detener timer anterior
+    
+    if (EstadoActual !== null) {
+        guardarEstadoTiempo(EstadoActual, tiempoSegundos);
+    }
+
+   
     if (timerInterval) {
         clearInterval(timerInterval);
     }
 
-    tiempoSegundos = 0;
-    estadoActual = nuevoEstado;
+    EstadoActual = nuevoEstado;
 
-    // Actualizar solo el texto de estado actual
+    const estadosGuardados = obtenerEstadosGuardados();
+    const estadoGuardado = estadosGuardados.find(e => e.idEstado === nuevoEstado);
+    tiempoSegundos = estadoGuardado ? estadoGuardado.tiempo : 0;
+
+   
     const statusText = document.getElementById("textoEstado");
     if (statusText) {
         statusText.textContent = obtenerTextoEstado(nuevoEstado);
     }
-
-    // Actualizar solo el indicador de color
     actualizarIndicadorColor(nuevoEstado);
 
-    // Crear solo el elemento del estado actual en el timeline
+    
     actualizarTimelineEstados(nuevoEstado);
 
-    // Iniciar timer solo para el estado actual
+   
+    const tiempoElem = document.getElementById(`tiempo-${nuevoEstado}`);
+    if (tiempoElem) {
+        tiempoElem.textContent = formatearTiempo(tiempoSegundos);
+    }
+
+    
+    guardarEstadoTiempo(nuevoEstado, tiempoSegundos);
+
+   
     timerInterval = setInterval(() => {
         tiempoSegundos++;
+        guardarEstadoTiempo(nuevoEstado, tiempoSegundos);
         const tiempo = document.getElementById(`tiempo-${nuevoEstado}`);
         if (tiempo) {
             tiempo.textContent = formatearTiempo(tiempoSegundos);
@@ -128,31 +162,45 @@ function cambiarEstado(nuevoEstado) {
     console.log(`Estado actualizado a: ${obtenerTextoEstado(nuevoEstado)}`);
 }
 
-// Actualizar tiempo específico sin recargar
+
 function actualizarTiempoEspera(tiempoEnSegundos) {
-    if (estadoActual && tiempoEnSegundos) {
+    if (EstadoActual && tiempoEnSegundos) {
         tiempoSegundos = tiempoEnSegundos;
-        const tiempo = document.getElementById(`tiempo-${estadoActual}`);
+        const tiempo = document.getElementById(`tiempo-${EstadoActual}`);
         if (tiempo) {
             tiempo.textContent = formatearTiempo(tiempoSegundos);
         }
+        
+        guardarEstadoTiempo(EstadoActual, tiempoSegundos);
     }
 }
 
-// Formato mm:ss
+
+function reconstruirTimeline() {
+    const estadosGuardados = obtenerEstadosGuardados();
+    estadosGuardados.forEach(({ idEstado, tiempo }) => {
+        actualizarTimelineEstados(idEstado);
+        const tiempoElem = document.getElementById(`tiempo-${idEstado}`);
+        if (tiempoElem) {
+            tiempoElem.textContent = formatearTiempo(tiempo);
+        }
+    });
+}
+
+
 function formatearTiempo(segundos) {
     const mins = Math.floor(segundos / 60);
     const segs = segundos % 60;
     return `${mins}:${segs.toString().padStart(2, '0')}`;
 }
 
-// Obtener texto de estado
+
 function obtenerTextoEstado(id) {
     const estado = estados.find(e => e.id === id);
     return estado ? estado.nombre : "Estado desconocido";
 }
 
-// Actualizar solo el color del indicador
+
 function actualizarIndicadorColor(estadoId) {
     const indicador = document.querySelector("#estado-container .status-indicator");
     if (!indicador) {
@@ -160,17 +208,16 @@ function actualizarIndicadorColor(estadoId) {
         return;
     }
 
-    // Remover clases de estado anteriores
     estados.forEach(e => indicador.classList.remove(e.clase));
 
-    // Agregar clase del estado actual
+  
     const estado = estados.find(e => e.id === estadoId);
     if (estado) {
         indicador.classList.add(estado.clase);
     }
 }
 
-// Limpiar solo la sección de estado
+
 function limpiarEstado() {
     if (timerInterval) {
         clearInterval(timerInterval);
@@ -178,9 +225,9 @@ function limpiarEstado() {
     }
 
     tiempoSegundos = 0;
-    estadoActual = null;
+    EstadoActual = null;
 
-    // Limpiar solo elementos dentro del estado-container
+    
     const statusText = document.getElementById("textoEstado");
     if (statusText) {
         statusText.textContent = "Sin información";
@@ -191,35 +238,34 @@ function limpiarEstado() {
         estados.forEach(e => indicador.classList.remove(e.clase));
     }
 
-    // Limpiar el timeline
+   
     const timeline = document.getElementById("statusTimeline");
     if (timeline) {
         timeline.innerHTML = "";
     }
+
+    limpiarEstadosGuardados();
 }
 
-// Inicializar solo la sección de estado
+
 function inicializarSeccionEstado() {
     console.log("Inicializando sección de estado de visita...");
 
-    // Verificar que existe el contenedor
     const container = document.getElementById("estado-container");
     if (!container) {
         console.error("No se encontró el contenedor #estado-container");
         return;
     }
 
-    // Obtener estado inicial (esto creará el timeline cuando se obtenga el estado)
+    
+    reconstruirTimeline();
+
+    
     actualizarEstadoVisita();
 
-    // Configurar actualización automática cada 10 segundos
+ 
     setInterval(actualizarEstadoVisita, 10000);
 }
 
-// Inicializar cuando el DOM esté listo
 
-    inicializarSeccionEstado();
-
-
-
-    inicializarSeccionEstado();
+inicializarSeccionEstado();

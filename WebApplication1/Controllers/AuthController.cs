@@ -140,6 +140,8 @@ public class AuthController : Controller
                 visita.FechaHoraSalida = DateTime.Now;
                 visita.Estado = 8;
 
+                //validacion veficar si se fue sin pagar 
+
                 if (visita.IdSilla != null)
                 {
                     var silla = _context.Sillas.FirstOrDefault(s => s.IdSilla == visita.IdSilla);

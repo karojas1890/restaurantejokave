@@ -49,7 +49,7 @@ function seleccionarSilla(elemento) {
             "Content-Type": "application/json"
         },
         credentials: 'include', 
-        body: JSON.stringify({ idSilla, idMesa })
+        body: JSON.stringify({ IdSilla: idSilla, IdMesa: idMesa })
     })
         .then(response => {
             return response.json();

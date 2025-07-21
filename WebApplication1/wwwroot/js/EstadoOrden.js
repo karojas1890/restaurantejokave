@@ -1,6 +1,5 @@
-﻿
-function actualizarEstadoOrden() {
-    fetch(/Ordenes/EstadoOrden, {
+﻿function actualizarEstadoOrden() {
+    fetch(`/Ordenes/EstadoOrden`, {
         method: 'GET',
         credentials: 'include'
     })
@@ -8,7 +7,7 @@ function actualizarEstadoOrden() {
 
             const contentType = res.headers.get('content-type') || '';
             if (!res.ok) {
-                throw new Error(HTTP error! status: ${ res.status });
+                throw new Error(`HTTP error! status: ${res.status}`);
             }
             if (!contentType.includes('application/json')) {
                 throw new Error('Respuesta no es JSON');
@@ -28,7 +27,7 @@ function actualizarEstadoOrden() {
             console.error('Error fetching estado:', err);
             limpiarEstado();
         });
-}
+} 
 
 
 function limpiarEstado() {
@@ -61,7 +60,7 @@ function actualizarBarra(progreso) {
 
     switch (progreso) {
         case 1:
-            progressBar.style.width = '25%';
+            progressBar.style.width = '20%';
             dots[0].classList.add('dot-yellow');
             if (statusText) statusText.textContent = 'Mesero tomando orden';
             break;
@@ -79,7 +78,7 @@ function actualizarBarra(progreso) {
             if (statusText) statusText.textContent = 'Cocina preparando orden';
             break;
         case 4:
-            progressBar.style.width = '100%';
+            progressBar.style.width = '80%';
             dots[0].classList.add('dot-yellow');
             dots[1].classList.add('dot-green');
             dots[2].classList.add('dot-magenta');
@@ -87,7 +86,7 @@ function actualizarBarra(progreso) {
             if (statusText) statusText.textContent = 'En camino a la mesa';
             break;
         case 5:
-            progressBar.style.width = '83.3%';
+            progressBar.style.width = '90%';
             dots[0].classList.add('dot-yellow');
             dots[1].classList.add('dot-green');
             dots[2].classList.add('dot-magenta');
