@@ -311,7 +311,161 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult ObtenerOrdenesMesero()
+        {
+            int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
 
+            if (idUsuario == null)
+            {
+                return Json(new { error = "Usuario no autenticado" });
+            }
+            var ordenes = new List<object>();
+
+            using (SqlConnection con = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariojokave.sp_OrdenesMesero", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Opcion", 1);
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ordenes.Add(new
+                            {
+                                IdOrden = reader["IdOrden"],
+                                IdMesa = reader["IdMesa"],
+                                HoraRecibida = ((DateTime)reader["HoraRecibida"]).ToString("HH:mm:ss")
+                            });
+                        }
+                    }
+                }
+            }
+
+            return Json(ordenes);
+        }
+
+        [HttpPost]
+        public IActionResult ObtenerOrdenesMeserodesdeCocina()
+        {
+            int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+
+            if (idUsuario == null)
+            {
+                return Json(new { error = "Usuario no autenticado" });
+            }
+            var ordenes = new List<object>();
+
+            using (SqlConnection con = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariojokave.sp_OrdenesMesero", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Opcion", 5);
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ordenes.Add(new
+                            {
+                                IdOrden = reader["IdOrden"],
+                                IdMesa = reader["IdMesa"],
+                                HoraRecibida = ((DateTime)reader["HoraRecibida"]).ToString("HH:mm:ss")
+                            });
+                        }
+                    }
+                }
+            }
+
+            return Json(ordenes);
+        }
+
+        [HttpPost]
+        public IActionResult AprobarOrden(int idOrden)
+        {
+            using (SqlConnection con = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariojokave.sp_OrdenesMesero", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Opcion", 4); // Opción para aprobar
+                    cmd.Parameters.AddWithValue("@IdOrden", idOrden); // Solo IdOrden se requiere en esta opción
+                    cmd.Parameters.AddWithValue("@IdUsuario", DBNull.Value); // En caso de que lo pida, pero no sea usado
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            return Json(new { success = true, mensaje = "Orden aprobada correctamente" });
+        }
+
+        public IActionResult AprobarOrdenparalaMesa(int idOrden)
+        {
+            using (SqlConnection con = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariojokave.sp_OrdenesMesero", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Opcion", 6); // Opción para aprobar
+                    cmd.Parameters.AddWithValue("@IdOrden", idOrden); // Solo IdOrden se requiere en esta opción
+                    cmd.Parameters.AddWithValue("@IdUsuario", DBNull.Value); // En caso de que lo pida, pero no sea usado
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            return Json(new { success = true, mensaje = "Orden aprobada correctamente" });
+        }
+
+        [HttpPost]
+        public IActionResult ObtenerDetalleOrden(int idOrden)
+        {
+            
+
+            int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+            Console.WriteLine($"🚀 Entrando a ObtenerDetalleOrden - IdUsuario: {idUsuario}, IdOrden: {idOrden}");
+
+            var detalles = new List<object>();
+
+            using (SqlConnection con = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariojokave.sp_OrdenesMesero", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Opcion", 2);
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    cmd.Parameters.AddWithValue("@IdOrden", idOrden); // Debés agregar este parámetro opcional al SP
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            detalles.Add(new
+                            {
+                                idOrden = reader["IdOrden"],
+                                idMesa = reader["IdMesa"],
+                                horaRecibida = ((DateTime)reader["HoraRecibida"]).ToString("HH:mm:ss"),
+                                nombre = reader["Nombre"],
+                                cantidadProducto = reader["CantidadProducto"]
+                            });
+                        }
+                    }
+                }
+            }
+            Console.WriteLine($"✅ Finalizando ObtenerDetalleOrden - Total productos encontrados: {detalles.Count}");
+
+            return Json(detalles);
+        }
 
         public IActionResult GeneradorCaos()
         {
