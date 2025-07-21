@@ -467,6 +467,46 @@ namespace WebApplication1.Controllers
             return Json(detalles);
         }
 
+        public IActionResult ObtenerDetalleOrdendesdeCocina(int idOrden)
+        {
+
+
+            int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+            Console.WriteLine($"🚀 Entrando a ObtenerDetalleOrden - IdUsuario: {idUsuario}, IdOrden: {idOrden}");
+
+            var detalles = new List<object>();
+
+            using (SqlConnection con = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand cmd = new SqlCommand("usuariojokave.sp_OrdenesMesero", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Opcion", 7);
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    cmd.Parameters.AddWithValue("@IdOrden", idOrden); // Debés agregar este parámetro opcional al SP
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            detalles.Add(new
+                            {
+                                idOrden = reader["IdOrden"],
+                                idMesa = reader["IdMesa"],
+                                horaRecibida = ((DateTime)reader["HoraRecibida"]).ToString("HH:mm:ss"),
+                                nombre = reader["Nombre"],
+                                cantidadProducto = reader["CantidadProducto"]
+                            });
+                        }
+                    }
+                }
+            }
+            Console.WriteLine($"✅ Finalizando ObtenerDetalleOrden - Total productos encontrados: {detalles.Count}");
+
+            return Json(detalles);
+        }
+
         public IActionResult GeneradorCaos()
         {
             return View("~/Views/pages/PanelGeneradordeCaos.cshtml");

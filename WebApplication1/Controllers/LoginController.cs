@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http; // para sesión
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-using Microsoft.Data.SqlClient;
-using Microsoft.AspNetCore.Http; // para sesión
 
 namespace WebApplication1.Controllers
 {
@@ -41,11 +41,11 @@ namespace WebApplication1.Controllers
                     if (mensaje == "Login exitoso")
                     {
                         idRol = Convert.ToInt32(reader["IdRol"]);
+                        int idJornadaLaboral = Convert.ToInt32(reader["IdJornadaLaboral"]);
                         HttpContext.Session.SetString("Usuario", reader["Usuario"].ToString());
                         HttpContext.Session.SetInt32("IdRol", idRol);
-
                         HttpContext.Session.SetInt32("IdUsuario", Convert.ToInt32(reader["IdUsuario"]));
-                        
+                        HttpContext.Session.SetInt32("IdJornadaLaboral", idJornadaLaboral);
 
                         if (idRol == 3)
                         {
@@ -72,11 +72,37 @@ namespace WebApplication1.Controllers
             return Json(new { mensaje = mensaje, redirectUrl = redirectUrl });
         }
 
+        [HttpPost]
         public IActionResult Logout()
         {
+            // Obtener los valores de sesión
+            var idJornadaLaboral = HttpContext.Session.GetInt32("IdJornadaLaboral");
+            var usuario = HttpContext.Session.GetString("Usuario");
+
+            if (idJornadaLaboral.HasValue && !string.IsNullOrEmpty(usuario))
+            {
+                // Ejecutar el procedimiento almacenado
+                string connectionString = _config.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("SP_CerrarSesion", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdJornadaLaboral", idJornadaLaboral.Value);
+                    cmd.Parameters.AddWithValue("@Usuario", usuario);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            // Limpiar la sesión
             HttpContext.Session.Clear();
-            return RedirectToAction("LoginCliente", "Links");
+
+            // Redirigir al Index (por ejemplo, página de login)
+            return RedirectToAction("Index", "Home"); // Asegúrate de que el controlador y vista existan
         }
+
     }
 }
 
