@@ -43,7 +43,7 @@ function limpiarEstadosGuardados() {
 
 
 function actualizarEstadoVisita() {
-    fetch(`/Ordenes/EstadoVisita`, {
+    fetch(`Ordenes/EstadoVisita`, {
         method: 'GET',
         credentials: 'include'
     })

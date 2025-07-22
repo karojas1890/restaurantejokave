@@ -1,5 +1,5 @@
 ﻿function actualizarEstadoOrden() {
-    fetch(`/Ordenes/EstadoOrden`, {
+    fetch(`Ordenes/EstadoOrden`, {
         method: 'GET',
         credentials: 'include'
     })

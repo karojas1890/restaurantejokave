@@ -43,7 +43,7 @@ function seleccionarSilla(elemento) {
     const idMesa = elemento.dataset.mesaId;
 
 
-    fetch("/Mesa/ConfirmarSilla", {
+    fetch("Mesa/ConfirmarSilla", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
