@@ -53,7 +53,11 @@
             minute: "2-digit",
         }
         const dateTimeString = now.toLocaleDateString("es-ES", options)
-        document.querySelector(".date-time").textContent = dateTimeString
+        const dateTimeElement = document.querySelector(".date-time");
+        if (dateTimeElement) {
+            dateTimeElement.textContent = dateTimeString;
+        }
+
     }
 
     // Update time every minute
