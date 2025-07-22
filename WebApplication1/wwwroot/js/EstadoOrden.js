@@ -1,5 +1,5 @@
 ﻿function actualizarEstadoOrden() {
-    fetch(`Ordenes/EstadoOrden`, {
+    fetch(`https://tiusr24pl.cuc-carrera-ti.ac.cr/jokave2007/Ordenes/EstadoOrden`, {
         method: 'GET',
         credentials: 'include'
     })

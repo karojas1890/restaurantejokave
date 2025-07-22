@@ -43,7 +43,7 @@ function limpiarEstadosGuardados() {
 
 
 function actualizarEstadoVisita() {
-    fetch(`Ordenes/EstadoVisita`, {
+    fetch(`https://tiusr24pl.cuc-carrera-ti.ac.cr/jokave2007/Ordenes/EstadoVisita`, {
         method: 'GET',
         credentials: 'include'
     })
