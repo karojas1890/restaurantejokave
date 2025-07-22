@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+    
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Restaurante JOKAVE</title>
+    <link rel="stylesheet" href="~/css/ImagenMenu.css" asp-append-version="true">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="restaurant-name">Restaurante JOKAVE</h1>
+                
+            </div>
+            <div class="header-controls">
+                <button class="btn-zoom" id="zoomBtn">
+                    <i class="fas fa-search-plus"></i>
+                    Ampliar Menú
+                </button>
+                <button class="btn-fullscreen" id="fullscreenBtn">
+                    <i class="fas fa-expand"></i>
+                    Pantalla Completa
+                </button>
+            </div>
+            <a asp-controller="Menu" asp-action="MenuC" class="btn-back" id="backBtn">
+                <i class="fas fa-times"></i>
+            </a>
+        </header>
+
+        <!-- Menu Display -->
+        <main class="menu-section">
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-image-wrapper">
+                    <img src="~/images/menu.jpg"
+                         alt="Menú Pizzería JOKAVE - Pizzas y Bebidas"
+                         class="menu-image"
+                         id="menuImage">
+                    <div class="image-overlay">
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" id="zoomInBtn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="zoom-btn" id="zoomOutBtn">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button class="zoom-btn" id="resetZoomBtn">
+                                <i class="fas fa-home"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+      
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Restaurante JOKAVE. Todos los derechos reservados.</p>
+            <p class="price-note">*Precios no incluyen I.V.A (13%)</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Fullscreen -->
+    <div class="modal" id="fullscreenModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="~/images/menu.jpg" alt="Menú Completo" class="modal-image" id="modalImage">
+        </div>
+    </div>
+
+    <script src="~/js/ImagenMenu.js" asp-append-version="true"></script>
+</body>
+</html>

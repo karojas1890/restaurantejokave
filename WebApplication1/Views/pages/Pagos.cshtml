@@ -1,4 +1,5 @@
 ﻿@model WebApplication1.Models.ViewModels.PagoViewModel
+@using System.Globalization
 @{
     Layout = null;
 }
@@ -52,7 +53,7 @@
                         {
                             var ultimos4 = tarjeta.NumeroTarjeta.Substring(tarjeta.NumeroTarjeta.Length - 4);
                             <option value="@tarjeta.NumeroTarjeta"
-                                    data-saldo="@tarjeta.Saldo"
+                                    data-saldo="@tarjeta.Saldo?.ToString("F2", CultureInfo.InvariantCulture)"
                                     data-mes="@tarjeta.MesVencimiento"
                                     data-anio="@tarjeta.AnioVencimiento"
                                     data-cvv="@tarjeta.CodigoSeguridad">

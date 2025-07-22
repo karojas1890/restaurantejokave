@@ -53,7 +53,7 @@
             mensaje.innerHTML = `
                 <div class="success-message" style="background: linear-gradient(90deg, #fff3b0, #ffc971, #ff6961); padding: 10px; border-radius: 8px; color: #000; display: flex; align-items: center; gap: 10px;">
                     <span class="error-icon">✗</span> 
-                    <span>Saldo insuficiente. <a style=" color: #000;" href="/Tarjetas/TraerTarjetas">Cargar saldo</a></span>
+                    <span>Saldo insuficiente. <a style=" color: #000;" href="https://tiusr24pl.cuc-carrera-ti.ac.cr/jokave2007/Tarjetas/TraerTarjetas">Cargar saldo</a></span>
                 </div>`;
             botonPagar.disabled = true;
         }

@@ -44,6 +44,12 @@ namespace WebApplication1.Controllers
             return View("~/Views/pages/LoginCliente.cshtml");
         }
 
+        [Authorize(Roles = "1")]
+        public IActionResult ImagenMenu()
+        {
+            return View("~/Views/pages/ImagenMenu.cshtml");
+        }
+
         public IActionResult CrearCuentaCliente()
         {
             return View("~/Views/pages/CrearCuentaCliente.cshtml");

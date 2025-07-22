@@ -1,44 +1,27 @@
 ﻿// Variables globales
-const form = document.getElementById('registrationForm');
-const createBtn = document.getElementById('createBtn');
-const inputs = document.querySelectorAll('.form-input');
-
+let form;
+let createBtn;
+let inputs;
 // Inicializa validaciones
 document.addEventListener('DOMContentLoaded', function () {
+    form = document.getElementById('registrationForm');
+    createBtn = document.getElementById('createBtn');
+    inputs = document.querySelectorAll('.form-input');
+
     initializeValidation();
 });
 
 // Configura validaciones para cada campo
 function initializeValidation() {
-    // Identificación
-    setupFieldValidation('identificacion', validateIdentificacion);
-
-    // Nombre
-    setupFieldValidation('nombre', validateNombre);
-
-    // Primer Apellido
-    setupFieldValidation('primerApellido', validateApellido);
-
-    // Segundo Apellido (opcional)
-    setupFieldValidation('segundoApellido', validateApellidoOpcional);
-
-    // Telefono
-    setupFieldValidation('telefono', validateTelefono);
-
-    // Correo
-    setupFieldValidation('correo', validateCorreo);
-
-    // Usuario
-    setupFieldValidation('usuario', validateUsuario);
-
-    // Contraseña
-    setupFieldValidation('contrasena', validateContrasena);
-
-    // Confirmar contraseña
+    setupFieldValidation('DocumentoIdentificacion', validateIdentificacion);
+    setupFieldValidation('Nombre', validateNombre);
+    setupFieldValidation('Apellido1', validateApellido);
+    setupFieldValidation('Apellido2', validateApellidoOpcional);
+    setupFieldValidation('Telefono', validateTelefono);
+    setupFieldValidation('Email', validateCorreo);
+    setupFieldValidation('Usuario1', validateUsuario);
+    setupFieldValidation('Password', validateContrasena);
     setupFieldValidation('confirmarContrasena', validateConfirmarContrasena);
-
-    // Enva el formulario
-    form.addEventListener('submit', handleFormSubmit);
 }
 
 // Configura validacion para un campos especificos
@@ -51,7 +34,7 @@ function setupFieldValidation(fieldId, validationFunction) {
 
     field.addEventListener('input', function () {
         clearFieldMessages(fieldId);
-        if (fieldId === 'contrasena') {
+        if (fieldId === 'Contraseña') {
             updatePasswordStrength(this.value);
         }
     });
@@ -117,7 +100,7 @@ function validateApellidoOpcional(value, fieldId) {
         showFieldSuccess(fieldId, 'Apellido válido');
     }
 
-    return true; 
+    return true;
 }
 
 function validateTelefono(value, fieldId) {
@@ -183,7 +166,7 @@ function validateContrasena(value, fieldId) {
 }
 
 function validateConfirmarContrasena(value, fieldId) {
-    const contrasena = document.getElementById('contrasena').value;
+    const contrasena = document.getElementById('Password').value;
     if (!value) {
         showFieldError(fieldId, 'Confirma tu contraseña');
         return false;
@@ -198,8 +181,8 @@ function validateConfirmarContrasena(value, fieldId) {
 
 // Actualizaa indicador de fortaleza de contraseña
 function updatePasswordStrength(password) {
-    const strengthIndicator = document.getElementById('passwordStrength');
-    const strengthBar = document.getElementById('passwordStrengthBar');
+    const strengthIndicator = document.getElementById('passStrength');
+    const strengthBar = document.getElementById('passStrengthBar');
 
     if (!password) {
         strengthIndicator.style.display = 'none';
@@ -271,16 +254,17 @@ function handleFormSubmit(e) {
 
     // Valida todos los campos
     const validations = [
-        validateIdentificacion(document.getElementById('identificacion').value, 'identificacion'),
-        validateNombre(document.getElementById('nombre').value, 'nombre'),
-        validateApellido(document.getElementById('primerApellido').value, 'primerApellido'),
-        validateApellidoOpcional(document.getElementById('segundoApellido').value, 'segundoApellido'),
-        validateTelefono(document.getElementById('telefono').value, 'telefono'),
-        validateCorreo(document.getElementById('correo').value, 'correo'),
-        validateUsuario(document.getElementById('usuario').value, 'usuario'),
-        validateContrasena(document.getElementById('contrasena').value, 'contrasena'),
+        validateIdentificacion(document.getElementById('DocumentoIdentificacion').value, 'DocumentoIdentificacion'),
+        validateNombre(document.getElementById('Nombre').value, 'Nombre'),
+        validateApellido(document.getElementById('Apellido1').value, 'Apellido1'),
+        validateApellidoOpcional(document.getElementById('Apellido2').value, 'Apellido2'),
+        validateTelefono(document.getElementById('Telefono').value, 'Telefono'),
+        validateCorreo(document.getElementById('Email').value, 'Email'),
+        validateUsuario(document.getElementById('Usuario1').value, 'Usuario1'),
+        validateContrasena(document.getElementById('Password').value, 'Password'),
         validateConfirmarContrasena(document.getElementById('confirmarContrasena').value, 'confirmarContrasena')
     ];
+
 
     const isValid = validations.every(validation => validation);
 
@@ -296,20 +280,32 @@ function submitForm() {
     createBtn.classList.add('loading');
     createBtn.disabled = true;
 
-    // Simula envío al servidor
-    setTimeout(() => {
+    // Armar objeto con datos del formulario (usando FormData)
+    const formData = new FormData(form);
 
-
-        // Limpia formulario
-        form.reset();
-        inputs.forEach(input => {
-            clearFieldMessages(input.id);
+    // Enviar datos con fetch al backend
+    fetch('/Usuarios/CrearCuenta', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.text(); // O JSON si el backend devuelve JSON
+            }
+            throw new Error('Error en la respuesta del servidor');
+        })
+        .then(data => {
+            alert('Cuenta creada exitosamente.');
+            form.reset();
+            inputs.forEach(input => clearFieldMessages(input.id));
+            document.getElementById('passwordStrength').style.display = 'none';
+        })
+        .catch(error => {
+            alert('Error al enviar los datos: ' + error.message);
+        })
+        .finally(() => {
+            createBtn.classList.remove('loading');
+            createBtn.disabled = false;
         });
-        document.getElementById('passwordStrength').style.display = 'none';
-
-        createBtn.classList.remove('loading');
-        createBtn.disabled = false;
-
-
-    }, 3000);
 }
+

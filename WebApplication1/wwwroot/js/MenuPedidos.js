@@ -116,8 +116,9 @@ document.getElementById('btnOrder').addEventListener('click', async () => {
     };
     
     try {
-        const response = await fetch('/Menu/RealizarPedido', {
+        const response = await fetch('https://tiusr24pl.cuc-carrera-ti.ac.cr/jokave2007/Menu/RealizarPedido', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },

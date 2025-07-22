@@ -51,7 +51,7 @@
         <!-- Menu hamburguesa tipo ventana lateral -->
         <div id="menuHamburguesa">
             <a asp-controller="Mesa" asp-action="SeleccionarMesa">📋 Seleccionar mesa</a>
-            <a asp-controller="" asp-action="">🏷 Ver el menú</a>
+            <a asp-controller="Links" asp-action="ImagenMenu">🏷 Ver el menú</a>
             <a asp-controller="Menu" asp-action="Pedidos">🔔 Ordenar</a>
             <a asp-controller="Links" asp-action="AgregarTarjeta">💳 Agregar tarjeta/Saldo</a>
             <a asp-controller="Links" asp-action="Facturas">🧾 Solicitar cuenta</a>
@@ -80,7 +80,8 @@
                     <div class="action-icon">📋</div>
                     <div>Seleccionar mesa</div>
                 </a>
-                <a asp-controller="" asp-action="" class="action-btn btn-menu">
+                <a asp-controller="Links" asp-action="ImagenMenu"
+                    class="action-btn btn-menu">
                     <div class="action-icon">🏷️</div>
                     <div>Ver el menú</div>
                 </a>
