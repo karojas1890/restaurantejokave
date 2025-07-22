@@ -204,6 +204,38 @@
                 color: white;
             }
 
+        .tarjeta-verde-pastel {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px; /* más pequeño */
+            font-weight: 500;
+            border: 2px solid #7BC043;
+            border-radius: 10px;
+            padding: 8px 12px; /* menos espacio interno */
+            transition: 0.3s ease-in-out;
+        }
+
+        .tarjeta-verde-pastel:hover {
+            background-color: #1A3F37;
+            color: white;
+        }
+
+        .modal-verde-pastel {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px solid #7BC043;
+            border-radius: 10px;
+            padding: 15px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+            .modal-verde-pastel:hover {
+                background-color: #1A3F37;
+                color: white;
+            }
+
+
         .mesa-circular {
             position: relative;
             width: 120px;
@@ -252,7 +284,11 @@
             <span><i class="fas fa-map-marker-alt"></i> Cartago, Costa Rica</span>
         </div>
         <div class="d-flex align-items-center gap-3 flex-wrap">
-            <button class="btn btn-warning btn-sm" style="color: white; font-weight: bold;">Salir</button>
+            <form method="post" asp-controller="Login" asp-action="Logout">
+                <button type="submit" class="btn btn-warning btn-sm" style="color: white; font-weight: bold;">
+                    Salir
+                </button>
+            </form>
         </div>
     </div>
     <header class="d-flex justify-content-between align-items-center px-4 py-1" style="background-color: #fff;">
@@ -292,33 +328,17 @@
             <div class="card shadow-sm mt-4" style="border-radius: 15px; background-color: white;">
                 <div class="card-body text-center">
                 <h3 class="titulo-mesero">Ordenes de clientes</h3>
-                <div class="card-body d-grid gap-3 w-100">
+                    <div id="contenedorOrdenes" class="card-body d-grid gap-3 w-100">
+                    <!-- Aquí se insertan las tarjetas desde el cliente -->
                     </div>
                 </div>
             </div>
             <div class="card shadow-sm mt-4" style="border-radius: 15px; background-color: white;">
                 <div class="card-body text-center">
                     <h3 class="titulo-mesero">Ordenes desde cocina</h3>
-                    <div class="card-body d-grid gap-3 w-100">
+                    <div id="contenedorOrdenesdesdeCocina" class="card-body d-grid gap-3 w-100">
+                        <!-- Aquí se insertan las tarjetas desde la cocina -->
                     </div>
-                </div>
-            </div>
-            <div class="card shadow-sm mt-4" style="border-radius: 15px; background-color: white;">
-                <div class="card-body text-center">
-                    <h3 class="titulo-mesero">Cuentas por aprobar</h3>
-                    <div class="card-body d-grid gap-3 w-100">
-                    </div>
-                </div>
-            </div>
-
-            <div class="card shadow-sm mt-4" style="border-radius: 15px; background-color: white;">
-                <div class="card-body text-center">
-                    <button class="btn btn-supervivencia @(Carga < 80 ? "btn-disabled" : "")"
-                            @(Carga < 80 ? "disabled" : "")
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalSupervivencia">
-                        ¡Activar modo supervivencia!
-                    </button>
                 </div>
             </div>
         </div>
@@ -329,6 +349,16 @@
         <div class="flex-grow-1 bg-light">
             @RenderBody()
             @RenderSection("Scripts", required: false)
+            <div class="card shadow-sm mt-4" style="border-radius: 15px; background-color: white;">
+                <div class="card-body text-center">
+                    <button class="btn btn-supervivencia @(Carga < 80 ? "btn-disabled" : "")"
+                            @(Carga < 80 ? "disabled" : "")
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalSupervivencia">
+                        ¡Activar modo supervivencia!
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Menú lateral derecho -->
@@ -386,6 +416,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalRevision" tabindex="-1" aria-labelledby="modalRevisionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-verde-pastel">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRevisionLabel">Detalle de Orden</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="contenidoModal">
+                    <!-- Aquí se cargará dinámicamente el detalle -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                    <button id="btnAprobarDesdeModal" class="btn btn-success">Aprobar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -449,6 +499,182 @@
             ejecutarAccion(4, "Saliendo del sistema"); // lógica futura
         });
     </script>
+    <script>
+        function cargarOrdenes() {
+            $.ajax({
+                type: 'POST',
+                url: '/Links/ObtenerOrdenesMesero',
+                success: function (ordenes) {
+                    console.log("📦 Datos recibidos del servidor:", ordenes);
+                    const contenedor = $('#contenedorOrdenes');
+                    contenedor.empty();
+
+                    ordenes.forEach(o => {
+                        const tarjeta = `
+                                <div class="card tarjeta-verde-pastel p-2">
+                                    <h6>Orden #${o.idOrden}</h6>
+                                    <p><strong>Mesa:</strong> ${o.idMesa} <strong>Hora:</strong> ${o.horaRecibida}</p>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-outline-info btn-sm" onclick="mostrarModal(${o.idOrden})">Revisar</button>
+                                        <button class="btn btn-outline-success btn-sm" onclick="aprobarOrden(${o.idOrden})">Aprobar</button>
+                                    </div>
+                                </div>`;
+                        contenedor.append(tarjeta);
+                    });
+                },
+                error: function () {
+                    console.log("Error al obtener las órdenes");
+                }
+            });
+        }
+
+        // Ejecutar al cargar la página y luego cada 5 segundos
+        $(document).ready(function () {
+            cargarOrdenes();
+            setInterval(cargarOrdenes, 5000);
+        });
+          
+        function aprobarOrden(idOrden) {
+            $.ajax({
+                type: 'POST',
+                url: '/Links/AprobarOrden',
+                data: { idOrden },
+                success: function (response) {
+                    console.log("✅ Orden aprobada:", response);
+                    cargarOrdenes(); // Recargar para que desaparezca la orden
+                },
+                error: function () {
+                    console.log("❌ Error al aprobar la orden");
+                }
+            });
+        }
+
+
+    </script>
+    <script>
+        function cargarOrdenesdesdeCocina() {
+            $.ajax({
+                type: 'POST',
+                url: '/Links/ObtenerOrdenesMeserodesdeCocina',
+                success: function (ordenes) {
+                    console.log("📦 Datos recibidos del servidor:", ordenes);
+                    const contenedor = $('#contenedorOrdenesdesdeCocina');
+                    contenedor.empty();
+
+                    ordenes.forEach(o => {
+                        const tarjeta = `
+                                <div class="card tarjeta-verde-pastel p-2">
+                                    <h6>Orden #${o.idOrden}</h6>
+                                    <p><strong>Mesa:</strong> ${o.idMesa} <strong>Hora:</strong> ${o.horaRecibida}</p>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-outline-info btn-sm" onclick="mostrarModalOrdenCocina(${o.idOrden})">Revisar</button>
+                                        <button class="btn btn-outline-success btn-sm" onclick="aprobarOrdenparalaMesa(${o.idOrden})">Enviar a la mesa</button>
+                                    </div>
+                                </div>`;
+                        contenedor.append(tarjeta);
+                    });
+                },
+                error: function () {
+                    console.log("Error al obtener las órdenes");
+                }
+            });
+        }
+
+        // Ejecutar al cargar la página y luego cada 5 segundos
+        $(document).ready(function () {
+            cargarOrdenesdesdeCocina();
+            setInterval(cargarOrdenes, 5000);
+        });
+
+        function aprobarOrdenparalaMesa(idOrden) {
+            $.ajax({
+                type: 'POST',
+                url: '/Links/AprobarOrdenparalaMesa',
+                data: { idOrden },
+                success: function (response) {
+                    console.log("✅ Orden aprobada:", response);
+                    cargarOrdenesdesdeCocina(); // Recargar para que desaparezca la orden
+                },
+                error: function () {
+                    console.log("❌ Error al aprobar la orden");
+                }
+            });
+        }
+
+
+    </script>
+    <script>
+        function mostrarModal(idOrden) {
+            $.ajax({
+                type: 'POST',
+                url: '/Links/ObtenerDetalleOrden', // nuevo controlador para opción 2
+                data: { idOrden: idOrden },
+                success: function (data) {
+                    // Agrupar y construir contenido
+                    if (data.length > 0) {
+                        const encabezado = `<p><strong>Orden:</strong> ${data[0].idOrden} |
+                                            <strong>Mesa:</strong> ${data[0].idMesa} |
+                                            <strong>Hora:</strong> ${data[0].horaRecibida}</p>`;
+                        let lista = "<ul>";
+                        data.forEach(d => {
+                            lista += `<li>${d.nombre} x${d.cantidadProducto}</li>`;
+                        });
+                        lista += "</ul>";
+
+                        $('#contenidoModal').html(encabezado + lista);
+
+                        // Evento de aprobar desde modal
+                        $('#btnAprobarDesdeModal').off('click').on('click', function () {
+                            aprobarOrden(idOrden);
+                            $('#modalRevision').modal('hide');
+                        });
+
+                        $('#modalRevision').modal('show');
+                    }
+                },
+                error: function () {
+                    alert("Error al cargar el detalle de la orden.");
+                }
+            });
+        }
+    </script>
+    <script>
+        function mostrarModalOrdenCocina(idOrden) {
+            $.ajax({
+                type: 'POST',
+                url: '/Links/ObtenerDetalleOrdendesdeCocina', // nuevo controlador para opción 2
+                data: { idOrden: idOrden },
+                success: function (data) {
+                    // Agrupar y construir contenido
+                    if (data.length > 0) {
+                        const encabezado = `<p><strong>Orden:</strong> ${data[0].idOrden} |
+                                            <strong>Mesa:</strong> ${data[0].idMesa} |
+                                            <strong>Hora:</strong> ${data[0].horaRecibida}</p>`;
+                        let lista = "<ul>";
+                        data.forEach(d => {
+                            lista += `<li>${d.nombre} x${d.cantidadProducto}</li>`;
+                        });
+                        lista += "</ul>";
+
+                        $('#contenidoModal').html(encabezado + lista);
+
+                        // Evento de aprobar desde modal
+                        $('#btnAprobarDesdeModal').off('click').on('click', function () {
+                            aprobarOrden(idOrden);
+                            $('#modalRevision').modal('hide');
+                        });
+
+                        $('#modalRevision').modal('show');
+                    }
+                },
+                error: function () {
+                    alert("Error al cargar el detalle de la orden.");
+                }
+            });
+        }
+    </script>
+
+
 
 
 
