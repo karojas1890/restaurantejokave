@@ -21725,18 +21725,19 @@ body {
   transform: translate(-50%, -50%) scale(1);
 }
 
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .card,
-  .card-body,
-  .media,
-  .flex-column,
-  .tab-content {
-    min-height: 1px;
-  }
-  img {
-    min-height: 1px;
-    height: auto;
-  }
+@media all and (forced-colors: none), (forced-colors: active) {
+    .card,
+    .card-body,
+    .media,
+    .flex-column,
+    .tab-content {
+        min-height: 1px;
+    }
+
+    img {
+        min-height: 1px;
+        height: auto;
+    }
 }
 .buy-now .btn-buy-now {
   position: fixed;
@@ -22691,18 +22692,19 @@ html:not(.layout-footer-fixed) .content-wrapper {
     transition-property: margin-left, margin-right, width;
   }
 }
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .menu,
-  .layout-menu,
-  .layout-page,
-  .layout-navbar,
-  .content-footer {
-    transition: none !important;
-    transition-duration: 0s !important;
-  }
-  .layout-overlay {
-    animation: none !important;
-  }
+@media all and (forced-colors: none), (forced-colors: active) {
+    .menu,
+    .layout-menu,
+    .layout-page,
+    .layout-navbar,
+    .content-footer {
+        transition: none !important;
+        transition-duration: 0s !important;
+    }
+
+    .layout-overlay {
+        animation: none !important;
+    }
 }
 @-webkit-keyframes menuAnimation {
   0% {
